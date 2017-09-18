@@ -22,38 +22,66 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fjx-30-s1E">
-                                <rect key="frame" x="3" y="3" width="314" height="498"/>
-                            </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eVc-qO-M0Q">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eVc-qO-M0Q">
                                 <rect key="frame" x="16" y="8" width="288" height="488"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="ieW-y7-5lv" customClass="Cell" customModule="TillTrip" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="288" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="150" id="ieW-y7-5lv" customClass="Cell" customModule="TillTrip" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="288" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ieW-y7-5lv" id="2Lt-bW-BWI">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="149.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trip name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kw9-nB-2nc">
-                                                    <rect key="frame" x="8" y="-8" width="147" height="52"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M96-v7-BWV">
+                                                    <rect key="frame" x="3" y="3" width="282" height="143.5"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHz-ee-HnI">
+                                                    <rect key="frame" x="8" y="33" width="272" height="25"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="days left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MqJ-6J-nMc">
+                                                    <rect key="frame" x="195" y="19" width="78" height="52"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="days left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MqJ-6J-nMc">
-                                                    <rect key="frame" x="194" y="-8" width="78" height="52"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trip name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kw9-nB-2nc">
+                                                    <rect key="frame" x="16" y="19" width="151" height="52"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Destination" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WaG-DI-4Dq">
+                                                    <rect key="frame" x="16" y="8" width="87" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Days left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyn-VN-9mL">
+                                                    <rect key="frame" x="175" y="8" width="67" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="M96-v7-BWV" secondAttribute="trailing" constant="3" id="6Z9-i8-fRQ"/>
+                                                <constraint firstItem="M96-v7-BWV" firstAttribute="top" secondItem="2Lt-bW-BWI" secondAttribute="top" constant="3" id="X9N-dY-QHR"/>
+                                                <constraint firstAttribute="bottom" secondItem="M96-v7-BWV" secondAttribute="bottom" constant="3" id="anb-J0-tip"/>
+                                                <constraint firstItem="M96-v7-BWV" firstAttribute="leading" secondItem="2Lt-bW-BWI" secondAttribute="leading" constant="3" id="plK-or-B7N"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="bgImage" destination="M96-v7-BWV" id="xJi-bx-wQo"/>
                                             <outlet property="daysLeftLabel" destination="MqJ-6J-nMc" id="lw3-5a-S80"/>
+                                            <outlet property="ddayLabel" destination="gyn-VN-9mL" id="a8M-4g-y5T"/>
+                                            <outlet property="destinationLabel" destination="WaG-DI-4Dq" id="PBk-zz-n2W"/>
+                                            <outlet property="labelsBG" destination="mHz-ee-HnI" id="OgF-na-XpQ"/>
                                             <outlet property="tripNameLabel" destination="kw9-nB-2nc" id="kH6-8z-3SE"/>
                                         </connections>
                                     </tableViewCell>
@@ -67,12 +95,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eVc-qO-M0Q" firstAttribute="top" secondItem="z20-bQ-ggN" secondAttribute="bottom" constant="8" id="2FM-7r-59u"/>
-                            <constraint firstItem="fjx-30-s1E" firstAttribute="top" secondItem="z20-bQ-ggN" secondAttribute="bottom" constant="3" id="JzA-7v-VJR"/>
                             <constraint firstItem="eVc-qO-M0Q" firstAttribute="trailing" secondItem="oTN-Pa-0J2" secondAttribute="trailingMargin" id="KOG-8c-2fo"/>
                             <constraint firstItem="eVc-qO-M0Q" firstAttribute="leading" secondItem="oTN-Pa-0J2" secondAttribute="leadingMargin" id="LIs-j9-zXt"/>
-                            <constraint firstItem="fjx-30-s1E" firstAttribute="leading" secondItem="oTN-Pa-0J2" secondAttribute="leading" constant="3" id="O9X-30-vav"/>
-                            <constraint firstItem="yXu-p7-g1q" firstAttribute="top" secondItem="fjx-30-s1E" secondAttribute="bottom" constant="3" id="ODy-At-lnx"/>
-                            <constraint firstAttribute="trailing" secondItem="fjx-30-s1E" secondAttribute="trailing" constant="3" id="eQ4-NH-hac"/>
                             <constraint firstItem="yXu-p7-g1q" firstAttribute="top" secondItem="eVc-qO-M0Q" secondAttribute="bottom" constant="8" id="gOF-Hd-jE6"/>
                         </constraints>
                     </view>
@@ -86,7 +110,6 @@
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
-                        <outlet property="bgImage" destination="fjx-30-s1E" id="V9B-TR-meV"/>
                         <outlet property="tableView" destination="eVc-qO-M0Q" id="NCK-gO-xbB"/>
                     </connections>
                 </viewController>

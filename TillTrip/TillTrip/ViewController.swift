@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import CoreData
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	
 	var images = ["thai1", "thai2", "thai3", "thai4", "thai5", "thai6", "thai7", "thai8", "thai9", "thai10", "thai11", "thai12", "thai13"]
 	
-	let tripName = ["Trip to Thailand"]
-	let daysLeft = ["76"]
+	let tripName = ["Trip to Thailand", "Next Trip"]
+	let daysLeft = ["76", "30"]
+	
+	var managedContext: NSManagedObjectContext!
 
-	@IBOutlet var bgImage: UIImageView!
+	
 	@IBOutlet weak var tableView: UITableView!
 	
 	
@@ -28,7 +31,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tableView.separatorColor = UIColor.clear
 		title = "TillTrip"
 		view.backgroundColor = UIColor.black
-		bgImage.contentMode = .scaleAspectFit
+		
 		refreshImage()
 	}
 
@@ -38,15 +41,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func refreshImage() {
-		let maxIndex = images.count
-		let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
-		let imageName = images[Int(randomImageIndex)]
-		print(imageName)
-		bgImage.image = UIImage(named: imageName)
+		
 	}
 
 	@IBAction func refreshView(_ sender: UIBarButtonItem) {
-		refreshImage()
+		tableView.reloadData()
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,12 +57,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		let day = daysLeft[indexPath.row]
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
 		
-		cell.tripNameLabel.text = trip
+		let maxIndex = images.count
+		let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
+		let imageName = images[Int(randomImageIndex)]
+		print(imageName)
+		cell.bgImage.image = UIImage(named: imageName)
+		cell.bgImage.contentMode = .scaleToFill
 		
+		cell.tripNameLabel.text = trip
+		cell.tripNameLabel.textColor = UIColor.white
 		cell.daysLeftLabel.text = day
 		
 		return cell
 	}
+	
+	
+	
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
