@@ -16,7 +16,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	let tripName = ["Trip to Thailand", "Next Trip"]
 	let daysLeft = ["76", "30"]
 	
+	var trips = [Trip]()
 	var managedContext: NSManagedObjectContext!
+	
 
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -25,6 +27,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		managedContext = appDelegate.persistentContainer.viewContext
+		
+		insertStarterData()
+		
+		let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+		fetchRequest.predicate = NSPredicate(format: "name != nil")
+		do {
+			trips = try managedContext.fetch(fetchRequest)
+		} catch let error as NSError {
+			print("Could not fetch plist data \(error)")
+		}
+		
 		
 		tableView.delegate = self
 		tableView.backgroundColor = UIColor.clear
@@ -49,12 +65,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return tripName.count
+		return trips.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let trip = tripName[indexPath.row]
-		let day = daysLeft[indexPath.row]
+		let trip = trips[indexPath.row]
+		let day = "69"
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
 		
 		let maxIndex = images.count
@@ -64,14 +80,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		cell.bgImage.image = UIImage(named: imageName)
 		cell.bgImage.contentMode = .scaleToFill
 		
-		cell.tripNameLabel.text = trip
+		cell.tripNameLabel.text = trip.name
 		cell.tripNameLabel.textColor = UIColor.white
 		cell.daysLeftLabel.text = day
 		
 		return cell
 	}
 	
-	
+	func insertStarterData() {
+		
+		let path = Bundle.main.path(forResource: "TripInfo", ofType: "plist")
+		let dataArray = NSArray(contentsOfFile: path!)!
+		
+		for data in dataArray {
+			
+			let entity = NSEntityDescription.entity(forEntityName: "Trip", in: managedContext)!
+			let trip = Trip(entity: entity, insertInto: managedContext)
+			
+			let tripDict = data as! [String: AnyObject]
+			
+			trip.name = tripDict["name"] as? String
+			
+		}
+		
+		try! managedContext.save()
+	}
 	
 	
 
