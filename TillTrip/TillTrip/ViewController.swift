@@ -28,7 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
 		
 		insertStarterData()
@@ -82,14 +82,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		cell.tripNameLabel.text = trip.name
 		cell.tripNameLabel.textColor = UIColor.white
-		cell.daysLeftLabel.text = trip.info
+		
+		let daysTillTrip = daysBetweenDates(firstDate: Date(), secondDate: trip.date! as Date)
+		
+		cell.daysLeftLabel.text = "\(daysTillTrip)"
 		
 		return cell
 	}
 	
 	func insertStarterData() {
 		
-		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
 		
 		
@@ -114,14 +117,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			let entity = NSEntityDescription.entity(forEntityName: "Trip", in: managedContext)!
 			let trip = Trip(entity: entity, insertInto: managedContext)
 			
-			let tripDict = data as! [String: AnyObject]
+			guard let tripDict = data as? [String: AnyObject] else {return}
+			
 			
 			trip.name = tripDict["name"] as? String
 			trip.info = tripDict["days"] as? String
+			trip.date = tripDict["date"] as? NSDate
 			
 		}
 		
 		try! managedContext.save()
+	}
+	
+	func daysBetweenDates(firstDate: Date, secondDate: Date) -> Int
+	{
+		let calendar = NSCalendar.current
+		
+		// Replace the hour (time) of both dates with 00:00
+		let date1 = calendar.startOfDay(for: firstDate)
+		let date2 = calendar.startOfDay(for: secondDate)
+		
+		let components = calendar.dateComponents([.day], from: date1, to: date2)
+		
+		return components.day!
 	}
 	
 	
