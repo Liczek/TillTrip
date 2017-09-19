@@ -3,10 +3,14 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>days</key>
+		<string>80</string>
 		<key>name</key>
 		<string>Koh Ngai</string>
 	</dict>
 	<dict>
+		<key>days</key>
+		<string>73</string>
 		<key>name</key>
 		<string>Phuket</string>
 	</dict>

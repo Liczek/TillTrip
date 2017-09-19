@@ -70,7 +70,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let trip = trips[indexPath.row]
-		let day = "69"
+
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
 		
 		let maxIndex = images.count
@@ -82,7 +82,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		cell.tripNameLabel.text = trip.name
 		cell.tripNameLabel.textColor = UIColor.white
-		cell.daysLeftLabel.text = day
+		cell.daysLeftLabel.text = trip.info
 		
 		return cell
 	}
@@ -100,6 +100,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			let tripDict = data as! [String: AnyObject]
 			
 			trip.name = tripDict["name"] as? String
+			trip.info = tripDict["days"] as? String
 			
 		}
 		
