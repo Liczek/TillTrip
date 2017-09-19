@@ -89,6 +89,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	func insertStarterData() {
 		
+		let appDelegate = UIApplication.shared.delegate as! AppDelegate
+		managedContext = appDelegate.persistentContainer.viewContext
+		
+		
+		let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+		fetchRequest.predicate = NSPredicate(format: "name != nil")
+		
+		
+		do {
+			let result = try managedContext.count(for: fetchRequest)
+			if result > 0 {return}
+		} catch let error as NSError {
+			print("Could not fetch plist data \(error)")
+		}
+
+		
+		
 		let path = Bundle.main.path(forResource: "TripInfo", ofType: "plist")
 		let dataArray = NSArray(contentsOfFile: path!)!
 		
