@@ -123,6 +123,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			trip.name = tripDict["name"] as? String
 			trip.info = tripDict["days"] as? String
 			trip.date = tripDict["date"] as? NSDate
+			trip.searchKey = tripDict["searchKey"] as? String
 			
 		}
 		

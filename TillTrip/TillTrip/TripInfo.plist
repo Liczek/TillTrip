@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>searchKey</key>
-		<string>numerniedopodrobienia1</string>
+		<string>1</string>
 		<key>date</key>
 		<date>2017-12-08T00:00:00Z</date>
 		<key>info</key>
@@ -14,7 +14,7 @@
 	</dict>
 	<dict>
 		<key>searchKey</key>
-		<string>numerniedopodrobienia2</string>
+		<string>2</string>
 		<key>date</key>
 		<date>2017-12-01T00:00:00Z</date>
 		<key>info</key>

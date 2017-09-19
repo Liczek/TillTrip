@@ -13,7 +13,7 @@ class TripViewController: UIViewController {
 	
 	var datePicker = UIDatePicker()
 	var managedContext: NSManagedObjectContext!
-	var searchKey = "numerniedopodrobienia2"
+	var searchKey = "2"
 	var trips = [Trip]()
 	
 	@IBOutlet weak var tripNameTextField: UITextField!
@@ -35,9 +35,10 @@ class TripViewController: UIViewController {
 			do {
 				trips = try managedContext.fetch(fetchRequest)
 				
-				let tripToEdit = trips.count
-				print("number of trips\(tripToEdit)")
-				
+				guard let tripToEdit = trips.first else {return}
+				print("number of trips\(String(describing: tripToEdit.name))")
+				tripNameTextField.text = tripToEdit.name
+				tripDateTextField.text = dateConverterToString(from: tripToEdit.date! as Date)
 				
 				
 				
@@ -87,9 +88,9 @@ class TripViewController: UIViewController {
 		self.view.endEditing(true)
 	}
 	
-	func dateConverterToString(from NSdate: NSDate) -> String{
+	func dateConverterToString(from date: Date) -> String{
 		
-		let pickedDate = NSdate
+		let pickedDate = date
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateStyle = .full
 		dateFormatter.dateFormat = "dd MMMM YYYY"
