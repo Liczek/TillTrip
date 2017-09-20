@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>searchKey</key>
-		<string>1</string>
+		<string>KohNgaiSearchKey</string>
 		<key>date</key>
 		<date>2017-12-08T00:00:00Z</date>
 		<key>info</key>
@@ -14,7 +14,7 @@
 	</dict>
 	<dict>
 		<key>searchKey</key>
-		<string>2</string>
+		<string>PhuketSearchKey</string>
 		<key>date</key>
 		<date>2017-12-01T00:00:00Z</date>
 		<key>info</key>

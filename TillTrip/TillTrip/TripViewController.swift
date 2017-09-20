@@ -13,24 +13,31 @@ class TripViewController: UIViewController {
 	
 	var datePicker = UIDatePicker()
 	var managedContext: NSManagedObjectContext!
-	var searchKey = "2"
+	var searchKey: String!
 	var trips = [Trip]()
 	
 	@IBOutlet weak var tripNameTextField: UITextField!
 	@IBOutlet weak var tripDateTextField: UITextField!
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		print("searchKey name in Trip: \(searchKey)")
+		
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-
-		
-		if searchKey != nil {
+		print("searchKey name in Trip: \(searchKey)")
+		let xxx = searchKey
+		if xxx != nil {
+			createDatePicker()
 			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 			managedContext = appDelegate.persistentContainer.viewContext
 			
 			let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
-			fetchRequest.predicate = NSPredicate(format: "searchKey == %@", searchKey)
+			fetchRequest.predicate = NSPredicate(format: "searchKey == %@", searchKey!)
 			
 			do {
 				trips = try managedContext.fetch(fetchRequest)
@@ -40,8 +47,6 @@ class TripViewController: UIViewController {
 				tripNameTextField.text = tripToEdit.name
 				tripDateTextField.text = dateConverterToString(from: tripToEdit.date! as Date)
 				
-				
-				
 			} catch let error as NSError {
 				print("Could Not Load/Create Trip \(error), \(error.userInfo)")
 			}
@@ -49,8 +54,9 @@ class TripViewController: UIViewController {
 		} else {
 			let uniqueID = UUID().uuidString
 			searchKey = uniqueID
+			createDatePicker()
 		}
-		createDatePicker()
+		
 
 		
     }

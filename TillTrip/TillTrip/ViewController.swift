@@ -18,7 +18,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	var trips = [Trip]()
 	var managedContext: NSManagedObjectContext!
-	
+	var searchKeyOfSelectedTrip = String()
 
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -88,6 +88,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		cell.daysLeftLabel.text = "\(daysTillTrip)"
 		
 		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
+		let trip = trips[indexPath.row]
+		self.searchKeyOfSelectedTrip = trip.searchKey!
+		print("searchKey name: \(searchKeyOfSelectedTrip)")
+		performSegue(withIdentifier: "EditTripDetails", sender: searchKeyOfSelectedTrip)
+	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "EditTripDetails" {
+			
+			let controller = segue.destination as! TripViewController 
+				controller.searchKey = sender as? String
+			
+			
+			
+		}
 	}
 	
 	func insertStarterData() {
