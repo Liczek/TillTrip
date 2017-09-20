@@ -92,9 +92,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		let trip = trips[indexPath.row]
-		self.searchKeyOfSelectedTrip = trip.searchKey!
-		print("searchKey name: \(searchKeyOfSelectedTrip)")
+		let cell = tableView.cellForRow(at: indexPath) as! Cell
+		
+		self.searchKeyOfSelectedTrip = cell.tripNameLabel.text!
+		print("searchKey name - sender: \(searchKeyOfSelectedTrip)")
 		performSegue(withIdentifier: "EditTripDetails", sender: searchKeyOfSelectedTrip)
 	}
 	

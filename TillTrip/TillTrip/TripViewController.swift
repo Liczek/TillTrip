@@ -22,17 +22,17 @@ class TripViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		print("searchKey name in Trip: \(searchKey)")
+		print("view will appear searchKey name in Trip: \(searchKey)")
 		
 	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		print("searchKey name in Trip: \(searchKey)")
-		let xxx = searchKey
-		if xxx != nil {
-			createDatePicker()
+		print("view did load searchKey name in Trip: \(searchKey)")
+		
+		if searchKey != nil {
+			
 			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 			managedContext = appDelegate.persistentContainer.viewContext
 			
@@ -54,9 +54,9 @@ class TripViewController: UIViewController {
 		} else {
 			let uniqueID = UUID().uuidString
 			searchKey = uniqueID
-			createDatePicker()
+			
 		}
-		
+		createDatePicker()
 
 		
     }

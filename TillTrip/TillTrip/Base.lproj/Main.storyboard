@@ -83,7 +83,6 @@
                                             <outlet property="destinationLabel" destination="WaG-DI-4Dq" id="PBk-zz-n2W"/>
                                             <outlet property="labelsBG" destination="mHz-ee-HnI" id="OgF-na-XpQ"/>
                                             <outlet property="tripNameLabel" destination="kw9-nB-2nc" id="kH6-8z-3SE"/>
-                                            <segue destination="0AT-40-9AY" kind="show" identifier="EditTripDetails" id="LRQ-Dm-dAP"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -110,13 +109,14 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="hxo-CC-Xhz">
                             <connections>
-                                <segue destination="0AT-40-9AY" kind="show" identifier="AddTrip" id="IvV-IU-Fjp"/>
+                                <segue destination="0AT-40-9AY" kind="show" identifier="AddTrip" id="k80-zv-EuQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
                         <outlet property="tableView" destination="eVc-qO-M0Q" id="NCK-gO-xbB"/>
+                        <segue destination="0AT-40-9AY" kind="show" identifier="EditTripDetails" id="1ON-JX-nzx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytv-Qf-tdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -219,6 +219,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IvV-IU-Fjp"/>
+        <segue reference="1ON-JX-nzx"/>
     </inferredMetricsTieBreakers>
 </document>
