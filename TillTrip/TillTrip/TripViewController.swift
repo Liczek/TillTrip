@@ -166,10 +166,11 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		searchKey = uniqueID
 	}
 	
-	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		tripNameTextField.resignFirstResponder()
-		return true
+	func textFieldShouldReturn(_ tripNameTextField: UITextField) -> Bool {
+		self.view.endEditing(true)
+		return false
 	}
+	
 	
 
 	

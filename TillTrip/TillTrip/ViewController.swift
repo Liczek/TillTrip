@@ -35,8 +35,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
 		fetchRequest.predicate = NSPredicate(format: "name != nil")
+		
 		do {
 			trips = try managedContext.fetch(fetchRequest)
+			
 		} catch let error as NSError {
 			print("Could not fetch plist data \(error)")
 		}
@@ -56,7 +58,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
 		let fetchRequest = NSFetchRequest<Trip>(entityName:"Trip")
-		
+		let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+		fetchRequest.sortDescriptors = [sortDescriptor]
 		do {
 			trips = try managedContext.fetch(fetchRequest)
 		} catch let error as NSError {
@@ -83,6 +86,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		
+		
 		let trip = trips[indexPath.row]
 
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
@@ -175,7 +180,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		return components.day!
 	}
 	
+	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return true
+	}
 	
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		let cell = tableView.cellForRow(at: indexPath) as! Cell
+		self.searchKeyOfSelectedTrip = cell.searchKey
+		let appDelegate = UIApplication.shared.delegate as? AppDelegate
+		managedContext = appDelegate?.persistentContainer.viewContext
+		let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+		fetchRequest.predicate = NSPredicate(format: "searchKey == %@", searchKeyOfSelectedTrip)
+		do {
+			guard let tripToRemove = try managedContext.fetch(fetchRequest) as? Trip,
+			editingStyle == .delete else {return}
+			
+			
+		} catch let error as NSError {
+			print("Could Not Delete Trip \(error), \(error.userInfo)")
+		}
+		trips.remove(at: indexPath.row)
+		tableView.deleteRows(at: [indexPath], with: .automatic)
+		tableView.reloadData()
+	}
 	
 	
 
