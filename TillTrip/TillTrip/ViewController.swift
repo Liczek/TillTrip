@@ -50,6 +50,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		refreshImage()
 	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		managedContext = appDelegate.persistentContainer.viewContext
+		let fetchRequest = NSFetchRequest<Trip>(entityName:"Trip")
+		
+		do {
+			trips = try managedContext.fetch(fetchRequest)
+		} catch let error as NSError {
+			print("Could Not Reload View \(error), \(error.userInfo)")
+		}
+		tableView.reloadData()
+	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
@@ -82,6 +96,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		cell.tripNameLabel.text = trip.name
 		cell.tripNameLabel.textColor = UIColor.white
+		cell.searchKey = trip.searchKey
 		
 		let daysTillTrip = daysBetweenDates(firstDate: Date(), secondDate: trip.date! as Date)
 		
@@ -94,7 +109,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tableView.deselectRow(at: indexPath, animated: true)
 		let cell = tableView.cellForRow(at: indexPath) as! Cell
 		
-		self.searchKeyOfSelectedTrip = cell.tripNameLabel.text!
+		self.searchKeyOfSelectedTrip = cell.searchKey
 		print("searchKey name - sender: \(searchKeyOfSelectedTrip)")
 		performSegue(withIdentifier: "EditTripDetails", sender: searchKeyOfSelectedTrip)
 	}
@@ -103,10 +118,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		if segue.identifier == "EditTripDetails" {
 			
 			let controller = segue.destination as! TripViewController 
-				controller.searchKey = sender as? String
-			
-			
-			
+				controller.searchKey = sender as? String			
 		}
 	}
 	
@@ -162,6 +174,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		return components.day!
 	}
+	
+	
 	
 	
 

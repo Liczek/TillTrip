@@ -17,6 +17,8 @@ class Cell: UITableViewCell {
 	@IBOutlet weak var destinationLabel: UILabel!
 	@IBOutlet weak var ddayLabel: UILabel!
 	
+	var searchKey: String!
+	
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = UIColor.clear
