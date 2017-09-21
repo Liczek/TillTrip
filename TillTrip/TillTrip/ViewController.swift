@@ -189,19 +189,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		self.searchKeyOfSelectedTrip = cell.searchKey
 		let appDelegate = UIApplication.shared.delegate as? AppDelegate
 		managedContext = appDelegate?.persistentContainer.viewContext
-		let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+		var fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
 		fetchRequest.predicate = NSPredicate(format: "searchKey == %@", searchKeyOfSelectedTrip)
 		do {
-			guard let tripToRemove = try managedContext.fetch(fetchRequest) as? Trip,
-			editingStyle == .delete else {return}
-			
-			
+			guard let tripToRemove = try managedContext.fetch(fetchRequest).first else {return}
+			managedContext.delete(tripToRemove)
 		} catch let error as NSError {
 			print("Could Not Delete Trip \(error), \(error.userInfo)")
 		}
-		trips.remove(at: indexPath.row)
-		tableView.deleteRows(at: [indexPath], with: .automatic)
-		tableView.reloadData()
+		
+		fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+		do {
+			trips = try managedContext.fetch(fetchRequest)
+		} catch let error as NSError {
+			print("Could Not Set trips after Deleting Trip \(error), \(error.userInfo)")
+		}
+		
+		
+		
+		do {
+			try managedContext.save()
+			tableView.deleteRows(at: [indexPath], with: .fade)
+		} catch let error as NSError {
+			print("Could Not Save Deleted Trip \(error), \(error.userInfo)")
+		}
+		
+		
 	}
 	
 	
