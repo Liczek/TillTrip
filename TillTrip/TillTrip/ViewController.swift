@@ -13,12 +13,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	var images = ["thai1", "thai2", "thai3", "thai4", "thai5", "thai6", "thai7", "thai8", "thai9", "thai10", "thai11", "thai12", "thai13"]
 	
-	let tripName = ["Trip to Thailand", "Next Trip"]
-	let daysLeft = ["76", "30"]
+//	let tripName = ["Trip to Thailand", "Next Trip"]
+//	let daysLeft = ["76", "30"]
 	
 	var trips = [Trip]()
 	var managedContext: NSManagedObjectContext!
 	var searchKeyOfSelectedTrip = String()
+	var selectedTripImageName = String()
 
 	
 	@IBOutlet weak var tableView: UITableView!
@@ -73,7 +74,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		} catch let error as NSError {
 			print("Could Not Reload View \(error), \(error.userInfo)")
 		}
-		tableView.reloadData()
+		//tableView.reloadData()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -118,7 +119,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		cell.tripNameLabel.text = trip.name
 		cell.tripNameLabel.textColor = UIColor.white
 		cell.searchKey = trip.searchKey
-		
+		cell.bgImageName = imageName
 		let daysTillTrip = daysBetweenDates(firstDate: Date(), secondDate: trip.date! as Date)
 		
 		cell.daysLeftLabel.text = "\(daysTillTrip)"
@@ -131,6 +132,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		let cell = tableView.cellForRow(at: indexPath) as! Cell
 		
 		self.searchKeyOfSelectedTrip = cell.searchKey
+		self.selectedTripImageName = cell.bgImageName
 		print("searchKey name - sender: \(searchKeyOfSelectedTrip)")
 		performSegue(withIdentifier: "EditTripDetails", sender: searchKeyOfSelectedTrip)
 	}
@@ -139,7 +141,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		if segue.identifier == "EditTripDetails" {
 			
 			let controller = segue.destination as! TripViewController 
-				controller.searchKey = sender as? String			
+				controller.searchKey = sender as? String
+				controller.imageName = selectedTripImageName
 		}
 	}
 	

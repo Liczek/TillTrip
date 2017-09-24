@@ -16,11 +16,13 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	var searchKey: String!
 	var pickedDate: Date!
 	var trips = [Trip]()
+	var imageName: String!
 	
 	@IBOutlet weak var tripNameTextField: UITextField!
 	@IBOutlet weak var tripDateTextField: UITextField!
 	@IBOutlet weak var acceptTripButton: UIButton!
 	@IBOutlet weak var cancelTripButton: UIButton!
+	@IBOutlet weak var imageView: UIImageView!
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -34,6 +36,17 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		view.backgroundColor = UIColor.black
 		
+		
+		
+		
+		//imageView.layer.cornerRadius = 10
+		imageView.image = UIImage(named: imageName)
+		imageView.clipsToBounds = true
+		imageView.contentMode = .scaleToFill
+		
+		
+		
+		
 		tripNameTextField.font = UIFont.preferredFont(forTextStyle: .headline)
 		tripNameTextField.autocapitalizationType = .sentences
 		tripNameTextField.clearButtonMode = .whileEditing
@@ -45,14 +58,14 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		acceptTripButton.backgroundColor = UIColor.darkGray
 		acceptTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.75), for: .normal)
 		acceptTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
-		acceptTripButton.translatesAutoresizingMaskIntoConstraints = true
+		
 		
 		cancelTripButton.clipsToBounds = true
 		cancelTripButton.layer.cornerRadius = 10
 		cancelTripButton.backgroundColor = UIColor.darkGray
 		cancelTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.30), for: .normal)
 		cancelTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-		cancelTripButton.translatesAutoresizingMaskIntoConstraints = true
+		
 		
 		tripNameTextField.delegate = self
 		
@@ -90,6 +103,36 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 
 		
     }
+	
+	override func viewDidLayoutSubviews() {
+		let topGradient: CAGradientLayer = CAGradientLayer()
+		topGradient.frame = imageView.layer.bounds
+		topGradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
+		topGradient.locations = [0.0, 0.2]
+		imageView.layer.addSublayer(topGradient)
+		
+		let leftGradient: CAGradientLayer = CAGradientLayer()
+		leftGradient.frame = imageView.bounds
+		leftGradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
+		leftGradient.locations = [0.0, 0.2]
+		leftGradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+		leftGradient.endPoint = CGPoint(x: 0.2, y: 0.5)
+		imageView.layer.addSublayer(leftGradient)
+		
+		let bottomGradient: CAGradientLayer = CAGradientLayer()
+		bottomGradient.frame = imageView.bounds
+		bottomGradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+		bottomGradient.locations = [0.8, 1.0]
+		imageView.layer.addSublayer(bottomGradient)
+		
+		let rightGradient: CAGradientLayer = CAGradientLayer()
+		rightGradient.frame = imageView.bounds
+		rightGradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+		rightGradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+		rightGradient.endPoint = CGPoint(x: 1.0, y: 0.5)
+		rightGradient.locations = [0.95, 1.0]
+		imageView.layer.addSublayer(rightGradient)
+	}
 	
 	@IBAction func addTripButtonTapped(_ sender: UIButton) {
 		
