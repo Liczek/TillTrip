@@ -11,8 +11,8 @@ import CoreData
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 	
-	var images = ["thai1", "thai2", "thai3", "thai4", "thai5", "thai6", "thai7", "thai8", "thai9", "thai10", "thai11", "thai12", "thai13"]
-	
+	var arrayOfImages = ["thai1", "thai2", "thai3", "thai4", "thai5", "thai6", "thai7", "thai8", "thai9", "thai10", "thai11", "thai12", "thai13"]
+	var images: [String]!
 //	let tripName = ["Trip to Thailand", "Next Trip"]
 //	let daysLeft = ["76", "30"]
 	
@@ -28,6 +28,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		images = arrayOfImages
+		
 		navigationController?.navigationBar.tintColor = UIColor.white
 		
 		let refreshImages = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshBackgrounds))
@@ -83,11 +86,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func refreshBackgrounds() {
+		images = arrayOfImages
 		tableView.reloadData()
 	}
 	
 	func openImageCatalog() {
-		
+		print("Number of images\(images.count) / \(arrayOfImages.count)")
 	}
 	
 	func addTrip() {
@@ -95,6 +99,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 
 	@IBAction func refreshView(_ sender: UIBarButtonItem) {
+		
 		tableView.reloadData()
 	}
 	
@@ -112,6 +117,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		let maxIndex = images.count
 		let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
 		let imageName = images[Int(randomImageIndex)]
+		images.remove(at: Int(randomImageIndex))
 		print(imageName)
 		cell.bgImage.image = UIImage(named: imageName)
 		cell.bgImage.contentMode = .scaleToFill
