@@ -178,6 +178,8 @@
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
+                        <outlet property="acceptTripButton" destination="oIf-f5-KE7" id="bIv-ra-5hf"/>
+                        <outlet property="cancelTripButton" destination="RWm-Rr-iRP" id="7bk-0W-hCh"/>
                         <outlet property="tripDateTextField" destination="s2X-jL-85l" id="vsS-ld-WwQ"/>
                         <outlet property="tripNameTextField" destination="Xyj-Kr-0CP" id="p8q-Tt-7GA"/>
                     </connections>

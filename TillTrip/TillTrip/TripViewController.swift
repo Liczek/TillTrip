@@ -19,6 +19,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	@IBOutlet weak var tripNameTextField: UITextField!
 	@IBOutlet weak var tripDateTextField: UITextField!
+	@IBOutlet weak var acceptTripButton: UIButton!
+	@IBOutlet weak var cancelTripButton: UIButton!
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -32,11 +34,33 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		view.backgroundColor = UIColor.black
 		
+		tripNameTextField.font = UIFont.preferredFont(forTextStyle: .headline)
+		tripNameTextField.autocapitalizationType = .sentences
+		tripNameTextField.clearButtonMode = .whileEditing
+		tripNameTextField.placeholder = "Set trip name"
+		tripDateTextField.font = UIFont.preferredFont(forTextStyle: .headline)
+		
+		acceptTripButton.clipsToBounds = true
+		acceptTripButton.layer.cornerRadius = 10
+		acceptTripButton.backgroundColor = UIColor.darkGray
+		acceptTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.75), for: .normal)
+		acceptTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+		acceptTripButton.translatesAutoresizingMaskIntoConstraints = true
+		
+		cancelTripButton.clipsToBounds = true
+		cancelTripButton.layer.cornerRadius = 10
+		cancelTripButton.backgroundColor = UIColor.darkGray
+		cancelTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.30), for: .normal)
+		cancelTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+		cancelTripButton.translatesAutoresizingMaskIntoConstraints = true
+		
 		tripNameTextField.delegate = self
 		
 		print("view did load searchKey name in Trip: \(searchKey)")
 		
 		if searchKey != nil {
+			
+			acceptTripButton.setTitle("Accept Changes", for: .normal)
 			
 			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 			managedContext = appDelegate.persistentContainer.viewContext
@@ -59,6 +83,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			
 		} else {
 			
+			acceptTripButton.setTitle("Add Trip", for: .normal)
 			
 		}
 		createDatePicker()
