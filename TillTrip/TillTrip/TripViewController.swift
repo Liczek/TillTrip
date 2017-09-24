@@ -30,7 +30,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		
+		view.backgroundColor = UIColor.black
 		
 		tripNameTextField.delegate = self
 		

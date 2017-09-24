@@ -100,23 +100,12 @@
                             <constraint firstItem="yXu-p7-g1q" firstAttribute="top" secondItem="eVc-qO-M0Q" secondAttribute="bottom" constant="8" id="gOF-Hd-jE6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ijo-iC-DFA">
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="23c-5e-Y8a">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="refreshView:" destination="OdR-pK-iRb" id="x6Q-Ff-b3C"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hxo-CC-Xhz">
-                            <connections>
-                                <segue destination="0AT-40-9AY" kind="show" identifier="AddTrip" id="k80-zv-EuQ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="ijo-iC-DFA"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
                         <outlet property="tableView" destination="eVc-qO-M0Q" id="NCK-gO-xbB"/>
                         <segue destination="0AT-40-9AY" kind="show" identifier="EditTripDetails" id="1ON-JX-nzx"/>
+                        <segue destination="0AT-40-9AY" kind="show" identifier="AddTrip" id="UmD-AS-5rm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytv-Qf-tdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -153,14 +142,14 @@
                                 <rect key="frame" x="122" y="92" width="77" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trip date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVs-hx-llv">
                                 <rect key="frame" x="126" y="194" width="68" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIf-f5-KE7">
@@ -186,7 +175,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
                         <outlet property="tripDateTextField" destination="s2X-jL-85l" id="vsS-ld-WwQ"/>
@@ -219,6 +208,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="1ON-JX-nzx"/>
+        <segue reference="UmD-AS-5rm"/>
     </inferredMetricsTieBreakers>
 </document>

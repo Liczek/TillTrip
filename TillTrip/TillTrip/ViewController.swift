@@ -27,11 +27,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		
 		navigationController?.navigationBar.tintColor = UIColor.white
+		
 		let refreshImages = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshBackgrounds))
-		let imagesCatalog = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(openImageCatalog))
+		let imagesCatalog = UIBarButtonItem(barButtonSystemItem: .organize, target: self, action: #selector(openImageCatalog))
 		let addTripButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTrip))
+		
+		navigationItem.leftBarButtonItems = [refreshImages, imagesCatalog]
+		navigationItem.rightBarButtonItem = addTripButton
 		
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
@@ -87,7 +90,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func addTrip() {
-		performSegue(withIdentifier: "addTrip", sender: self)
+		performSegue(withIdentifier: "AddTrip", sender: self)
 	}
 
 	@IBAction func refreshView(_ sender: UIBarButtonItem) {
