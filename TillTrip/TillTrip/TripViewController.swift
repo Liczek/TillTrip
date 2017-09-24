@@ -30,6 +30,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		
+		
 		tripNameTextField.delegate = self
 		
 		print("view did load searchKey name in Trip: \(searchKey)")
@@ -126,6 +128,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	func createDatePicker() {
 		
 		datePicker.datePickerMode = .date
+		datePicker.backgroundColor = UIColor.black
+		datePicker.setValue(UIColor.white, forKey: "textColor")
 		
 		if pickedDate != nil {
 		datePicker.setDate(pickedDate, animated: true)
@@ -133,9 +137,13 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		let toolBar = UIToolbar()
 		toolBar.sizeToFit()
-		
+		toolBar.barStyle = .default
+		toolBar.barTintColor = UIColor.black
+		toolBar.tintColor = UIColor.white
 		let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneDatePicking))
-		toolBar.setItems([doneButton], animated: true)
+		let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelDatePicking))
+		let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
+		toolBar.setItems([cancelButton, flexibleSpace, doneButton], animated: true)
 		tripDateTextField.inputAccessoryView = toolBar
 		tripDateTextField.inputView = datePicker
 	}
@@ -149,6 +157,10 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		let reformatedDate = dateFormatter.string(from: pickedDate)
 		tripDateTextField.text = "\(reformatedDate)"
 		self.view.endEditing(true)
+	}
+	
+	func cancelDatePicking() {
+		tripDateTextField.resignFirstResponder()
 	}
 	
 	func dateConverterToString(from date: Date) -> String{

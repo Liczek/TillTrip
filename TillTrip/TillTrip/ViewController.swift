@@ -28,6 +28,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		navigationController?.navigationBar.tintColor = UIColor.white
+		let refreshImages = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshBackgrounds))
+		let imagesCatalog = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(openImageCatalog))
+		let addTripButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTrip))
+		
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
 		
@@ -50,7 +55,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		title = "TillTrip"
 		view.backgroundColor = UIColor.black
 		
-		refreshImage()
+		
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -73,8 +78,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		// Dispose of any resources that can be recreated.
 	}
 	
-	func refreshImage() {
+	func refreshBackgrounds() {
+		tableView.reloadData()
+	}
+	
+	func openImageCatalog() {
 		
+	}
+	
+	func addTrip() {
+		performSegue(withIdentifier: "addTrip", sender: self)
 	}
 
 	@IBAction func refreshView(_ sender: UIBarButtonItem) {
