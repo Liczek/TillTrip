@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA953C4C1F798C6B003260AA /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA953C4B1F798C6B003260AA /* ImagesViewController.swift */; };
 		DAEF32D51F6B0A880041315B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF32D41F6B0A880041315B /* AppDelegate.swift */; };
 		DAEF32D71F6B0A880041315B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF32D61F6B0A880041315B /* ViewController.swift */; };
 		DAEF32DA1F6B0A880041315B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAEF32D81F6B0A880041315B /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA953C4B1F798C6B003260AA /* ImagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		DAEF32D11F6B0A880041315B /* TillTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TillTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAEF32D41F6B0A880041315B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAEF32D61F6B0A880041315B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				DAEF32D41F6B0A880041315B /* AppDelegate.swift */,
 				DAEF32D61F6B0A880041315B /* ViewController.swift */,
 				DAEF32F71F719B540041315B /* TripViewController.swift */,
+				DA953C4B1F798C6B003260AA /* ImagesViewController.swift */,
 				DAEF32D81F6B0A880041315B /* Main.storyboard */,
 				DAEF32E91F6B18F40041315B /* Cell.swift */,
 				DAEF32DE1F6B0A880041315B /* Assets.xcassets */,
@@ -158,6 +161,7 @@
 			files = (
 				DAEF32F31F7056A30041315B /* Trip+CoreDataClass.swift in Sources */,
 				DAEF32F41F7056A30041315B /* Trip+CoreDataProperties.swift in Sources */,
+				DA953C4C1F798C6B003260AA /* ImagesViewController.swift in Sources */,
 				DAEF32F81F719B540041315B /* TripViewController.swift in Sources */,
 				DAEF32DD1F6B0A880041315B /* TillTrip.xcdatamodeld in Sources */,
 				DAEF32EA1F6B18F40041315B /* Cell.swift in Sources */,

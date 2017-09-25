@@ -39,8 +39,12 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		
 		
-		//imageView.layer.cornerRadius = 10
+		imageView.layer.cornerRadius = 10
+		if imageName == nil {
+			imageView.image = UIImage(named: "thai8")
+		} else {
 		imageView.image = UIImage(named: imageName)
+		}
 		imageView.clipsToBounds = true
 		imageView.contentMode = .scaleToFill
 		
@@ -250,6 +254,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		self.view.endEditing(true)
 		return false
 	}
+	
+	
 	
 	
 

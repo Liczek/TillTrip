@@ -106,11 +106,62 @@
                         <outlet property="tableView" destination="eVc-qO-M0Q" id="NCK-gO-xbB"/>
                         <segue destination="0AT-40-9AY" kind="show" identifier="EditTripDetails" id="1ON-JX-nzx"/>
                         <segue destination="0AT-40-9AY" kind="show" identifier="AddTrip" id="UmD-AS-5rm"/>
+                        <segue destination="Gla-5R-w23" kind="show" identifier="GoToImagesPicker" id="rZN-xp-yK5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytv-Qf-tdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1955.625" y="52.816901408450704"/>
+        </scene>
+        <!--Images View Controller-->
+        <scene sceneID="1mA-68-kAf">
+            <objects>
+                <viewController id="Gla-5R-w23" customClass="ImagesViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DiJ-FW-SZe"/>
+                        <viewControllerLayoutGuide type="bottom" id="bb8-VR-vWm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="n1j-2r-bDa">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dr2-dY-sBM">
+                                <rect key="frame" x="0.0" y="8" width="320" height="355"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageCell" id="IPS-Sg-zuj">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IPS-Sg-zuj" id="HVW-KM-u4R">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Gla-5R-w23" id="k35-0M-6GV"/>
+                                    <outlet property="delegate" destination="Gla-5R-w23" id="44k-PR-nbF"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9GN-8y-Eqa">
+                                <rect key="frame" x="38" y="412" width="245" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add New Images"/>
+                                <connections>
+                                    <action selector="addNewImage:" destination="Gla-5R-w23" eventType="touchUpInside" id="1fs-DX-Yep"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="dr2-dY-sBM" id="Nx0-Va-CmI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dq5-Ls-doY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1955.625" y="801.76056338028172"/>
         </scene>
         <!--Trip View Controller-->
         <scene sceneID="pGV-zg-g0U">

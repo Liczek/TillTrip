@@ -13,9 +13,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	var arrayOfImages = ["thai1", "thai2", "thai3", "thai4", "thai5", "thai6", "thai7", "thai8", "thai9", "thai10", "thai11", "thai12", "thai13"]
 	var images: [String]!
-//	let tripName = ["Trip to Thailand", "Next Trip"]
-//	let daysLeft = ["76", "30"]
-	
 	var trips = [Trip]()
 	var managedContext: NSManagedObjectContext!
 	var searchKeyOfSelectedTrip = String()
@@ -77,12 +74,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		} catch let error as NSError {
 			print("Could Not Reload View \(error), \(error.userInfo)")
 		}
-		//tableView.reloadData()
-	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
+		tableView.reloadData()
 	}
 	
 	func refreshBackgrounds() {
@@ -91,6 +83,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func openImageCatalog() {
+		performSegue(withIdentifier: "GoToImagesPicker", sender: self)
 		print("Number of images\(images.count) / \(arrayOfImages.count)")
 	}
 	
@@ -114,10 +107,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
 		
+		if images.count < trips.count {
+			images = arrayOfImages
+		}
 		let maxIndex = images.count
 		let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
 		let imageName = images[Int(randomImageIndex)]
 		images.remove(at: Int(randomImageIndex))
+		
 		print(imageName)
 		cell.bgImage.image = UIImage(named: imageName)
 		cell.bgImage.contentMode = .scaleToFill
