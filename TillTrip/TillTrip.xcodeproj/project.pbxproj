@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		DA953C4C1F798C6B003260AA /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA953C4B1F798C6B003260AA /* ImagesViewController.swift */; };
+		DA953C511F7AA801003260AA /* FullRes+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA953C4D1F7AA801003260AA /* FullRes+CoreDataClass.swift */; };
+		DA953C521F7AA801003260AA /* FullRes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA953C4E1F7AA801003260AA /* FullRes+CoreDataProperties.swift */; };
+		DA953C531F7AA801003260AA /* Thumbnail+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA953C4F1F7AA801003260AA /* Thumbnail+CoreDataClass.swift */; };
+		DA953C541F7AA801003260AA /* Thumbnail+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA953C501F7AA801003260AA /* Thumbnail+CoreDataProperties.swift */; };
 		DAEF32D51F6B0A880041315B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF32D41F6B0A880041315B /* AppDelegate.swift */; };
 		DAEF32D71F6B0A880041315B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF32D61F6B0A880041315B /* ViewController.swift */; };
 		DAEF32DA1F6B0A880041315B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAEF32D81F6B0A880041315B /* Main.storyboard */; };
@@ -23,6 +27,10 @@
 
 /* Begin PBXFileReference section */
 		DA953C4B1F798C6B003260AA /* ImagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
+		DA953C4D1F7AA801003260AA /* FullRes+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FullRes+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA953C4E1F7AA801003260AA /* FullRes+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FullRes+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		DA953C4F1F7AA801003260AA /* Thumbnail+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Thumbnail+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA953C501F7AA801003260AA /* Thumbnail+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Thumbnail+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DAEF32D11F6B0A880041315B /* TillTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TillTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAEF32D41F6B0A880041315B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAEF32D61F6B0A880041315B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +57,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA953C551F7AA83A003260AA /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				DA953C4D1F7AA801003260AA /* FullRes+CoreDataClass.swift */,
+				DA953C4E1F7AA801003260AA /* FullRes+CoreDataProperties.swift */,
+				DA953C4F1F7AA801003260AA /* Thumbnail+CoreDataClass.swift */,
+				DA953C501F7AA801003260AA /* Thumbnail+CoreDataProperties.swift */,
+				DAEF32F11F7056A30041315B /* Trip+CoreDataClass.swift */,
+				DAEF32F21F7056A30041315B /* Trip+CoreDataProperties.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
 		DAEF32C81F6B0A880041315B = {
 			isa = PBXGroup;
 			children = (
@@ -68,8 +89,7 @@
 		DAEF32D31F6B0A880041315B /* TillTrip */ = {
 			isa = PBXGroup;
 			children = (
-				DAEF32F11F7056A30041315B /* Trip+CoreDataClass.swift */,
-				DAEF32F21F7056A30041315B /* Trip+CoreDataProperties.swift */,
+				DA953C551F7AA83A003260AA /* CoreData */,
 				DAEF32D41F6B0A880041315B /* AppDelegate.swift */,
 				DAEF32D61F6B0A880041315B /* ViewController.swift */,
 				DAEF32F71F719B540041315B /* TripViewController.swift */,
@@ -159,13 +179,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA953C531F7AA801003260AA /* Thumbnail+CoreDataClass.swift in Sources */,
 				DAEF32F31F7056A30041315B /* Trip+CoreDataClass.swift in Sources */,
+				DA953C511F7AA801003260AA /* FullRes+CoreDataClass.swift in Sources */,
 				DAEF32F41F7056A30041315B /* Trip+CoreDataProperties.swift in Sources */,
 				DA953C4C1F798C6B003260AA /* ImagesViewController.swift in Sources */,
 				DAEF32F81F719B540041315B /* TripViewController.swift in Sources */,
 				DAEF32DD1F6B0A880041315B /* TillTrip.xcdatamodeld in Sources */,
 				DAEF32EA1F6B18F40041315B /* Cell.swift in Sources */,
+				DA953C541F7AA801003260AA /* Thumbnail+CoreDataProperties.swift in Sources */,
 				DAEF32D71F6B0A880041315B /* ViewController.swift in Sources */,
+				DA953C521F7AA801003260AA /* FullRes+CoreDataProperties.swift in Sources */,
 				DAEF32D51F6B0A880041315B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
