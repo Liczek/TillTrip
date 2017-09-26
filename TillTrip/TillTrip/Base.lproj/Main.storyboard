@@ -128,9 +128,10 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9GN-8y-Eqa">
                                 <rect key="frame" x="38" y="412" width="245" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add New Images"/>
+                                <state key="normal" title="Capture Image"/>
                                 <connections>
                                     <action selector="addNewImage:" destination="Gla-5R-w23" eventType="touchUpInside" id="1fs-DX-Yep"/>
+                                    <action selector="captureImage:" destination="Gla-5R-w23" eventType="touchUpInside" id="feM-gT-5Ug"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Au-gf-FVH">
@@ -138,9 +139,12 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UHV-i8-XBl">
-                                <rect key="frame" x="137" y="466" width="46" height="30"/>
+                                <rect key="frame" x="143" y="466" width="34" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Load"/>
+                                <connections>
+                                    <action selector="loadImage:" destination="Gla-5R-w23" eventType="touchUpInside" id="aRC-ZA-Zai"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
