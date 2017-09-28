@@ -26,6 +26,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		tableView.register(TripMenuCell.self, forCellReuseIdentifier: "TripMenuCell")
+		
+		tableView.delegate = self
+		tableView.dataSource = self
+		
 		images = arrayOfImages
 		
 		navigationController?.navigationBar.tintColor = UIColor.white
@@ -96,6 +101,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tableView.reloadData()
 	}
 	
+	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		let tableViewHeight = tableView.bounds.height
+		return tableViewHeight * 0.333333
+	}
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return trips.count
 	}
@@ -105,7 +115,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		let trip = trips[indexPath.row]
 
-		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! Cell
+		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		
 		if images.count < trips.count {
 			images = arrayOfImages
@@ -119,20 +129,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		cell.bgImage.image = UIImage(named: imageName)
 		cell.bgImage.contentMode = .scaleToFill
 		
-		cell.tripNameLabel.text = trip.name
-		cell.tripNameLabel.textColor = UIColor.white
+		cell.destinationName.text = trip.name
+		cell.destinationName.textColor = UIColor.white
 		cell.searchKey = trip.searchKey
 		cell.bgImageName = imageName
 		let daysTillTrip = daysBetweenDates(firstDate: Date(), secondDate: trip.date! as Date)
 		
-		cell.daysLeftLabel.text = "\(daysTillTrip)"
+		cell.dayLeftNumber.text = "\(daysTillTrip)"
 		
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
-		let cell = tableView.cellForRow(at: indexPath) as! Cell
+		let cell = tableView.cellForRow(at: indexPath) as! TripMenuCell
 		
 		self.searchKeyOfSelectedTrip = cell.searchKey
 		self.selectedTripImageName = cell.bgImageName

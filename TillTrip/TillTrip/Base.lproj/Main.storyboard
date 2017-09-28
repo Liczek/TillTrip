@@ -25,67 +25,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eVc-qO-M0Q">
                                 <rect key="frame" x="16" y="8" width="288" height="488"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="150" id="ieW-y7-5lv" customClass="Cell" customModule="TillTrip" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="288" height="150"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ieW-y7-5lv" id="2Lt-bW-BWI">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="150"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M96-v7-BWV">
-                                                    <rect key="frame" x="3" y="3" width="282" height="143.5"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHz-ee-HnI">
-                                                    <rect key="frame" x="8" y="33" width="272" height="25"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="days left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MqJ-6J-nMc">
-                                                    <rect key="frame" x="195" y="19" width="78" height="52"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trip name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kw9-nB-2nc">
-                                                    <rect key="frame" x="16" y="19" width="151" height="52"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Destination" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WaG-DI-4Dq">
-                                                    <rect key="frame" x="16" y="8" width="87" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Days left" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyn-VN-9mL">
-                                                    <rect key="frame" x="175" y="8" width="67" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="M96-v7-BWV" secondAttribute="trailing" constant="3" id="6Z9-i8-fRQ"/>
-                                                <constraint firstItem="M96-v7-BWV" firstAttribute="top" secondItem="2Lt-bW-BWI" secondAttribute="top" constant="3" id="X9N-dY-QHR"/>
-                                                <constraint firstAttribute="bottom" secondItem="M96-v7-BWV" secondAttribute="bottom" constant="3" id="anb-J0-tip"/>
-                                                <constraint firstItem="M96-v7-BWV" firstAttribute="leading" secondItem="2Lt-bW-BWI" secondAttribute="leading" constant="3" id="plK-or-B7N"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="bgImage" destination="M96-v7-BWV" id="xJi-bx-wQo"/>
-                                            <outlet property="daysLeftLabel" destination="MqJ-6J-nMc" id="lw3-5a-S80"/>
-                                            <outlet property="ddayLabel" destination="gyn-VN-9mL" id="a8M-4g-y5T"/>
-                                            <outlet property="destinationLabel" destination="WaG-DI-4Dq" id="PBk-zz-n2W"/>
-                                            <outlet property="labelsBG" destination="mHz-ee-HnI" id="OgF-na-XpQ"/>
-                                            <outlet property="tripNameLabel" destination="kw9-nB-2nc" id="kH6-8z-3SE"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="OdR-pK-iRb" id="tkQ-aS-ZPb"/>
                                     <outlet property="delegate" destination="OdR-pK-iRb" id="oFa-fv-CmV"/>
@@ -146,6 +85,13 @@
                                     <action selector="loadImage:" destination="Gla-5R-w23" eventType="touchUpInside" id="aRC-ZA-Zai"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ei1-xX-I6v">
+                                <rect key="frame" x="8" y="463" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>

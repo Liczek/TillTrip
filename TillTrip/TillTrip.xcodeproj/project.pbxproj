@@ -13,6 +13,7 @@
 		DA953C531F7AA801003260AA /* Thumbnail+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA953C4F1F7AA801003260AA /* Thumbnail+CoreDataClass.swift */; };
 		DA953C541F7AA801003260AA /* Thumbnail+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA953C501F7AA801003260AA /* Thumbnail+CoreDataProperties.swift */; };
 		DAA6E6441F7D6B92002E68FF /* TripMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA6E6431F7D6B92002E68FF /* TripMenuCell.swift */; };
+		DAA6E6461F7D7AFB002E68FF /* UILabelWithInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA6E6451F7D7AFB002E68FF /* UILabelWithInsets.swift */; };
 		DAEF32D51F6B0A880041315B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF32D41F6B0A880041315B /* AppDelegate.swift */; };
 		DAEF32D71F6B0A880041315B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF32D61F6B0A880041315B /* ViewController.swift */; };
 		DAEF32DA1F6B0A880041315B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAEF32D81F6B0A880041315B /* Main.storyboard */; };
@@ -33,6 +34,7 @@
 		DA953C4F1F7AA801003260AA /* Thumbnail+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Thumbnail+CoreDataClass.swift"; sourceTree = "<group>"; };
 		DA953C501F7AA801003260AA /* Thumbnail+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Thumbnail+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		DAA6E6431F7D6B92002E68FF /* TripMenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripMenuCell.swift; sourceTree = "<group>"; };
+		DAA6E6451F7D7AFB002E68FF /* UILabelWithInsets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelWithInsets.swift; sourceTree = "<group>"; };
 		DAEF32D11F6B0A880041315B /* TillTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TillTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAEF32D41F6B0A880041315B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAEF32D61F6B0A880041315B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				DAEF32D81F6B0A880041315B /* Main.storyboard */,
 				DAEF32E91F6B18F40041315B /* Cell.swift */,
 				DAA6E6431F7D6B92002E68FF /* TripMenuCell.swift */,
+				DAA6E6451F7D7AFB002E68FF /* UILabelWithInsets.swift */,
 				DAEF32DE1F6B0A880041315B /* Assets.xcassets */,
 				DAEF32E01F6B0A880041315B /* LaunchScreen.storyboard */,
 				DAEF32E31F6B0A880041315B /* Info.plist */,
@@ -188,6 +191,7 @@
 				DAEF32F41F7056A30041315B /* Trip+CoreDataProperties.swift in Sources */,
 				DA953C4C1F798C6B003260AA /* ImagesViewController.swift in Sources */,
 				DAEF32F81F719B540041315B /* TripViewController.swift in Sources */,
+				DAA6E6461F7D7AFB002E68FF /* UILabelWithInsets.swift in Sources */,
 				DAEF32DD1F6B0A880041315B /* TillTrip.xcdatamodeld in Sources */,
 				DAEF32EA1F6B18F40041315B /* Cell.swift in Sources */,
 				DAA6E6441F7D6B92002E68FF /* TripMenuCell.swift in Sources */,
