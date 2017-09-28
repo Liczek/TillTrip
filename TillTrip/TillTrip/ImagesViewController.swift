@@ -6,7 +6,7 @@
 //  Copyright © 2017 Paweł Liczmański. All rights reserved.
 //
 
-import UIKit
+/*import UIKit
 import CoreData
 
 class ImagesViewController: UIViewController {
@@ -204,4 +204,4 @@ extension UIImage {
 		
 		return newImage
 	}
-}
+} */
