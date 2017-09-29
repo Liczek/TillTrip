@@ -11,7 +11,7 @@ import UIKit
 class UILabelWithInsets: UILabel {
 
 	let horizontalInset: CGFloat = 8
-	let verticalInset: CGFloat = 3
+	let verticalInset: CGFloat = 4
 	
 	override func drawText(in rect: CGRect) {
 		let insetValue = UIEdgeInsetsMake(verticalInset, horizontalInset, verticalInset, horizontalInset)

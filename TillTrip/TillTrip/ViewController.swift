@@ -25,6 +25,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		print("status bar: \(UIApplication.shared.statusBarFrame.height)")
+		print("navigation bar: \(String(describing: self.navigationController?.navigationBar.frame.height))")
+		print("tool bar: \(String(describing: self.navigationController?.toolbar.frame.height))")
+		
+		
+		
 		view.addSubview(tableView)
 		configureUniversalConstraints()
 		tableView.register(TripMenuCell.self, forCellReuseIdentifier: "TripMenuCell")
@@ -90,7 +96,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		universalConstraints.append(tableView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor))
 		universalConstraints.append(tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5))
 		universalConstraints.append(tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5))
-		universalConstraints.append(tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3))
+		universalConstraints.append(tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -3))
 		
 		NSLayoutConstraint.activate(universalConstraints)
 		
@@ -117,14 +123,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		let tableViewHeight = tableView.frame.height
+		var tableViewHeight = CGFloat()
+		let statusBar = UIApplication.shared.statusBarFrame.height
+		print("status bar: \(UIApplication.shared.statusBarFrame.height)")
+		if statusBar == 0.0 {
+			tableViewHeight = tableView.frame.size.height - 20
+		} else {
+			tableViewHeight = tableView.frame.size.height
+		}
 		var rowHeight = CGFloat()
 		if traitCollection.verticalSizeClass == .regular {
-			rowHeight = tableViewHeight * 0.333333
-			
+			rowHeight = tableViewHeight / 3
+			print("pionowo \(tableViewHeight)")
 		} else if traitCollection.verticalSizeClass == .compact {
-			rowHeight = tableViewHeight * 0.5
-			
+			rowHeight = (tableViewHeight + 20)  / 2
+			print("poziomo \(tableViewHeight)")
 		}
 		return rowHeight
 	}
@@ -163,9 +176,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		return cell
 	}
-	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-		view.reloadInputViews()
-	}
+	
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
