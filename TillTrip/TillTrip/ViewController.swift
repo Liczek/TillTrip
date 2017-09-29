@@ -17,13 +17,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	var managedContext: NSManagedObjectContext!
 	var searchKeyOfSelectedTrip = String()
 	var selectedTripImageName = String()
+	var universalConstraints = [NSLayoutConstraint]()
 
 	
-	@IBOutlet weak var tableView: UITableView!
+	let tableView = UITableView()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		view.addSubview(tableView)
+		configureUniversalConstraints()
 		tableView.register(TripMenuCell.self, forCellReuseIdentifier: "TripMenuCell")
 		
 		tableView.delegate = self
@@ -80,6 +83,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tableView.reloadData()
 	}
 	
+	func configureUniversalConstraints() {
+		
+		tableView.translatesAutoresizingMaskIntoConstraints = false
+		
+		universalConstraints.append(tableView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor))
+		universalConstraints.append(tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5))
+		universalConstraints.append(tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5))
+		universalConstraints.append(tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -3))
+		
+		NSLayoutConstraint.activate(universalConstraints)
+		
+	}
+	
 	func refreshBackgrounds() {
 		images = arrayOfImages
 		tableView.reloadData()
@@ -98,12 +114,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tableView.reloadData()
 	}
 	
-	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-		tableView.setNeedsLayout()
-	}
+	
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-		let tableViewHeight = tableView.bounds.height
+		let tableViewHeight = tableView.frame.height
 		var rowHeight = CGFloat()
 		if traitCollection.verticalSizeClass == .regular {
 			rowHeight = tableViewHeight * 0.333333
@@ -114,6 +128,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		}
 		return rowHeight
 	}
+	
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return trips.count
@@ -147,6 +162,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		cell.dayLeftNumber.text = "\(daysTillTrip)"
 		
 		return cell
+	}
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		view.reloadInputViews()
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -256,6 +274,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		}
 		
 		
+	}
+	
+	override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+		coordinator.animate(alongsideTransition: { (UIViewControllerTransitionCoordinatorContext) in
+			self.tableView.setContentOffset(CGPoint.zero, animated: true)
+		})
+		super.viewWillTransition(to: size, with: coordinator)
 	}
 	
 	

@@ -21,28 +21,11 @@
                     <view key="view" contentMode="scaleToFill" id="oTN-Pa-0J2">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eVc-qO-M0Q">
-                                <rect key="frame" x="16" y="8" width="288" height="488"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="OdR-pK-iRb" id="tkQ-aS-ZPb"/>
-                                    <outlet property="delegate" destination="OdR-pK-iRb" id="oFa-fv-CmV"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="eVc-qO-M0Q" firstAttribute="top" secondItem="z20-bQ-ggN" secondAttribute="bottom" constant="8" id="2FM-7r-59u"/>
-                            <constraint firstItem="eVc-qO-M0Q" firstAttribute="trailing" secondItem="oTN-Pa-0J2" secondAttribute="trailingMargin" id="KOG-8c-2fo"/>
-                            <constraint firstItem="eVc-qO-M0Q" firstAttribute="leading" secondItem="oTN-Pa-0J2" secondAttribute="leadingMargin" id="LIs-j9-zXt"/>
-                            <constraint firstItem="yXu-p7-g1q" firstAttribute="top" secondItem="eVc-qO-M0Q" secondAttribute="bottom" constant="8" id="gOF-Hd-jE6"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ijo-iC-DFA"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <connections>
-                        <outlet property="tableView" destination="eVc-qO-M0Q" id="NCK-gO-xbB"/>
                         <segue destination="0AT-40-9AY" kind="show" identifier="EditTripDetails" id="1ON-JX-nzx"/>
                         <segue destination="0AT-40-9AY" kind="show" identifier="AddTrip" id="UmD-AS-5rm"/>
                         <segue destination="Gla-5R-w23" kind="show" identifier="GoToImagesPicker" id="rZN-xp-yK5"/>
