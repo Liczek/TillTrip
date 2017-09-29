@@ -44,6 +44,16 @@ class TripMenuCell: UITableViewCell {
 		self.backgroundColor = UIColor.clear
 	}
 	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+		
+		if traitCollection.horizontalSizeClass == .compact {
+			
+		} else if traitCollection.horizontalSizeClass == .regular {
+			
+		}
+	}
+	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
@@ -91,8 +101,20 @@ class TripMenuCell: UITableViewCell {
 		universalConstraints.append(dayLeftNumber.topAnchor.constraint(equalTo: destinationName.topAnchor))
 		universalConstraints.append(dayLeftNumber.centerXAnchor.constraint(equalTo: dayLeft.centerXAnchor))
 		
-		
 		NSLayoutConstraint.activate(universalConstraints)
+	}
+	
+	func configureCopactConstraints() {
+		
+	
+		
+	}
+	
+	func configureRegularConstraints() {
+		
+		
+		
+		
 	}
 	
 	func configureLabels() {

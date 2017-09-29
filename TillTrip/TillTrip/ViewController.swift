@@ -21,8 +21,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	@IBOutlet weak var tableView: UITableView!
 	
-	
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -97,13 +95,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 
 	@IBAction func refreshView(_ sender: UIBarButtonItem) {
-		
 		tableView.reloadData()
+	}
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		tableView.setNeedsLayout()
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		let tableViewHeight = tableView.bounds.height
-		return tableViewHeight * 0.333333
+		var rowHeight = CGFloat()
+		if traitCollection.verticalSizeClass == .regular {
+			rowHeight = tableViewHeight * 0.333333
+			
+		} else if traitCollection.verticalSizeClass == .compact {
+			rowHeight = tableViewHeight * 0.5
+			
+		}
+		return rowHeight
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
