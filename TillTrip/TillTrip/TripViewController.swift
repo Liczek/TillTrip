@@ -18,8 +18,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	var trips = [Trip]()
 	var imageName: String!
 	
-	let verticalGap: CGFloat = 5
-	let horizontalGap: CGFloat = 15
+	var verticalGap: CGFloat = 5
+	var horizontalGap: CGFloat = 15
 	
 	
 	var tripNameLabel = UILabelWithInsets()
@@ -51,11 +51,11 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		view.addSubview(imageView)
 		view.addSubview(tripNameLabel)
-//		view.addSubview(tripNameTextField)
-//		view.addSubview(tripDateLabel)
-//		view.addSubview(tripDateTextField)
-//		view.addSubview(acceptTripButton)
-//		view.addSubview(cancelTripButton)
+		view.addSubview(tripNameTextField)
+		view.addSubview(tripDateLabel)
+		view.addSubview(tripDateTextField)
+		view.addSubview(acceptTripButton)
+		view.addSubview(cancelTripButton)
 		
 		configureUniversalConstraints()
 		
@@ -202,31 +202,28 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		universalCoinstrains.append(imageView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: verticalGap))
 		universalCoinstrains.append(imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
 		universalCoinstrains.append(imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
-//		universalCoinstrains.append(imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 		
 		//tripName Label
 		universalCoinstrains.append(tripNameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: verticalGap))
 		universalCoinstrains.append(tripNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 
-//		//tripName textField
-//		universalCoinstrains.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap * 2))
-//		universalCoinstrains.append(tripNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor))
-//		
-//		//tripDate Label
-//		universalCoinstrains.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 2))
-//		universalCoinstrains.append(tripDateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor))
-//		
-//		//tripDate textField
-//		universalCoinstrains.append(tripDateTextField.topAnchor.constraint(equalTo: tripDateLabel.bottomAnchor, constant: verticalGap))
-//		universalCoinstrains.append(tripDateTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor))
-//		
-//		//AcceptButton
-//		universalCoinstrains.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap))
-//		universalCoinstrains.append(acceptTripButton.centerXAnchor.constraint(equalTo: view.centerXAnchor))
-//		
-//		//CancelButton
-//		universalCoinstrains.append(cancelTripButton.topAnchor.constraint(equalTo: acceptTripButton.topAnchor))
-//		universalCoinstrains.append(cancelTripButton.trailingAnchor.constraint(equalTo: acceptTripButton.leadingAnchor , constant: -horizontalGap))
+		//tripName textField
+		universalCoinstrains.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap))
+		universalCoinstrains.append(tripNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+		
+		//tripDate Label
+		universalCoinstrains.append(tripDateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+		
+		//tripDate textField
+		universalCoinstrains.append(tripDateTextField.topAnchor.constraint(equalTo: tripDateLabel.bottomAnchor, constant: verticalGap))
+		universalCoinstrains.append(tripDateTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+
+		//AcceptButton
+		universalCoinstrains.append(acceptTripButton.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+		
+		//CancelButton
+		universalCoinstrains.append(cancelTripButton.topAnchor.constraint(equalTo: acceptTripButton.topAnchor))
+		universalCoinstrains.append(cancelTripButton.trailingAnchor.constraint(equalTo: acceptTripButton.leadingAnchor , constant: -horizontalGap))
 		
 		NSLayoutConstraint.activate(universalCoinstrains)
 	}
@@ -238,10 +235,12 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		viewHeight = view.frame.height
 		print("compact: \(viewHeight)")
 		compactVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 5 ))
-//		compactVerticalConstraints.append(tripNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
-//		compactVerticalConstraints.append(tripNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
-//		compactVerticalConstraints.append(tripDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap * 3))
-//		compactVerticalConstraints.append(tripDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap * 3))
+		compactVerticalConstraints.append(tripNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
+		compactVerticalConstraints.append(tripNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
+		compactVerticalConstraints.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 5))
+		compactVerticalConstraints.append(tripDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap * 3))
+		compactVerticalConstraints.append(tripDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap * 3))
+		compactVerticalConstraints.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap * 5))
 		
 	}
 	
@@ -249,9 +248,13 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		viewHeight = view.frame.height
 		print("regular: \(viewHeight)")
 		regularVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 3 ))
-//		regularVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66))
-//		regularVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5))
+		regularVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66))
+		regularVerticalConstraints.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 3))
+		regularVerticalConstraints.append(tripDateTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5))
+		regularVerticalConstraints.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap * 3))
 	}
+	
+	func configure
 	
 	
 	
