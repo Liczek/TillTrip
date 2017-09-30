@@ -29,6 +29,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	var acceptTripButton = UIButton()
 	var cancelTripButton = UIButton()
 	var imageView = UIImageView()
+	var viewHeight = CGFloat()
 	
 	var universalCoinstrains = [NSLayoutConstraint]()
 	var compactVerticalConstraints = [NSLayoutConstraint]()
@@ -50,13 +51,23 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		view.addSubview(imageView)
 		view.addSubview(tripNameLabel)
-		view.addSubview(tripNameTextField)
-		view.addSubview(tripDateLabel)
-		view.addSubview(tripDateTextField)
-		//view.addSubview(acceptTripButton)
-		//view.addSubview(cancelTripButton)
+//		view.addSubview(tripNameTextField)
+//		view.addSubview(tripDateLabel)
+//		view.addSubview(tripDateTextField)
+//		view.addSubview(acceptTripButton)
+//		view.addSubview(cancelTripButton)
+		
+		configureUniversalConstraints()
 		
 		
+		if traitCollection.verticalSizeClass == .regular {
+			configureCopactConstraints()
+			NSLayoutConstraint.activate(compactVerticalConstraints)
+		} else if traitCollection.verticalSizeClass == .compact {
+			configureRegularConstraints()
+
+			NSLayoutConstraint.activate(regularVerticalConstraints)
+		}
 		
 		imageView.layer.cornerRadius = 10
 		if imageName == nil {
@@ -105,11 +116,24 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		createDatePicker()
 		
-		configureUniversalConstraints()
-		configureCopactConstraints()
+		
+		
+		
 
 		
     }
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		if traitCollection.verticalSizeClass == .regular {
+			configureCopactConstraints()
+			NSLayoutConstraint.deactivate(regularVerticalConstraints)
+			NSLayoutConstraint.activate(compactVerticalConstraints)
+		} else if traitCollection.verticalSizeClass == .compact {
+			configureRegularConstraints()
+			NSLayoutConstraint.deactivate(compactVerticalConstraints)
+			NSLayoutConstraint.activate(regularVerticalConstraints)
+		}
+	}
 	
 	func configureItems() {
 		
@@ -154,7 +178,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		acceptTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.75), for: .normal)
 		acceptTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
 		
-		
+		cancelTripButton.setTitle("Cancel", for: .normal)
 		cancelTripButton.clipsToBounds = true
 		cancelTripButton.layer.cornerRadius = 10
 		cancelTripButton.backgroundColor = UIColor.darkGray
@@ -171,51 +195,65 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		tripNameTextField.translatesAutoresizingMaskIntoConstraints = false
 		tripDateLabel.translatesAutoresizingMaskIntoConstraints = false
 		tripDateTextField.translatesAutoresizingMaskIntoConstraints = false
+		acceptTripButton.translatesAutoresizingMaskIntoConstraints = false
+		cancelTripButton.translatesAutoresizingMaskIntoConstraints = false
 		
 		//imageView
 		universalCoinstrains.append(imageView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: verticalGap))
 		universalCoinstrains.append(imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
 		universalCoinstrains.append(imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
+//		universalCoinstrains.append(imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 		
 		//tripName Label
 		universalCoinstrains.append(tripNameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: verticalGap))
-		universalCoinstrains.append(tripNameLabel.centerXAnchor.constraint(equalTo: imageView.centerXAnchor))
+		universalCoinstrains.append(tripNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 
-		//tripName textField
-		universalCoinstrains.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap * 2))
-		universalCoinstrains.append(tripNameTextField.centerXAnchor.constraint(equalTo: tripNameLabel.centerXAnchor))
-		
-		//tripDate Label
-		universalCoinstrains.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 2))
-		universalCoinstrains.append(tripDateLabel.centerXAnchor.constraint(equalTo: tripNameTextField.centerXAnchor))
-		
-		//tripDate textField
-		universalCoinstrains.append(tripDateTextField.topAnchor.constraint(equalTo: tripDateLabel.bottomAnchor, constant: verticalGap))
-		universalCoinstrains.append(tripDateTextField.centerXAnchor.constraint(equalTo: tripDateLabel.centerXAnchor))
+//		//tripName textField
+//		universalCoinstrains.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap * 2))
+//		universalCoinstrains.append(tripNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+//		
+//		//tripDate Label
+//		universalCoinstrains.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 2))
+//		universalCoinstrains.append(tripDateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+//		
+//		//tripDate textField
+//		universalCoinstrains.append(tripDateTextField.topAnchor.constraint(equalTo: tripDateLabel.bottomAnchor, constant: verticalGap))
+//		universalCoinstrains.append(tripDateTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+//		
+//		//AcceptButton
+//		universalCoinstrains.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap))
+//		universalCoinstrains.append(acceptTripButton.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+//		
+//		//CancelButton
+//		universalCoinstrains.append(cancelTripButton.topAnchor.constraint(equalTo: acceptTripButton.topAnchor))
+//		universalCoinstrains.append(cancelTripButton.trailingAnchor.constraint(equalTo: acceptTripButton.leadingAnchor , constant: -horizontalGap))
 		
 		NSLayoutConstraint.activate(universalCoinstrains)
 	}
 	
 	func configureCopactConstraints() {
 		
-		imageView.translatesAutoresizingMaskIntoConstraints = false
-		tripNameTextField.translatesAutoresizingMaskIntoConstraints = false
 		
-		let viewHeight = view.frame.size.height
-		compactVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: (viewHeight / 5) ))
-		compactVerticalConstraints.append(tripNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
-		compactVerticalConstraints.append(tripNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
-		compactVerticalConstraints.append(tripDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap * 3))
-		compactVerticalConstraints.append(tripDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap * 3))
-		NSLayoutConstraint.activate(compactVerticalConstraints)
+		
+		viewHeight = view.frame.height
+		print("compact: \(viewHeight)")
+		compactVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 5 ))
+//		compactVerticalConstraints.append(tripNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
+//		compactVerticalConstraints.append(tripNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
+//		compactVerticalConstraints.append(tripDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap * 3))
+//		compactVerticalConstraints.append(tripDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap * 3))
 		
 	}
 	
 	func configureRegularConstraints() {
-		let viewHeight = view.frame.size.height
-		regularVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: (viewHeight / 3) ))
-		regularVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66))
+		viewHeight = view.frame.height
+		print("regular: \(viewHeight)")
+		regularVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 3 ))
+//		regularVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66))
+//		regularVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5))
 	}
+	
+	
 	
 	override func viewDidLayoutSubviews() {
 		let topGradient: CAGradientLayer = CAGradientLayer()
