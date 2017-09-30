@@ -255,7 +255,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-		let cell = tableView.cellForRow(at: indexPath) as! Cell
+		let cell = tableView.cellForRow(at: indexPath) as! TripMenuCell
 		self.searchKeyOfSelectedTrip = cell.searchKey
 		let appDelegate = UIApplication.shared.delegate as? AppDelegate
 		managedContext = appDelegate?.persistentContainer.viewContext

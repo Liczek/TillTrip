@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -97,94 +96,8 @@
                     <view key="view" contentMode="scaleToFill" id="lP2-eN-kc3">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tap to set trip destination" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xyj-Kr-0CP">
-                                <rect key="frame" x="24" y="213" width="272" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tap to set trip date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s2X-jL-85l">
-                                <rect key="frame" x="48" y="288" width="224" height="30"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trip name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="siW-Zi-cA6">
-                                <rect key="frame" x="121.5" y="184" width="77" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trip date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVs-hx-llv">
-                                <rect key="frame" x="126" y="259" width="68" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIf-f5-KE7">
-                                <rect key="frame" x="85" y="350" width="150" height="45"/>
-                                <color key="backgroundColor" red="0.74729581128804212" green="1" blue="0.7343832777727215" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="Gp4-b3-QKr"/>
-                                    <constraint firstAttribute="height" constant="45" id="LWC-BU-s2G"/>
-                                </constraints>
-                                <state key="normal" title="Add Trip">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="addTripButtonTapped:" destination="0AT-40-9AY" eventType="touchUpInside" id="Fvr-dL-XX8"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="doT-5r-FSp">
-                                <rect key="frame" x="8" y="0.0" width="304" height="145"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="145" id="a7p-X1-D7n"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RWm-Rr-iRP">
-                                <rect key="frame" x="120" y="411" width="80" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.8400796061912511" blue="0.81873234491358204" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="D0Z-CA-p6j"/>
-                                    <constraint firstAttribute="height" constant="30" id="sHr-lD-So1"/>
-                                </constraints>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="cancelButtonTapped:" destination="0AT-40-9AY" eventType="touchUpInside" id="4jY-TC-bna"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="doT-5r-FSp" firstAttribute="leading" secondItem="lP2-eN-kc3" secondAttribute="leadingMargin" constant="-8" id="46c-DA-ZG8"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Xyj-Kr-0CP" secondAttribute="trailing" constant="8" id="Adl-hg-bjN"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="doT-5r-FSp" secondAttribute="trailing" constant="-8" id="DBj-RU-Coh"/>
-                            <constraint firstItem="siW-Zi-cA6" firstAttribute="centerX" secondItem="lP2-eN-kc3" secondAttribute="centerX" id="EcV-Qc-Q4i"/>
-                            <constraint firstItem="Xyj-Kr-0CP" firstAttribute="top" secondItem="siW-Zi-cA6" secondAttribute="bottom" constant="8" id="LcM-rS-LFc"/>
-                            <constraint firstItem="oIf-f5-KE7" firstAttribute="top" secondItem="s2X-jL-85l" secondAttribute="bottom" constant="32" id="M6G-lp-B1o"/>
-                            <constraint firstItem="oIf-f5-KE7" firstAttribute="centerX" secondItem="lP2-eN-kc3" secondAttribute="centerX" id="O7X-cE-aNi"/>
-                            <constraint firstItem="Xyj-Kr-0CP" firstAttribute="leading" secondItem="lP2-eN-kc3" secondAttribute="leadingMargin" constant="8" id="OFt-Or-WmO"/>
-                            <constraint firstItem="KVs-hx-llv" firstAttribute="top" secondItem="Xyj-Kr-0CP" secondAttribute="bottom" constant="16" id="OHo-cq-XwB"/>
-                            <constraint firstItem="RWm-Rr-iRP" firstAttribute="top" secondItem="oIf-f5-KE7" secondAttribute="bottom" constant="16" id="QrR-41-M38"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="s2X-jL-85l" secondAttribute="trailing" constant="32" id="YON-Zy-L83"/>
-                            <constraint firstItem="KVs-hx-llv" firstAttribute="centerX" secondItem="lP2-eN-kc3" secondAttribute="centerX" id="cT0-DC-8Ww"/>
-                            <constraint firstItem="doT-5r-FSp" firstAttribute="top" secondItem="aw5-DD-34k" secondAttribute="bottom" id="k35-4q-dlV"/>
-                            <constraint firstItem="s2X-jL-85l" firstAttribute="leading" secondItem="lP2-eN-kc3" secondAttribute="leadingMargin" constant="32" id="luK-dD-jTi"/>
-                            <constraint firstItem="siW-Zi-cA6" firstAttribute="top" secondItem="doT-5r-FSp" secondAttribute="bottom" constant="39" id="m9U-0q-sfm"/>
-                            <constraint firstItem="RWm-Rr-iRP" firstAttribute="centerX" secondItem="lP2-eN-kc3" secondAttribute="centerX" id="pOc-F1-y4s"/>
-                            <constraint firstItem="s2X-jL-85l" firstAttribute="top" secondItem="KVs-hx-llv" secondAttribute="bottom" constant="8" id="ro9-NQ-thp"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="acceptTripButton" destination="oIf-f5-KE7" id="bIv-ra-5hf"/>
-                        <outlet property="cancelTripButton" destination="RWm-Rr-iRP" id="7bk-0W-hCh"/>
-                        <outlet property="imageView" destination="doT-5r-FSp" id="SoC-aU-Jzb"/>
-                        <outlet property="tripDateTextField" destination="s2X-jL-85l" id="vsS-ld-WwQ"/>
-                        <outlet property="tripNameTextField" destination="Xyj-Kr-0CP" id="p8q-Tt-7GA"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2uV-WP-uu5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
