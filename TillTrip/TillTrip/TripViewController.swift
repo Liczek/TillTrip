@@ -60,10 +60,10 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		configureUniversalConstraints()
 		
 		
-		if traitCollection.verticalSizeClass == .regular {
-			configureCopactConstraints()
+		if traitCollection.verticalSizeClass == .compact {
+			configureCompactConstraints()
 			NSLayoutConstraint.activate(compactVerticalConstraints)
-		} else if traitCollection.verticalSizeClass == .compact {
+		} else if traitCollection.verticalSizeClass == .regular {
 			configureRegularConstraints()
 
 			NSLayoutConstraint.activate(regularVerticalConstraints)
@@ -83,6 +83,9 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		tripNameTextField.delegate = self
 		
 		print("view did load searchKey name in Trip: \(searchKey)")
+		
+		acceptTripButton.addTarget(self, action: #selector(addTripButtonTapped(_:)), for: .touchUpInside)
+		cancelTripButton.addTarget(self, action: #selector(cancelButtonTapped(_:)), for: .touchUpInside)
 		
 		if searchKey != nil {
 			
@@ -112,26 +115,19 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			acceptTripButton.setTitle("Add Trip", for: .normal)
 			
 		}
-		
-		
 		createDatePicker()
 		
-		
-		
-		
-
-		
-    }
+	}
 	
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
 		if traitCollection.verticalSizeClass == .regular {
-			configureCopactConstraints()
-			NSLayoutConstraint.deactivate(regularVerticalConstraints)
-			NSLayoutConstraint.activate(compactVerticalConstraints)
-		} else if traitCollection.verticalSizeClass == .compact {
 			configureRegularConstraints()
 			NSLayoutConstraint.deactivate(compactVerticalConstraints)
 			NSLayoutConstraint.activate(regularVerticalConstraints)
+		} else if traitCollection.verticalSizeClass == .compact {
+			configureCompactConstraints()
+			NSLayoutConstraint.deactivate(regularVerticalConstraints)
+			NSLayoutConstraint.activate(compactVerticalConstraints)
 		}
 	}
 	
@@ -208,14 +204,12 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		universalCoinstrains.append(tripNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 
 		//tripName textField
-		universalCoinstrains.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap))
 		universalCoinstrains.append(tripNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 		
 		//tripDate Label
 		universalCoinstrains.append(tripDateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 		
 		//tripDate textField
-		universalCoinstrains.append(tripDateTextField.topAnchor.constraint(equalTo: tripDateLabel.bottomAnchor, constant: verticalGap))
 		universalCoinstrains.append(tripDateTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 
 		//AcceptButton
@@ -228,37 +222,46 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		NSLayoutConstraint.activate(universalCoinstrains)
 	}
 	
-	func configureCopactConstraints() {
-		
-		
-		
-		viewHeight = view.frame.height
-		print("compact: \(viewHeight)")
-		compactVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 5 ))
-		compactVerticalConstraints.append(tripNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
-		compactVerticalConstraints.append(tripNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
-		compactVerticalConstraints.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 5))
-		compactVerticalConstraints.append(tripDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap * 3))
-		compactVerticalConstraints.append(tripDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap * 3))
-		compactVerticalConstraints.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap * 5))
-		
-	}
-	
 	func configureRegularConstraints() {
 		viewHeight = view.frame.height
-		print("regular: \(viewHeight)")
-		regularVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 3 ))
-		regularVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66))
-		regularVerticalConstraints.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 3))
-		regularVerticalConstraints.append(tripDateTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5))
-		regularVerticalConstraints.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap * 3))
+		print("compact: \(viewHeight)")
+		regularVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 5 ))
+		regularVerticalConstraints.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap))
+		regularVerticalConstraints.append(tripNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
+		regularVerticalConstraints.append(tripNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
+		regularVerticalConstraints.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 5))
+		regularVerticalConstraints.append(tripDateTextField.topAnchor.constraint(equalTo: tripDateLabel.bottomAnchor, constant: verticalGap))
+		regularVerticalConstraints.append(tripDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap * 3))
+		regularVerticalConstraints.append(tripDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap * 3))
+		regularVerticalConstraints.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap * 5))
+		
 	}
 	
-	func configure
+	func configureCompactConstraints() {
+		viewHeight = view.frame.height
+		print("regular: \(viewHeight)")
+		compactVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 3 ))
+		compactVerticalConstraints.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap))
+		compactVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66))
+		compactVerticalConstraints.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 3))
+		compactVerticalConstraints.append(tripDateTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5))
+		compactVerticalConstraints.append(tripDateTextField.topAnchor.constraint(equalTo: tripDateLabel.bottomAnchor, constant: verticalGap))
+		compactVerticalConstraints.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap * 3))
+	}
+	
+	func configureCompactConstraintsWhenNameIsSet() {
+		
+	}
 	
 	
 	
 	override func viewDidLayoutSubviews() {
+		setImageGradientBorders()
+	}
+	
+	func setImageGradientBorders() {
+		
+		
 		let topGradient: CAGradientLayer = CAGradientLayer()
 		topGradient.frame = imageView.layer.bounds
 		topGradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
@@ -288,7 +291,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		imageView.layer.addSublayer(rightGradient)
 	}
 	
-	@IBAction func addTripButtonTapped(_ sender: UIButton) {
+	func addTripButtonTapped(_ sender: UIButton) {
 		
 		
 		if pickedDate == nil && tripNameTextField.text == "" {
@@ -342,13 +345,14 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		}
 	}
 	
-	@IBAction func cancelButtonTapped(_ sender: UIButton) {
+	func cancelButtonTapped(_ sender: UIButton) {
 		self.navigationController?.popViewController(animated: true)
 		
 	}
 
 	func createDatePicker() {
 		
+		datePicker = UIDatePicker(frame:CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 162))
 		datePicker.datePickerMode = .date
 		datePicker.backgroundColor = UIColor.black
 		datePicker.setValue(UIColor.white, forKey: "textColor")
