@@ -38,8 +38,6 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		print("view will appear searchKey name in Trip: \(searchKey)")
-		
 	}
 	
 	
@@ -81,8 +79,6 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		configureItems()
 		
 		tripNameTextField.delegate = self
-		
-		print("view did load searchKey name in Trip: \(searchKey)")
 		
 		acceptTripButton.addTarget(self, action: #selector(addTripButtonTapped(_:)), for: .touchUpInside)
 		cancelTripButton.addTarget(self, action: #selector(cancelButtonTapped(_:)), for: .touchUpInside)
@@ -224,8 +220,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	func configureRegularConstraints() {
 		viewHeight = view.frame.height
-		print("compact: \(viewHeight)")
-		regularVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 5 ))
+		print("\ncompact: \(viewHeight)\n")
+		regularVerticalConstraints.append(imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2))
 		regularVerticalConstraints.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap))
 		regularVerticalConstraints.append(tripNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
 		regularVerticalConstraints.append(tripNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
@@ -239,8 +235,9 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	func configureCompactConstraints() {
 		viewHeight = view.frame.height
-		print("regular: \(viewHeight)")
-		compactVerticalConstraints.append(imageView.heightAnchor.constraint(equalToConstant: viewHeight / 3 ))
+		print("\nregular: \(viewHeight)\n")
+		compactVerticalConstraints.append(imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3333333333))
+
 		compactVerticalConstraints.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap))
 		compactVerticalConstraints.append(tripNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.66))
 		compactVerticalConstraints.append(tripDateLabel.topAnchor.constraint(equalTo: tripNameTextField.bottomAnchor, constant: verticalGap * 3))
@@ -249,18 +246,13 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		compactVerticalConstraints.append(acceptTripButton.topAnchor.constraint(equalTo: tripDateTextField.bottomAnchor, constant: verticalGap * 3))
 	}
 	
-	func configureCompactConstraintsWhenNameIsSet() {
-		
-	}
-	
-	
 	
 	override func viewDidLayoutSubviews() {
 		setImageGradientBorders()
 	}
 	
 	func setImageGradientBorders() {
-		
+		imageView.layer.sublayers = nil
 		
 		let topGradient: CAGradientLayer = CAGradientLayer()
 		topGradient.frame = imageView.layer.bounds

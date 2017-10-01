@@ -28,6 +28,7 @@
                         <segue destination="0AT-40-9AY" kind="show" identifier="EditTripDetails" id="1ON-JX-nzx"/>
                         <segue destination="0AT-40-9AY" kind="show" identifier="AddTrip" id="UmD-AS-5rm"/>
                         <segue destination="Gla-5R-w23" kind="show" identifier="GoToImagesPicker" id="rZN-xp-yK5"/>
+                        <segue destination="orh-aC-Ras" kind="show" identifier="Galeries" id="uxM-s4-DFa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ytv-Qf-tdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -84,6 +85,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dq5-Ls-doY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1955.625" y="801.76056338028172"/>
+        </scene>
+        <!--Galerie View Controller-->
+        <scene sceneID="mvU-Hq-mo8">
+            <objects>
+                <viewController id="orh-aC-Ras" customClass="GalerieViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OS4-fF-MSi"/>
+                        <viewControllerLayoutGuide type="bottom" id="Iec-a4-YhP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dYu-Ye-Vi0">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ekF-z5-HIw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2666" y="802"/>
         </scene>
         <!--Trip View Controller-->
         <scene sceneID="pGV-zg-g0U">

@@ -37,6 +37,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		tableView.delegate = self
 		tableView.dataSource = self
+		tableView.backgroundColor = UIColor.black
 		
 		images = arrayOfImages
 		
@@ -108,7 +109,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func openImageCatalog() {
-		performSegue(withIdentifier: "GoToImagesPicker", sender: self)
+		performSegue(withIdentifier: "Galeries", sender: self)
 		print("Number of images\(images.count) / \(arrayOfImages.count)")
 	}
 	
@@ -165,6 +166,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		print(imageName)
 		cell.bgImage.image = UIImage(named: imageName)
 		cell.bgImage.contentMode = .scaleToFill
+		cell.selectionStyle = .none
 		
 		cell.destinationName.text = trip.name
 		cell.destinationName.textColor = UIColor.white

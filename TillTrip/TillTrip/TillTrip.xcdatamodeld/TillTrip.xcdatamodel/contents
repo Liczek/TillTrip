@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="FullRes" representedClassName=".FullRes" syncable="YES">
         <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="imageName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="thumbnail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Thumbnail" inverseName="fullRes" inverseEntity="Thumbnail" syncable="YES"/>
     </entity>
     <entity name="Thumbnail" representedClassName=".Thumbnail" syncable="YES">
@@ -16,8 +17,8 @@
         <attribute name="searchKey" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Trip" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="FullRes" positionX="-666" positionY="192" width="126" height="73"/>
+        <element name="FullRes" positionX="-666" positionY="192" width="126" height="90"/>
         <element name="Thumbnail" positionX="-432" positionY="191" width="128" height="88"/>
+        <element name="Trip" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>
