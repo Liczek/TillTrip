@@ -10,9 +10,6 @@ import UIKit
 import CoreData
 
 class GalerieViewController: UIViewController {
-
-	var arrayOfImages = ["thai1", "thai2", "thai3", "thai4", "thai5", "thai6", "thai7", "thai8", "thai9", "thai10", "thai11", "thai12", "thai13"]
-	
 	
 	var bgImages = [FullRes]()
 	var tableView = UITableView()
@@ -30,6 +27,9 @@ class GalerieViewController: UIViewController {
 		
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
+		
+		insertStarterData()
+		
 		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
 		
 		do {
@@ -45,6 +45,7 @@ class GalerieViewController: UIViewController {
 		view.backgroundColor = UIColor.black
 		
 		tableView.register(TripMenuCell.self, forCellReuseIdentifier: "TripMenuCell")
+		tableView.separatorColor = UIColor.clear
 		
 		view.addSubview(getNewPhotoButton)
 		view.addSubview(tableView)
@@ -72,7 +73,7 @@ class GalerieViewController: UIViewController {
 		//tableView
 		universalLayoutConstraints.append(tableView.topAnchor.constraint(equalTo: getNewPhotoButton.bottomAnchor, constant: verticalGap))
 		universalLayoutConstraints.append(tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
-		universalLayoutConstraints.append(tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -verticalGap))
+		universalLayoutConstraints.append(tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
 		universalLayoutConstraints.append(tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -verticalGap))
 
 		
@@ -134,15 +135,23 @@ extension GalerieViewController {
 		}
 		
 		let path = Bundle.main.path(forResource: "FullRes", ofType: "plist")
-		let dataArray = NSArray(contentsOfFile: path!)
+		let dataArray = NSArray(contentsOfFile: path!)!
 		
 		for data in dataArray {
+			let entity = NSEntityDescription.entity(forEntityName: "FullRes", in: managedContext)!
+			let image = FullRes(entity: entity, insertInto: managedContext)
 			
+			guard let imageDict = data as? [String: AnyObject] else {return}
+			
+			image.imageName = imageDict["imageName"] as? String
+			
+			do {
+				try managedContext.save()
+			} catch let error as NSError {
+				print("Could Not Save Inserted Starter Data \(error), \(error.userInfo)")
+			}
 		}
-		
 	}
-	
-	
 }
 
 extension GalerieViewController: UITableViewDelegate, UITableViewDataSource {
@@ -168,15 +177,15 @@ extension GalerieViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return arrayOfImages.count
+		return bgImages.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let imageName = arrayOfImages[indexPath.row]
+		let imageName = bgImages[indexPath.row]
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		cell.destination.isHidden = true
 		cell.dayLeft.isHidden = true
-		cell.bgImage.image = UIImage(named: imageName)
+		cell.bgImage.image = UIImage(named: imageName.imageName!)
 		return cell
 	}
 	

@@ -2,7 +2,7 @@
 //  Trip+CoreDataProperties.swift
 //  TillTrip
 //
-//  Created by Paweł Liczmański on 18.09.2017.
+//  Created by Paweł Liczmański on 01.10.2017.
 //  Copyright © 2017 Paweł Liczmański. All rights reserved.
 //
 
@@ -16,9 +16,9 @@ extension Trip {
         return NSFetchRequest<Trip>(entityName: "Trip")
     }
 
-    @NSManaged public var name: String?
     @NSManaged public var date: NSDate?
     @NSManaged public var info: String?
+    @NSManaged public var name: String?
     @NSManaged public var searchKey: String?
 
 }
