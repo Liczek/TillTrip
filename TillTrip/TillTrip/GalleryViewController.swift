@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class GalerieViewController: UIViewController {
+class GalleryViewController: UIViewController {
 	
 	var bgImages = [FullRes]()
 	var tableView = UITableView()
@@ -20,6 +20,7 @@ class GalerieViewController: UIViewController {
 	
 	var verticalGap: CGFloat = 15
 	var horizontalGap: CGFloat = 5
+	
 	
 	
     override func viewDidLoad() {
@@ -38,10 +39,6 @@ class GalerieViewController: UIViewController {
 			print("Could Not Fetch bgImages \(error), \(error.userInfo)")
 		}
 		
-		
-		
-		
-		
 		view.backgroundColor = UIColor.black
 		
 		tableView.register(TripMenuCell.self, forCellReuseIdentifier: "TripMenuCell")
@@ -59,7 +56,27 @@ class GalerieViewController: UIViewController {
 		
 		getNewPhotoButton.addTarget(self, action: #selector(imagePickerSourceType), for: .touchUpInside)
 		imagePicker.delegate = self
+		
+		print("Liczba FullRes'ów\(bgImages.count)")
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		managedContext = appDelegate.persistentContainer.viewContext
+		
+		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+		
+		do {
+			bgImages = try managedContext.fetch(fetchRequest)
+		} catch let error as NSError {
+			print("Could Not Fetch bgImages \(error), \(error.userInfo)")
+		}
+		
+		print("Liczba FullRes'ów\(bgImages.count)")
+		tableView.reloadData()
+	}
 	
 	func universalConstraints() {
 		
@@ -86,6 +103,7 @@ class GalerieViewController: UIViewController {
 		getNewPhotoButton.backgroundColor = UIColor.white
 		getNewPhotoButton.setTitle("Add New Photo", for: .normal)
 		getNewPhotoButton.setTitleColor(UIColor.black, for: .normal)
+		
 	}
 	
 	func imagePickerSourceType() {
@@ -108,18 +126,18 @@ class GalerieViewController: UIViewController {
 	
 	func openImagePickerLibrary() {
 		imagePicker.sourceType = .photoLibrary
+		imagePicker.allowsEditing = true
 		present(imagePicker, animated: true, completion: nil)
 	}
 	
 	func openImagePickerCamera() {
 		imagePicker.sourceType = .camera
+		imagePicker.allowsEditing = true
 		present(imagePicker, animated: true, completion: nil)
 	}
-
-
 }
 
-extension GalerieViewController {
+extension GalleryViewController {
 	
 	func insertStarterData() {
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
@@ -144,7 +162,6 @@ extension GalerieViewController {
 			guard let imageDict = data as? [String: AnyObject] else {return}
 			
 			image.imageName = imageDict["imageName"] as? String
-			
 			do {
 				try managedContext.save()
 			} catch let error as NSError {
@@ -154,7 +171,7 @@ extension GalerieViewController {
 	}
 }
 
-extension GalerieViewController: UITableViewDelegate, UITableViewDataSource {
+extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		var tableViewHeight = CGFloat()
@@ -181,19 +198,84 @@ extension GalerieViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let imageName = bgImages[indexPath.row]
+		let image = bgImages[indexPath.row]
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		cell.destination.isHidden = true
 		cell.dayLeft.isHidden = true
-		cell.bgImage.image = UIImage(named: imageName.imageName!)
+		cell.destinationName.isHidden = true
+		cell.dayLeftNumber.isHidden = true
+		if image.imageData == nil {
+			cell.bgImage.image = UIImage(named: image.imageName!)
+		} else {
+			let convertedImageData: Data = image.imageData! as Data
+			cell.bgImage.image = UIImage(data: convertedImageData)
+		}
+		cell.selectionStyle = .none
 		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return true
+	}
+	
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		let managedContext = appDelegate.persistentContainer.viewContext
+		
+		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+		
+		do {
+			let imageToRemove = try managedContext.fetch(fetchRequest)[indexPath.row]
+			managedContext.delete(imageToRemove)
+			bgImages.remove(at: indexPath.row)
+			tableView.deleteRows(at: [indexPath], with: .automatic)
+			
+		} catch let error as NSError {
+			print("Could Not Find Selected Image \(error), \(error.userInfo)")
+		}
+		
+		do {
+			try managedContext.save()
+		} catch let error as NSError {
+			print("Could Not Save After Remove Image \(error), \(error.userInfo)")
+		}
 	}
 	
 }
 
-extension GalerieViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+		
+		let pickedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+		guard let imageData = UIImageJPEGRepresentation(pickedImage, 1) else {
+			print("Could not convert UIImage to NSData")
+			return
+		}
+		let imageName = String(NSDate().timeIntervalSince1970)
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		let managedContext = appDelegate.persistentContainer.viewContext
+		let entity = NSEntityDescription.entity(forEntityName: "FullRes", in: managedContext)!
+		let fullRes = FullRes(entity: entity, insertInto: managedContext)
+		
+		fullRes.imageData = imageData as NSData
+		fullRes.imageName = imageName
+		managedContext.insert(fullRes)
+		
+		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+		do {
+			bgImages = try managedContext.fetch(fetchRequest)
+			print("liczba bgImages po SAVE: \(bgImages.count)")
+		} catch let error as NSError {
+			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
+		}
+		
+		do {
+			try managedContext.save()
+		} catch let error as NSError {
+			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
+		}
+		
 		dismiss(animated: true, completion: nil)
 		
 		

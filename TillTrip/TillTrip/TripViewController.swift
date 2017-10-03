@@ -220,7 +220,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	func configureRegularConstraints() {
 		viewHeight = view.frame.height
-		print("\ncompact: \(viewHeight)\n")
+		
 		regularVerticalConstraints.append(imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2))
 		regularVerticalConstraints.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap))
 		regularVerticalConstraints.append(tripNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
@@ -235,7 +235,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	func configureCompactConstraints() {
 		viewHeight = view.frame.height
-		print("\nregular: \(viewHeight)\n")
+		
 		compactVerticalConstraints.append(imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3333333333))
 
 		compactVerticalConstraints.append(tripNameTextField.topAnchor.constraint(equalTo: tripNameLabel.bottomAnchor, constant: verticalGap))

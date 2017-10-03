@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	var arrayOfImages = ["thai1", "thai2", "thai3", "thai4", "thai5", "thai6", "thai7", "thai8", "thai9", "thai10", "thai11", "thai12", "thai13"]
 	var images: [String]!
 	var trips = [Trip]()
+	var bgImages = [FullRes]()
 	var managedContext: NSManagedObjectContext!
 	var searchKeyOfSelectedTrip = String()
 	var selectedTripImageName = String()
@@ -40,6 +41,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tableView.backgroundColor = UIColor.black
 		
 		images = arrayOfImages
+		
 		
 		navigationController?.navigationBar.tintColor = UIColor.white
 		
@@ -80,10 +82,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
 		let fetchRequest = NSFetchRequest<Trip>(entityName:"Trip")
+		let fetchRequestFullRes = NSFetchRequest<FullRes>(entityName: "FullRes")
 		let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
 		fetchRequest.sortDescriptors = [sortDescriptor]
 		do {
 			trips = try managedContext.fetch(fetchRequest)
+			bgImages = try managedContext.fetch(fetchRequestFullRes)
 		} catch let error as NSError {
 			print("Could Not Reload View \(error), \(error.userInfo)")
 		}

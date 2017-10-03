@@ -86,10 +86,10 @@
             </objects>
             <point key="canvasLocation" x="1955.625" y="801.76056338028172"/>
         </scene>
-        <!--Galerie View Controller-->
+        <!--Gallery View Controller-->
         <scene sceneID="mvU-Hq-mo8">
             <objects>
-                <viewController id="orh-aC-Ras" customClass="GalerieViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="orh-aC-Ras" customClass="GalleryViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OS4-fF-MSi"/>
                         <viewControllerLayoutGuide type="bottom" id="Iec-a4-YhP"/>
