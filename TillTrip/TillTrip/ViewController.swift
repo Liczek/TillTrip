@@ -15,6 +15,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	var images: [String]!
 	var trips = [Trip]()
 	var bgImages = [FullRes]()
+	var bgImagesDecreasingArray = [FullRes]()
 	var managedContext: NSManagedObjectContext!
 	var searchKeyOfSelectedTrip = String()
 	var selectedTripImageName = String()
@@ -40,9 +41,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		tableView.dataSource = self
 		tableView.backgroundColor = UIColor.black
 		
-		images = arrayOfImages
-		
-		
 		navigationController?.navigationBar.tintColor = UIColor.white
 		
 		let refreshImages = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshBackgrounds))
@@ -56,6 +54,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		managedContext = appDelegate.persistentContainer.viewContext
 		
 		insertStarterData()
+		
+		bgImagesDecreasingArray = bgImages
 		
 		let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
 		fetchRequest.predicate = NSPredicate(format: "name != nil")
@@ -159,16 +159,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		
-		if images.count < trips.count {
-			images = arrayOfImages
+		if bgImagesDecreasingArray.count < trips.count {
+			bgImagesDecreasingArray += bgImages
 		}
-		let maxIndex = images.count
+		
+		
+		let maxIndex = bgImagesDecreasingArray.count
 		let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
-		let imageName = images[Int(randomImageIndex)]
-		images.remove(at: Int(randomImageIndex))
+		let image = bgImagesDecreasingArray[Int(randomImageIndex)]
+		let imageName = bgImagesDecreasingArray[Int(randomImageIndex)].imageName!
+		bgImagesDecreasingArray.remove(at: Int(randomImageIndex))
+		
+		
+		if image.imageData == nil {
+			cell.bgImage.image = UIImage(named: image.imageName!)
+		} else {
+			let convertedImageData: Data = image.imageData! as Data
+			cell.bgImage.image = UIImage(data: convertedImageData)
+		}
 		
 		print(imageName)
-		cell.bgImage.image = UIImage(named: imageName)
 		cell.bgImage.contentMode = .scaleToFill
 		cell.selectionStyle = .none
 		
