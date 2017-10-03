@@ -27,9 +27,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		print("status bar: \(UIApplication.shared.statusBarFrame.height)")
-		print("navigation bar: \(String(describing: self.navigationController?.navigationBar.frame.height))")
-		print("tool bar: \(String(describing: self.navigationController?.toolbar.frame.height))")
+		insertStarterData()
+		insertStarterImages()
+		bgImagesDecreasingArray = bgImages
+		
+		let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+		fetchRequest.predicate = NSPredicate(format: "name != nil")
+		let fetchRequestFullRes = NSFetchRequest<FullRes>(entityName: "FullRes")
+		do {
+			trips = try managedContext.fetch(fetchRequest)
+			bgImages = try managedContext.fetch(fetchRequestFullRes)
+		} catch let error as NSError {
+			print("Could not fetch plist data \(error)")
+		}
+		
 		
 		
 		
@@ -53,19 +64,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
 		
-		insertStarterData()
 		
-		bgImagesDecreasingArray = bgImages
-		
-		let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
-		fetchRequest.predicate = NSPredicate(format: "name != nil")
-		
-		do {
-			trips = try managedContext.fetch(fetchRequest)
-			
-		} catch let error as NSError {
-			print("Could not fetch plist data \(error)")
-		}
 		
 		
 		tableView.delegate = self
@@ -92,6 +91,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			print("Could Not Reload View \(error), \(error.userInfo)")
 		}
 		tableView.reloadData()
+		bgImagesDecreasingArray = bgImages
 	}
 	
 	func configureUniversalConstraints() {
@@ -108,13 +108,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	func refreshBackgrounds() {
-		images = arrayOfImages
+		bgImagesDecreasingArray = bgImages
 		tableView.reloadData()
 	}
 	
 	func openImageCatalog() {
 		performSegue(withIdentifier: "Galeries", sender: self)
-		print("Number of images\(images.count) / \(arrayOfImages.count)")
+		//print("Number of images\(images.count) / \(arrayOfImages.count)")
 	}
 	
 	func addTrip() {
@@ -160,11 +160,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		
 		if bgImagesDecreasingArray.count < trips.count {
-			bgImagesDecreasingArray += bgImages
+			bgImagesDecreasingArray = bgImages
 		}
 		
-		
+		let BGINDEX = bgImages.count
+		print("BG_INDEX: \(BGINDEX)")
 		let maxIndex = bgImagesDecreasingArray.count
+		print("INDEX: \(maxIndex)")
 		let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
 		let image = bgImagesDecreasingArray[Int(randomImageIndex)]
 		let imageName = bgImagesDecreasingArray[Int(randomImageIndex)].imageName!
@@ -211,6 +213,49 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 				controller.searchKey = sender as? String
 				controller.imageName = selectedTripImageName
 		}
+	}
+	
+	func insertStarterImages() {
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		managedContext = appDelegate.persistentContainer.viewContext
+		
+		
+		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+		fetchRequest.predicate = NSPredicate(format: "imageName != nil")
+		
+		
+		do {
+			let result = try managedContext.count(for: fetchRequest)
+			if result > 0 {return}
+		} catch let error as NSError {
+			print("Could not fetch plist data \(error)")
+		}
+		
+		for (_, element) in arrayOfImages.enumerated() {
+			let entity = NSEntityDescription.entity(forEntityName: "FullRes", in: managedContext)!
+			let fullRes = FullRes(entity: entity, insertInto: managedContext)
+			fullRes.imageName = String(element)
+			
+			managedContext.insert(fullRes)
+		}
+		
+		
+		
+		
+		do {
+			bgImages = try managedContext.fetch(fetchRequest)
+			print("liczba bgImages po SAVE: \(bgImages.count)")
+		} catch let error as NSError {
+			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
+		}
+		
+		do {
+			try managedContext.save()
+		} catch let error as NSError {
+			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
+		}
+
+		
 	}
 	
 	func insertStarterData() {
