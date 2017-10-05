@@ -36,5 +36,7 @@
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>&quot;Important to one functionality&quot;</string>
+	<key>NSCameraUsageDescription</key>
+	<string>&quot;Important to one functionality&quot;</string>
 </dict>
 </plist>
