@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="dA0-mD-KmJ">
             <objects>
-                <viewController id="OdR-pK-iRb" customClass="ViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainVC" id="OdR-pK-iRb" customClass="ViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="z20-bQ-ggN"/>
                         <viewControllerLayoutGuide type="bottom" id="yXu-p7-g1q"/>
@@ -89,7 +89,7 @@
         <!--Gallery View Controller-->
         <scene sceneID="mvU-Hq-mo8">
             <objects>
-                <viewController id="orh-aC-Ras" customClass="GalleryViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GalleryVC" id="orh-aC-Ras" customClass="GalleryViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OS4-fF-MSi"/>
                         <viewControllerLayoutGuide type="bottom" id="Iec-a4-YhP"/>
@@ -107,7 +107,7 @@
         <!--Trip View Controller-->
         <scene sceneID="pGV-zg-g0U">
             <objects>
-                <viewController id="0AT-40-9AY" customClass="TripViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="tripVC" id="0AT-40-9AY" customClass="TripViewController" customModule="TillTrip" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aw5-DD-34k"/>
                         <viewControllerLayoutGuide type="bottom" id="3me-Fo-6RT"/>
@@ -120,12 +120,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2uV-WP-uu5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2731.875" y="54.929577464788736"/>
+            <point key="canvasLocation" x="3002" y="53"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="78e-lR-EEm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QeY-5b-a2i" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navCon" automaticallyAdjustsScrollViewInsets="NO" id="QeY-5b-a2i" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO"/>

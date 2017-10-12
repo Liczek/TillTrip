@@ -38,5 +38,24 @@
 	<string>&quot;Important to one functionality&quot;</string>
 	<key>NSCameraUsageDescription</key>
 	<string>&quot;Important to one functionality&quot;</string>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeAdd</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Add new trip</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.liczmanskipawel.TillTrip.add</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeRefresh</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Refresh</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.liczmanskipawel.TillTrip.refresh</string>
+		</dict>
+	</array>
 </dict>
 </plist>

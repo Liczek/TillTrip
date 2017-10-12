@@ -17,6 +17,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	var pickedDate: Date!
 	var trips = [Trip]()
 	var imageName: String!
+	var image: FullRes!
+	
 	
 	var verticalGap: CGFloat = 5
 	var horizontalGap: CGFloat = 15
@@ -67,11 +69,51 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			NSLayoutConstraint.activate(regularVerticalConstraints)
 		}
 		
+//		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+//		managedContext = appDelegate.persistentContainer.viewContext
+//		
+//		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+//		fetchRequest.predicate = NSPredicate(format: "imageName == %@", imageName!)
+//		
+//		do {
+//			let pickedFotoArray: [FullRes] = try managedContext.fetch(fetchRequest)
+//			guard let editedTripImage = pickedFotoArray.first else {return}
+//			image = editedTripImage
+//			let editedTripImageData: Data = image.imageData as! Data
+//			imageView.image = UIImage(data: editedTripImageData)
+//			
+//		} catch let error as NSError {
+//			print("Could Not Load/Create Trip \(error), \(error.userInfo)")
+//		}
+
+		
 		imageView.layer.cornerRadius = 10
 		if imageName == nil {
 			imageView.image = UIImage(named: "thai8")
 		} else {
-		imageView.image = UIImage(named: imageName)
+			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+			managedContext = appDelegate.persistentContainer.viewContext
+			
+			let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+			fetchRequest.predicate = NSPredicate(format: "imageName == %@", imageName!)
+			do {
+				let xxx = try managedContext.fetch(fetchRequest)
+				guard let xxxFirst = xxx.first else {return}
+				image = xxxFirst
+				
+				
+			} catch let error as NSError {
+				print("Could Not Load/Create Trip \(error), \(error.userInfo)")
+			}
+			if image.imageData != nil {
+				let editedTripImageData: Data = image.imageData! as Data
+				imageView.image = UIImage(data: editedTripImageData)
+			} else {
+				imageView.image = UIImage(named: imageName)
+			}
+			
+			
+		
 		}
 		imageView.clipsToBounds = true
 		imageView.contentMode = .scaleToFill

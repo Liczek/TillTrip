@@ -90,8 +90,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		} catch let error as NSError {
 			print("Could Not Reload View \(error), \(error.userInfo)")
 		}
-		tableView.reloadData()
 		bgImagesDecreasingArray = bgImages
+		tableView.reloadData()
+		
 	}
 	
 	func configureUniversalConstraints() {
@@ -156,17 +157,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		
 		let trip = trips[indexPath.row]
+		
+		
 
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		
 		if bgImagesDecreasingArray.count < trips.count {
-			bgImagesDecreasingArray = bgImages
+			bgImagesDecreasingArray += bgImages
 		}
 		
-		let BGINDEX = bgImages.count
-		print("BG_INDEX: \(BGINDEX)")
 		let maxIndex = bgImagesDecreasingArray.count
-		print("INDEX: \(maxIndex)")
 		let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
 		let image = bgImagesDecreasingArray[Int(randomImageIndex)]
 		let imageName = bgImagesDecreasingArray[Int(randomImageIndex)].imageName!
@@ -244,7 +244,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		do {
 			bgImages = try managedContext.fetch(fetchRequest)
-			print("liczba bgImages po SAVE: \(bgImages.count)")
+			//print("liczba bgImages po SAVE: \(bgImages.count)")
 		} catch let error as NSError {
 			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
 		}

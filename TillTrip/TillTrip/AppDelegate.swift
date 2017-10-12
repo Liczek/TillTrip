@@ -19,8 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-		return true
+//		var launchedFromShortCut = false
+//		//Check for ShortCutItem
+//		if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsKey.shortcutItem] as? UIApplicationShortcutItem {
+//			launchedFromShortCut = true
+//			
+//		}
+		return false
 	}
+	
 
 	func applicationWillResignActive(_ application: UIApplication) {
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -90,6 +97,76 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	        }
 	    }
 	}
+	
+	enum TouchActions: String {
+		case add = "add"
+		case refresh = "refresh"
+		
+		var number: Int {
+			switch self {
+			case .add:
+				return 0
+			case .refresh:
+				return 1
+			}
+		}
+	}
+	func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+		
+//		guard let type = TouchActions(rawValue: shortcutItem.type) else {
+//			completionHandler(false)
+//			return
+//		}
+//		let selectedIndex = type.number
+//		completionHandler(true)
+		
+		if shortcutItem.type == "com.liczmanskipawel.TillTrip.add" {
+			let sb = UIStoryboard(name: "Main", bundle: nil)
+			let mainVC = sb.instantiateViewController(withIdentifier: "navCon") as! UINavigationController
+			let tripVC = sb.instantiateViewController(withIdentifier: "tripVC") as! TripViewController
+			let root = UIApplication.shared.keyWindow?.rootViewController
+			
+			root?.present(mainVC, animated: false, completion: {
+				mainVC.pushViewController(tripVC, animated: false)
+				completionHandler(false)
+			
+			})
+			
+			
+			
+			
+			
+			
+			
+		}
+	}
+	
+//	enum ShortcutType: String {
+//		case add = "com.liczmanskipawel.TillTrip.add"
+//		case refresh = "com.liczmanskipawel.TillTrip.refresh"
+//	}
+//	
+//	func handleShortCutItem(shortcutItem: UIApplicationShortcutItem) -> Bool {
+//		var handled = false
+//		//Get type string from shortcutItem
+//		if let shortcutType = ShortcutType.init(rawValue: shortcutItem.type) {
+//			//Get root navigation viewcontroller and its first controller
+//			let rootNavigationViewController = window!.rootViewController as? UINavigationController
+//			let rootViewController = rootNavigationViewController?.viewControllers.first as UIViewController?
+//			//Pop to root view controller so that approperiete segue can be performed
+//			rootNavigationViewController?.popViewController(animated: false)
+//			
+//			switch shortcutType {
+//			case .add:
+//				rootViewController?.performSegue(withIdentifier: "AddTrip", sender: nil)
+//				handled = true
+//			case.refresh:
+//				rootViewController?.performSegue(withIdentifier: "Galeries", sender: nil)
+//				handled = true
+//			}
+//		}
+//		return handled
+//	}
 
 }
 

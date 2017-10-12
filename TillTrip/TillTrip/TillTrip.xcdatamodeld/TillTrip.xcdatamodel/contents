@@ -4,6 +4,7 @@
         <attribute name="imageData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="imageName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="thumbnail" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Thumbnail" inverseName="fullRes" inverseEntity="Thumbnail" syncable="YES"/>
+        <relationship name="trip" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trip" inverseName="bgImage" inverseEntity="Trip" syncable="YES"/>
     </entity>
     <entity name="Thumbnail" representedClassName=".Thumbnail" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
@@ -15,10 +16,11 @@
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="searchKey" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bgImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FullRes" inverseName="trip" inverseEntity="FullRes" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FullRes" positionX="-666" positionY="192" width="126" height="90"/>
-        <element name="Thumbnail" positionX="-432" positionY="191" width="128" height="88"/>
-        <element name="Trip" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="FullRes" positionX="-468" positionY="174" width="126" height="103"/>
+        <element name="Thumbnail" positionX="-209" positionY="335" width="128" height="88"/>
+        <element name="Trip" positionX="-63" positionY="-18" width="128" height="118"/>
     </elements>
 </model>
