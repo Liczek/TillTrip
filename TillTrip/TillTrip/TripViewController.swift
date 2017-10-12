@@ -31,6 +31,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	var acceptTripButton = UIButton()
 	var cancelTripButton = UIButton()
 	var imageView = UIImageView()
+	var imageSwitch = UISwitch()
 	var viewHeight = CGFloat()
 	
 	var universalCoinstrains = [NSLayoutConstraint]()
@@ -39,7 +40,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
+
 	}
 	
 	
@@ -56,6 +57,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		view.addSubview(tripDateTextField)
 		view.addSubview(acceptTripButton)
 		view.addSubview(cancelTripButton)
+		view.addSubview(imageSwitch)
 		
 		configureUniversalConstraints()
 		
@@ -65,26 +67,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			NSLayoutConstraint.activate(compactVerticalConstraints)
 		} else if traitCollection.verticalSizeClass == .regular {
 			configureRegularConstraints()
-
 			NSLayoutConstraint.activate(regularVerticalConstraints)
 		}
-		
-//		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-//		managedContext = appDelegate.persistentContainer.viewContext
-//		
-//		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
-//		fetchRequest.predicate = NSPredicate(format: "imageName == %@", imageName!)
-//		
-//		do {
-//			let pickedFotoArray: [FullRes] = try managedContext.fetch(fetchRequest)
-//			guard let editedTripImage = pickedFotoArray.first else {return}
-//			image = editedTripImage
-//			let editedTripImageData: Data = image.imageData as! Data
-//			imageView.image = UIImage(data: editedTripImageData)
-//			
-//		} catch let error as NSError {
-//			print("Could Not Load/Create Trip \(error), \(error.userInfo)")
-//		}
 
 		
 		imageView.layer.cornerRadius = 10
@@ -108,8 +92,10 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			if image.imageData != nil {
 				let editedTripImageData: Data = image.imageData! as Data
 				imageView.image = UIImage(data: editedTripImageData)
+				imageSwitch.isOn = true
 			} else {
 				imageView.image = UIImage(named: imageName)
+				imageSwitch.isOn = false
 			}
 			
 			
@@ -155,7 +141,10 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		}
 		createDatePicker()
 		
+		imageSwitch.addTarget(self, action: #selector(switchChanged), for: UIControlEvents.valueChanged)
 	}
+	
+	
 	
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
 		if traitCollection.verticalSizeClass == .regular {
@@ -219,6 +208,10 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		cancelTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.30), for: .normal)
 		cancelTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
 		
+		imageSwitch.tintColor = UIColor.darkGray
+		imageSwitch.onTintColor = UIColor.white
+		imageSwitch.thumbTintColor = UIColor.lightGray
+		
 	}
 	
 	func configureUniversalConstraints() {
@@ -231,6 +224,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		tripDateTextField.translatesAutoresizingMaskIntoConstraints = false
 		acceptTripButton.translatesAutoresizingMaskIntoConstraints = false
 		cancelTripButton.translatesAutoresizingMaskIntoConstraints = false
+		imageSwitch.translatesAutoresizingMaskIntoConstraints = false
 		
 		//imageView
 		universalCoinstrains.append(imageView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: verticalGap))
@@ -256,6 +250,10 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		//CancelButton
 		universalCoinstrains.append(cancelTripButton.topAnchor.constraint(equalTo: acceptTripButton.topAnchor))
 		universalCoinstrains.append(cancelTripButton.trailingAnchor.constraint(equalTo: acceptTripButton.leadingAnchor , constant: -horizontalGap))
+		
+		//Switch
+		universalCoinstrains.append(imageSwitch.centerYAnchor.constraint(equalTo: acceptTripButton.centerYAnchor))
+		universalCoinstrains.append(imageSwitch.leadingAnchor.constraint(equalTo: acceptTripButton.trailingAnchor, constant: horizontalGap))
 		
 		NSLayoutConstraint.activate(universalCoinstrains)
 	}
@@ -443,7 +441,45 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		return false
 	}
 	
+	func switchChanged(imageSwitch: UISwitch) {
+		let value = imageSwitch.isOn
+		if value == true {
+			print("Switch is On")
+			
+			let alert = UIAlertController(title: "Do you wanna set image for this Trip?", message: nil, preferredStyle: .alert)
+			let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+				self.performSegue(withIdentifier: "setPhoto", sender: nil)
+			})
+			let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
+			
+			alert.addAction(yesAction)
+			alert.addAction(noAction)
+			present(alert, animated: true, completion: nil)
+			
+		} else {
+			let alert = UIAlertController(title: nil, message: "What you wanna to do with current Trip photo?", preferredStyle: .alert)
+			let yesAction = UIAlertAction(title: "Delete", style: .default, handler: { (action) in
+				
+			})
+			let noAction = UIAlertAction(title: "Nothing", style: .default, handler: nil)
+			let changeAction = UIAlertAction(title: "Change", style: .default, handler: { (action) in
+				self.performSegue(withIdentifier: "setPhoto", sender: nil)
+			})
+			
+			alert.addAction(yesAction)
+			alert.addAction(noAction)
+			alert.addAction(changeAction)
+			present(alert, animated: true, completion: nil)
+			print("Switch is Off")
+		}
+	}
 	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "setPhoto" {
+			let controller = segue.destination as! GalleryViewController
+			controller.isEditingPhoto = true
+		}
+	}
 	
 	
 

@@ -17,6 +17,7 @@ class GalleryViewController: UIViewController {
 	var universalLayoutConstraints = [NSLayoutConstraint]()
 	var imagePicker = UIImagePickerController()
 	var managedContext: NSManagedObjectContext!
+	var isEditingPhoto = false
 	
 	var verticalGap: CGFloat = 15
 	var horizontalGap: CGFloat = 5
@@ -62,6 +63,15 @@ class GalleryViewController: UIViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		if isEditingPhoto == true {
+			let alert = UIAlertController(title: "Choose photo", message: "Tap on image which you want add to your trip or add new photo to gallery from your camera or photo library", preferredStyle: .alert)
+			let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+			alert.addAction(okAction)
+			present(alert, animated: true, completion: nil)
+		}
+		
+		
 		
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
@@ -238,6 +248,14 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 			try managedContext.save()
 		} catch let error as NSError {
 			print("Could Not Save After Remove Image \(error), \(error.userInfo)")
+		}
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if isEditingPhoto == false {
+			return
+		} else {
+			print("READY FOR SAVING")
 		}
 	}
 	
