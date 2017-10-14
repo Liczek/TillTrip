@@ -465,7 +465,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			})
 			
 			let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action) in
-				imageSwitch.isOn = !imageSwitch.isOn})
+				imageSwitch.isOn = true})
 			
 			let changeAction = UIAlertAction(title: "Change", style: .default, handler: { (action) in
 				self.performSegue(withIdentifier: "setPhoto", sender: nil)

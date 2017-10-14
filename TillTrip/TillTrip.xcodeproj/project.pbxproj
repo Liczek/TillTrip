@@ -17,6 +17,8 @@
 		DAA6E6481F812301002E68FF /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA6E6471F812301002E68FF /* GalleryViewController.swift */; };
 		DAA6E64A1F814D7D002E68FF /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA6E6491F814D7D002E68FF /* PhotoCell.swift */; };
 		DAA6E64C1F817652002E68FF /* FullRes.plist in Resources */ = {isa = PBXBuildFile; fileRef = DAA6E64B1F817652002E68FF /* FullRes.plist */; };
+		DAA6E65A1F9270F8002E68FF /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA6E6591F9270F8002E68FF /* HudView.swift */; };
+		DAA6E65C1F9271D6002E68FF /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA6E65B1F9271D6002E68FF /* ToDoList.swift */; };
 		DAEF32D51F6B0A880041315B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF32D41F6B0A880041315B /* AppDelegate.swift */; };
 		DAEF32D71F6B0A880041315B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEF32D61F6B0A880041315B /* ViewController.swift */; };
 		DAEF32DA1F6B0A880041315B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAEF32D81F6B0A880041315B /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 		DAA6E6471F812301002E68FF /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		DAA6E6491F814D7D002E68FF /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		DAA6E64B1F817652002E68FF /* FullRes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FullRes.plist; sourceTree = "<group>"; };
+		DAA6E6591F9270F8002E68FF /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = HudView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		DAA6E65B1F9271D6002E68FF /* ToDoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
 		DAEF32D11F6B0A880041315B /* TillTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TillTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAEF32D41F6B0A880041315B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAEF32D61F6B0A880041315B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 				DAEF32F71F719B540041315B /* TripViewController.swift */,
 				DA953C4B1F798C6B003260AA /* ImagesViewController.swift */,
 				DAA6E6471F812301002E68FF /* GalleryViewController.swift */,
+				DAA6E6591F9270F8002E68FF /* HudView.swift */,
 				DAEF32D81F6B0A880041315B /* Main.storyboard */,
 				DAA6E6431F7D6B92002E68FF /* TripMenuCell.swift */,
 				DAA6E6451F7D7AFB002E68FF /* UILabelWithInsets.swift */,
@@ -113,6 +118,7 @@
 				DAEF32EB1F6B21520041315B /* TripInfo.plist */,
 				DAA6E64B1F817652002E68FF /* FullRes.plist */,
 				DAEF32DB1F6B0A880041315B /* TillTrip.xcdatamodeld */,
+				DAA6E65B1F9271D6002E68FF /* ToDoList.swift */,
 			);
 			path = TillTrip;
 			sourceTree = "<group>";
@@ -194,8 +200,10 @@
 			files = (
 				DA953C531F7AA801003260AA /* Thumbnail+CoreDataClass.swift in Sources */,
 				DAA6E64A1F814D7D002E68FF /* PhotoCell.swift in Sources */,
+				DAA6E65C1F9271D6002E68FF /* ToDoList.swift in Sources */,
 				DAEF32F31F7056A30041315B /* Trip+CoreDataClass.swift in Sources */,
 				DA953C511F7AA801003260AA /* FullRes+CoreDataClass.swift in Sources */,
+				DAA6E65A1F9270F8002E68FF /* HudView.swift in Sources */,
 				DAEF32F41F7056A30041315B /* Trip+CoreDataProperties.swift in Sources */,
 				DA953C4C1F798C6B003260AA /* ImagesViewController.swift in Sources */,
 				DAEF32F81F719B540041315B /* TripViewController.swift in Sources */,

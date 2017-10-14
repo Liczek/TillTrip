@@ -25,6 +25,8 @@ class GalleryViewController: UIViewController {
 	var verticalGap: CGFloat = 15
 	var horizontalGap: CGFloat = 5
 	
+	var hud = HudView()
+	var hudLayoutConstraints = [NSLayoutConstraint]()
 	
 	
     override func viewDidLoad() {
@@ -286,6 +288,10 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 			let selectedImageName = selectedImage.imageName
 			let selectedImageData = selectedImage.imageData
 			
+			
+			
+			
+			
 			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 			managedContext = appDelegate.persistentContainer.viewContext
 			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
@@ -296,9 +302,21 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 				guard let tripToEdit = trips.first else { return }
 				tripToEdit.imageName = selectedImageName
 				tripToEdit.imageData = selectedImageData
+				
+				hud.hudNameLabel.text = "Photo Added"
+				if selectedImageData != nil {
+					hud.hudImage.image = UIImage(data: selectedImageData! as Data)
+				} else {
+					hud.hudImage.image = UIImage(named: selectedImageName!)
+				}
+				
+				showHUD()
+				
 			} catch let error as NSError {
 				print("Could Not Find Selected Trip \(error), \(error.userInfo)")
 			}
+			
+			
 
 
 			do {
@@ -306,6 +324,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 			} catch let error as NSError {
 				print("Could Not Save photo in Selected Trip  \(error), \(error.userInfo)")
 			}
+//TODO: dowiedzieć się czemu nie działał dismiss
 			self.dismiss(animated: true, completion: nil)
 			
 		}
@@ -354,5 +373,15 @@ extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationCo
 		dismiss(animated: true, completion: nil)
 	}
 	
-	
+	func showHUD() {
+		
+		view.addSubview(hud)
+		hud.translatesAutoresizingMaskIntoConstraints = false
+		hudLayoutConstraints.append(hud.topAnchor.constraint(equalTo: view.topAnchor))
+		hudLayoutConstraints.append(hud.bottomAnchor.constraint(equalTo: view.bottomAnchor))
+		hudLayoutConstraints.append(hud.leadingAnchor.constraint(equalTo: view.leadingAnchor))
+		hudLayoutConstraints.append(hud.trailingAnchor.constraint(equalTo: view.trailingAnchor))
+		NSLayoutConstraint.activate(hudLayoutConstraints)
+		
+	}
 }
