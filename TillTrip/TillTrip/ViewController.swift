@@ -115,7 +115,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	
 	func openImageCatalog() {
 		performSegue(withIdentifier: "Galeries", sender: self)
-		//print("Number of images\(images.count) / \(arrayOfImages.count)")
 	}
 	
 	func addTrip() {
@@ -131,7 +130,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		var tableViewHeight = CGFloat()
 		let statusBar = UIApplication.shared.statusBarFrame.height
-		print("status bar: \(UIApplication.shared.statusBarFrame.height)")
 		if statusBar == 0.0 {
 			tableViewHeight = tableView.frame.size.height - 20
 		} else {
@@ -140,10 +138,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		var rowHeight = CGFloat()
 		if traitCollection.verticalSizeClass == .regular {
 			rowHeight = tableViewHeight / 3
-			print("pionowo \(tableViewHeight)")
 		} else if traitCollection.verticalSizeClass == .compact {
 			rowHeight = (tableViewHeight + 20)  / 2
-			print("poziomo \(tableViewHeight)")
 		}
 		return rowHeight
 	}
@@ -180,7 +176,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			cell.bgImage.image = UIImage(data: convertedImageData)
 		}
 		
-		print(imageName)
+		
 		cell.bgImage.contentMode = .scaleToFill
 		cell.selectionStyle = .none
 		
@@ -202,7 +198,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		self.searchKeyOfSelectedTrip = cell.searchKey
 		self.selectedTripImageName = cell.bgImageName
-		print("searchKey name - sender: \(searchKeyOfSelectedTrip)")
+		
 		performSegue(withIdentifier: "EditTripDetails", sender: searchKeyOfSelectedTrip)
 	}
 	
@@ -244,7 +240,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		do {
 			bgImages = try managedContext.fetch(fetchRequest)
-			//print("liczba bgImages po SAVE: \(bgImages.count)")
 		} catch let error as NSError {
 			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
 		}

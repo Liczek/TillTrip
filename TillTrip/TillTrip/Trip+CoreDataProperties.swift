@@ -2,7 +2,7 @@
 //  Trip+CoreDataProperties.swift
 //  TillTrip
 //
-//  Created by Paweł Liczmański on 12.10.2017.
+//  Created by Paweł Liczmański on 14.10.2017.
 //  Copyright © 2017 Paweł Liczmański. All rights reserved.
 //
 
@@ -20,6 +20,8 @@ extension Trip {
     @NSManaged public var info: String?
     @NSManaged public var name: String?
     @NSManaged public var searchKey: String?
+    @NSManaged public var imageName: String?
+    @NSManaged public var imageData: NSData?
     @NSManaged public var bgImage: FullRes?
 
 }

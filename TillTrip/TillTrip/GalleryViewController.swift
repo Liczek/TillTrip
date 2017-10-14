@@ -12,12 +12,15 @@ import CoreData
 class GalleryViewController: UIViewController {
 	
 	var bgImages = [FullRes]()
+	var trips = [Trip]()
+	var trip = Trip()
 	var tableView = UITableView()
 	var getNewPhotoButton = UIButton()
 	var universalLayoutConstraints = [NSLayoutConstraint]()
 	var imagePicker = UIImagePickerController()
 	var managedContext: NSManagedObjectContext!
 	var isEditingPhoto = false
+	var searchKeyForSelectedTrip = String()
 	
 	var verticalGap: CGFloat = 15
 	var horizontalGap: CGFloat = 5
@@ -57,8 +60,6 @@ class GalleryViewController: UIViewController {
 		
 		getNewPhotoButton.addTarget(self, action: #selector(imagePickerSourceType), for: .touchUpInside)
 		imagePicker.delegate = self
-		
-		print("Liczba FullRes'ów\(bgImages.count)")
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +70,18 @@ class GalleryViewController: UIViewController {
 			let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
 			alert.addAction(okAction)
 			present(alert, animated: true, completion: nil)
+			
+			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+			managedContext = appDelegate.persistentContainer.viewContext
+			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
+			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip)
+			
+			do {
+				trips = try managedContext.fetch(tripFetch)
+				trip = trips.first!
+			} catch let error as NSError {
+				print("Could Not Find Selected Trip \(error), \(error.userInfo)")
+			}
 		}
 		
 		
@@ -84,7 +97,6 @@ class GalleryViewController: UIViewController {
 			print("Could Not Fetch bgImages \(error), \(error.userInfo)")
 		}
 		
-		print("Liczba FullRes'ów\(bgImages.count)")
 		tableView.reloadData()
 	}
 	
@@ -251,11 +263,43 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 		}
 	}
 	
+	
+	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if isEditingPhoto == false {
+			print("is Editing Photo == false")
 			return
+			
 		} else {
-			print("READY FOR SAVING")
+			let selectedImage = bgImages[indexPath.row]
+			let selectedImageName = selectedImage.imageName
+			let selectedImageData = selectedImage.imageData
+			
+			
+			print("\(String(describing: selectedImageName)) Saved")
+			
+			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+			managedContext = appDelegate.persistentContainer.viewContext
+			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
+			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip)
+			
+			do {
+				trips = try managedContext.fetch(tripFetch)
+				guard let tripToEdit = trips.first else { return }
+				tripToEdit.imageName = selectedImageName
+				print(">>>>\(String(describing: tripToEdit.imageName))")
+				tripToEdit.imageData = selectedImageData
+			} catch let error as NSError {
+				print("Could Not Find Selected Trip \(error), \(error.userInfo)")
+			}
+
+
+			do {
+				try managedContext.save()
+			} catch let error as NSError {
+				print("Could Not Save photo in Selected Trip  \(error), \(error.userInfo)")
+			}
+			
 		}
 	}
 	
@@ -283,7 +327,6 @@ extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationCo
 		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
 		do {
 			bgImages = try managedContext.fetch(fetchRequest)
-			print("liczba bgImages po SAVE: \(bgImages.count)")
 		} catch let error as NSError {
 			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
 		}

@@ -2,7 +2,7 @@
 //  FullRes+CoreDataProperties.swift
 //  TillTrip
 //
-//  Created by Paweł Liczmański on 12.10.2017.
+//  Created by Paweł Liczmański on 14.10.2017.
 //  Copyright © 2017 Paweł Liczmański. All rights reserved.
 //
 

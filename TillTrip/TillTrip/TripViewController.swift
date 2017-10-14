@@ -15,7 +15,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	var managedContext: NSManagedObjectContext!
 	var searchKey: String!
 	var pickedDate: Date!
-	var trips = [Trip]()
+	var trips: [Trip] = []
+	var trip: Trip!
 	var imageName: String!
 	var image: FullRes!
 	
@@ -40,7 +41,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-
+		tripImageConfiguration()
 	}
 	
 	
@@ -61,7 +62,6 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		configureUniversalConstraints()
 		
-		
 		if traitCollection.verticalSizeClass == .compact {
 			configureCompactConstraints()
 			NSLayoutConstraint.activate(compactVerticalConstraints)
@@ -69,40 +69,14 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			configureRegularConstraints()
 			NSLayoutConstraint.activate(regularVerticalConstraints)
 		}
-
+		
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		managedContext = appDelegate.persistentContainer.viewContext
+		
 		
 		imageView.layer.cornerRadius = 10
-		if imageName == nil {
-			imageView.image = UIImage(named: "thai8")
-		} else {
-			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-			managedContext = appDelegate.persistentContainer.viewContext
-			
-			let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
-			fetchRequest.predicate = NSPredicate(format: "imageName == %@", imageName!)
-			do {
-				let xxx = try managedContext.fetch(fetchRequest)
-				guard let xxxFirst = xxx.first else {return}
-				image = xxxFirst
-				
-				
-			} catch let error as NSError {
-				print("Could Not Load/Create Trip \(error), \(error.userInfo)")
-			}
-			if image.imageData != nil {
-				let editedTripImageData: Data = image.imageData! as Data
-				imageView.image = UIImage(data: editedTripImageData)
-				imageSwitch.isOn = true
-			} else {
-				imageView.image = UIImage(named: imageName)
-				imageSwitch.isOn = false
-			}
-			
-			
 		
-		}
-		imageView.clipsToBounds = true
-		imageView.contentMode = .scaleToFill
+		tripImageConfiguration()
 		
 		configureItems()
 		
@@ -125,7 +99,6 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 				trips = try managedContext.fetch(fetchRequest)
 				
 				guard let tripToEdit = trips.first else {return}
-				print("number of trips\(String(describing: tripToEdit.name))")
 				tripNameTextField.text = tripToEdit.name
 				tripDateTextField.text = dateConverterToString(from: tripToEdit.date! as Date)
 				pickedDate = tripToEdit.date! as Date
@@ -160,9 +133,6 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	func configureItems() {
 		
-		tripNameLabel.text = "Trip name"
-		tripDateLabel.text = "Date of trip"
-		
 		let labels = [tripNameLabel, tripDateLabel]
 		for label in labels {
 			label.backgroundColor = UIColor.darkGray.withAlphaComponent(0.85)
@@ -174,6 +144,11 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			label.layer.borderColor = UIColor.black.withAlphaComponent(0.25).cgColor
 		}
 		
+		imageView.clipsToBounds = true
+		imageView.contentMode = .scaleToFill
+		
+		tripNameLabel.text = "Trip name"
+		tripDateLabel.text = "Date of trip"
 		
 		tripNameTextField.font = UIFont.preferredFont(forTextStyle: .headline)
 		tripNameTextField.backgroundColor = UIColor.white
@@ -478,10 +453,53 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		if segue.identifier == "setPhoto" {
 			let controller = segue.destination as! GalleryViewController
 			controller.isEditingPhoto = true
+			controller.searchKeyForSelectedTrip = searchKey
 		}
 	}
 	
-	
+	func tripImageConfiguration() {
+		if imageName == nil {
+			//TODO: 1 - zmienić na arc4random_uniform zamiast thai8
+			imageView.image = UIImage(named: "thai8")
+		} else {
+			
+			let tripsFetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+			tripsFetchRequest.predicate = NSPredicate(format: "searchKey == %@", searchKey!)
+			
+			do {
+				let fetchedTrips = try managedContext.fetch(tripsFetchRequest)
+				trip = fetchedTrips.first!
+			} catch let error as NSError {
+				print("Could Not Fetch Edited Trip \(error), \(error.userInfo)")
+			}
+			
+			if trip.imageData != nil {
+				let tripImageData = trip.imageData! as Data
+				imageView.image = UIImage(data: tripImageData)
+				imageSwitch.isOn = true
+			} else {
+				
+				let imagesFetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+				imagesFetchRequest.predicate = NSPredicate(format: "imageName == %@", imageName!)
+				
+				do {
+					let fetchedImages = try managedContext.fetch(imagesFetchRequest)
+					image = fetchedImages.first!
+				} catch let error as NSError {
+					print("Could Not Load/Create Trip \(error), \(error.userInfo)")
+				}
+				
+				if image.imageData != nil {
+					let editedTripImageData: Data = image.imageData! as Data
+					imageView.image = UIImage(data: editedTripImageData)
+					imageSwitch.isOn = false
+				} else {
+					imageView.image = UIImage(named: imageName)
+					imageSwitch.isOn = false
+				}
+			}
+		}
+	}
 
 	
 }

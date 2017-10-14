@@ -13,6 +13,8 @@
     </entity>
     <entity name="Trip" representedClassName=".Trip" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="imageName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="searchKey" optional="YES" attributeType="String" syncable="YES"/>
@@ -21,6 +23,6 @@
     <elements>
         <element name="FullRes" positionX="-468" positionY="174" width="126" height="103"/>
         <element name="Thumbnail" positionX="-209" positionY="335" width="128" height="88"/>
-        <element name="Trip" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Trip" positionX="-63" positionY="-18" width="128" height="148"/>
     </elements>
 </model>
