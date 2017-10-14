@@ -473,9 +473,13 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 				print("Could Not Fetch Edited Trip \(error), \(error.userInfo)")
 			}
 			
-			if trip.imageData != nil {
+			if trip.imageData != nil{
 				let tripImageData = trip.imageData! as Data
 				imageView.image = UIImage(data: tripImageData)
+				imageSwitch.isOn = true
+			} else if trip.imageName != nil {
+				let tripImageName = trip.imageName! as String
+				imageView.image = UIImage(named: tripImageName)
 				imageSwitch.isOn = true
 			} else {
 				

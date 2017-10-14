@@ -155,7 +155,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		let trip = trips[indexPath.row]
 		
 		
-
+		
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		
 		if bgImagesDecreasingArray.count < trips.count {
@@ -169,11 +169,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		bgImagesDecreasingArray.remove(at: Int(randomImageIndex))
 		
 		
-		if image.imageData == nil {
-			cell.bgImage.image = UIImage(named: image.imageName!)
+		
+		
+		if trip.imageData != nil {
+			let tripImageData: Data = trip.imageData! as Data
+			cell.bgImage.image = UIImage(data: tripImageData)
+		} else if trip.imageName != nil {
+			let tripImageName = trip.imageName! as String
+			cell.bgImage.image = UIImage(named: tripImageName)
 		} else {
-			let convertedImageData: Data = image.imageData! as Data
-			cell.bgImage.image = UIImage(data: convertedImageData)
+			if image.imageData == nil {
+				cell.bgImage.image = UIImage(named: image.imageName!)
+			} else {
+				let convertedImageData: Data = image.imageData! as Data
+				cell.bgImage.image = UIImage(data: convertedImageData)
+			}
+			
 		}
 		
 		
