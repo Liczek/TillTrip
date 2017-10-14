@@ -60,31 +60,24 @@ class GalleryViewController: UIViewController {
 		
 		getNewPhotoButton.addTarget(self, action: #selector(imagePickerSourceType), for: .touchUpInside)
 		imagePicker.delegate = self
+		
+		
+		let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
+		tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip)
+		
+		do {
+			trips = try managedContext.fetch(tripFetch)
+			trip = trips.first!
+		} catch let error as NSError {
+			print("Could Not Find Selected Trip \(error), \(error.userInfo)")
+		}
+		if trip.imageName == nil {
+		displayAlertForBGImageSet()
+		}
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		
-		if isEditingPhoto == true {
-			let alert = UIAlertController(title: "Choose photo", message: "Tap on image which you want add to your trip or add new photo to gallery from your camera or photo library", preferredStyle: .alert)
-			let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-			alert.addAction(okAction)
-			present(alert, animated: true, completion: nil)
-			
-			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-			managedContext = appDelegate.persistentContainer.viewContext
-			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
-			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip)
-			
-			do {
-				trips = try managedContext.fetch(tripFetch)
-				trip = trips.first!
-			} catch let error as NSError {
-				print("Could Not Find Selected Trip \(error), \(error.userInfo)")
-			}
-		}
-		
-		
 		
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
@@ -156,6 +149,27 @@ class GalleryViewController: UIViewController {
 		imagePicker.sourceType = .camera
 		imagePicker.allowsEditing = true
 		present(imagePicker, animated: true, completion: nil)
+	}
+	
+	func displayAlertForBGImageSet() {
+		if isEditingPhoto == true {
+			let alert = UIAlertController(title: "Choose photo", message: "Tap on image which you want add to your trip or add new photo to gallery from your camera or photo library", preferredStyle: .alert)
+			let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+			alert.addAction(okAction)
+			present(alert, animated: true, completion: nil)
+			
+			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+			managedContext = appDelegate.persistentContainer.viewContext
+			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
+			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip)
+			
+			do {
+				trips = try managedContext.fetch(tripFetch)
+				trip = trips.first!
+			} catch let error as NSError {
+				print("Could Not Find Selected Trip \(error), \(error.userInfo)")
+			}
+		}
 	}
 }
 
@@ -292,6 +306,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 			} catch let error as NSError {
 				print("Could Not Save photo in Selected Trip  \(error), \(error.userInfo)")
 			}
+			self.dismiss(animated: true, completion: nil)
 			
 		}
 	}
@@ -314,7 +329,7 @@ extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationCo
 		let fullRes = FullRes(entity: entity, insertInto: managedContext)
 		
 		fullRes.imageData = imageData as NSData
-		fullRes.imageName = imageName
+		fullRes.imageName = imageName as String
 		managedContext.insert(fullRes)
 		
 		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
