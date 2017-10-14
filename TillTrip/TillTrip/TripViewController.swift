@@ -159,6 +159,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		tripNameTextField.textAlignment = .center
 		tripNameTextField.font = UIFont.preferredFont(forTextStyle: .headline)
 		tripNameTextField.borderStyle = .roundedRect
+		tripNameTextField.autocorrectionType = .no
 		
 		tripDateTextField.font = UIFont.preferredFont(forTextStyle: .headline)
 		tripDateTextField.backgroundColor = UIColor.white
@@ -415,6 +416,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		self.view.endEditing(true)
 		return false
 	}
+//MARK: ALERTS
 	
 	func switchChanged(imageSwitch: UISwitch) {
 		let value = imageSwitch.isOn
@@ -425,7 +427,8 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { (action) in
 				self.performSegue(withIdentifier: "setPhoto", sender: nil)
 			})
-			let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
+			let noAction = UIAlertAction(title: "No", style: .default, handler: { (action) in
+				imageSwitch.isOn = false})
 			
 			alert.addAction(yesAction)
 			alert.addAction(noAction)
@@ -433,17 +436,42 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			
 		} else {
 			let alert = UIAlertController(title: nil, message: "What you wanna to do with current Trip photo?", preferredStyle: .alert)
-			let yesAction = UIAlertAction(title: "Delete", style: .default, handler: { (action) in
+			let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+				
+				guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+				self.managedContext = appDelegate.persistentContainer.viewContext
+				
+				let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+				fetchRequest.predicate = NSPredicate(format: "searchKey == %@", self.searchKey!)
+				
+				do {
+					self.trips = try self.managedContext.fetch(fetchRequest)
+					
+					guard let tripToEdit = self.trips.first else {return}
+					tripToEdit.imageName = nil
+					tripToEdit.imageData = nil
+					
+				} catch let error as NSError {
+					print("Could Not Load/Create Trip \(error), \(error.userInfo)")
+				}
+				
+				do {
+					try self.managedContext.save()
+				} catch let error as NSError {
+					print("Could Not Save trip after Deleting Image \(error), \(error.userInfo)")
+				}
+				
+				self.dismiss(animated: true, completion: nil)
 				
 			})
-			let noAction = UIAlertAction(title: "Nothing", style: .default, handler: nil)
+			let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
 			let changeAction = UIAlertAction(title: "Change", style: .default, handler: { (action) in
 				self.performSegue(withIdentifier: "setPhoto", sender: nil)
 			})
 			
-			alert.addAction(yesAction)
-			alert.addAction(noAction)
 			alert.addAction(changeAction)
+			alert.addAction(cancelAction)
+			alert.addAction(deleteAction)
 			present(alert, animated: true, completion: nil)
 			print("Switch is Off")
 		}

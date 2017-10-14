@@ -198,7 +198,6 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		var tableViewHeight = CGFloat()
 		let statusBar = UIApplication.shared.statusBarFrame.height
-		print("status bar: \(UIApplication.shared.statusBarFrame.height)")
 		if statusBar == 0.0 {
 			tableViewHeight = tableView.frame.size.height - 20
 		} else {
@@ -207,10 +206,8 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 		var rowHeight = CGFloat()
 		if traitCollection.verticalSizeClass == .regular {
 			rowHeight = tableViewHeight / 3
-			print("pionowo \(tableViewHeight)")
 		} else if traitCollection.verticalSizeClass == .compact {
 			rowHeight = (tableViewHeight + 20)  / 2
-			print("poziomo \(tableViewHeight)")
 		}
 		return rowHeight
 	}
@@ -275,9 +272,6 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 			let selectedImageName = selectedImage.imageName
 			let selectedImageData = selectedImage.imageData
 			
-			
-			print("\(String(describing: selectedImageName)) Saved")
-			
 			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 			managedContext = appDelegate.persistentContainer.viewContext
 			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
@@ -287,7 +281,6 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 				trips = try managedContext.fetch(tripFetch)
 				guard let tripToEdit = trips.first else { return }
 				tripToEdit.imageName = selectedImageName
-				print(">>>>\(String(describing: tripToEdit.imageName))")
 				tripToEdit.imageData = selectedImageData
 			} catch let error as NSError {
 				print("Could Not Find Selected Trip \(error), \(error.userInfo)")
