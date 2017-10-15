@@ -27,6 +27,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	var tripNameLabel = UILabelWithInsets()
 	var tripDateLabel = UILabelWithInsets()
+	var setPhotoLabel = UILabel()
 	var tripNameTextField = UITextField()
 	var tripDateTextField = UITextField()
 	var acceptTripButton = UIButton()
@@ -38,6 +39,9 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	var universalCoinstrains = [NSLayoutConstraint]()
 	var compactVerticalConstraints = [NSLayoutConstraint]()
 	var regularVerticalConstraints = [NSLayoutConstraint]()
+	
+	var hud = HudView()
+	var hudLayoutConstraints = [NSLayoutConstraint]()
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -59,6 +63,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		view.addSubview(acceptTripButton)
 		view.addSubview(cancelTripButton)
 		view.addSubview(imageSwitch)
+		view.addSubview(setPhotoLabel)
 		
 		configureUniversalConstraints()
 		
@@ -133,7 +138,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	func configureItems() {
 		
-		let labels = [tripNameLabel, tripDateLabel]
+		let labels = [tripNameLabel, tripDateLabel, setPhotoLabel]
 		for label in labels {
 			label.backgroundColor = UIColor.darkGray.withAlphaComponent(0.85)
 			label.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -149,6 +154,9 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		
 		tripNameLabel.text = "Trip name"
 		tripDateLabel.text = "Date of trip"
+		setPhotoLabel.text = "Set Photo"
+		setPhotoLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+		setPhotoLabel.backgroundColor = UIColor.clear
 		
 		tripNameTextField.font = UIFont.preferredFont(forTextStyle: .headline)
 		tripNameTextField.backgroundColor = UIColor.white
@@ -160,6 +168,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		tripNameTextField.font = UIFont.preferredFont(forTextStyle: .headline)
 		tripNameTextField.borderStyle = .roundedRect
 		tripNameTextField.autocorrectionType = .no
+		tripNameTextField.keyboardAppearance = .dark
 		
 		tripDateTextField.font = UIFont.preferredFont(forTextStyle: .headline)
 		tripDateTextField.backgroundColor = UIColor.white
@@ -176,13 +185,15 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		acceptTripButton.backgroundColor = UIColor.darkGray
 		acceptTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.75), for: .normal)
 		acceptTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+		acceptTripButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 5, bottom: 4, right: 5)
 		
 		cancelTripButton.setTitle("Cancel", for: .normal)
 		cancelTripButton.clipsToBounds = true
 		cancelTripButton.layer.cornerRadius = 10
 		cancelTripButton.backgroundColor = UIColor.darkGray
-		cancelTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.30), for: .normal)
-		cancelTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+		cancelTripButton.setTitleColor(UIColor.white.withAlphaComponent(0.50), for: .normal)
+		cancelTripButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+		cancelTripButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 5, bottom: 4, right: 5)
 		
 		imageSwitch.tintColor = UIColor.darkGray
 		imageSwitch.onTintColor = UIColor.white
@@ -201,6 +212,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		acceptTripButton.translatesAutoresizingMaskIntoConstraints = false
 		cancelTripButton.translatesAutoresizingMaskIntoConstraints = false
 		imageSwitch.translatesAutoresizingMaskIntoConstraints = false
+		setPhotoLabel.translatesAutoresizingMaskIntoConstraints = false
 		
 		//imageView
 		universalCoinstrains.append(imageView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: verticalGap))
@@ -224,12 +236,17 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		universalCoinstrains.append(acceptTripButton.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 		
 		//CancelButton
-		universalCoinstrains.append(cancelTripButton.topAnchor.constraint(equalTo: acceptTripButton.topAnchor))
+		//universalCoinstrains.append(cancelTripButton.topAnchor.constraint(equalTo: acceptTripButton.topAnchor))
+		universalCoinstrains.append(cancelTripButton.centerYAnchor.constraint(equalTo: acceptTripButton.centerYAnchor))
 		universalCoinstrains.append(cancelTripButton.trailingAnchor.constraint(equalTo: acceptTripButton.leadingAnchor , constant: -horizontalGap))
 		
 		//Switch
 		universalCoinstrains.append(imageSwitch.centerYAnchor.constraint(equalTo: acceptTripButton.centerYAnchor))
 		universalCoinstrains.append(imageSwitch.leadingAnchor.constraint(equalTo: acceptTripButton.trailingAnchor, constant: horizontalGap))
+		
+		//SetPhotoLabel
+		universalCoinstrains.append(setPhotoLabel.topAnchor.constraint(equalTo: imageSwitch.bottomAnchor, constant: 2))
+		universalCoinstrains.append(setPhotoLabel.centerXAnchor.constraint(equalTo: imageSwitch.centerXAnchor))
 		
 		NSLayoutConstraint.activate(universalCoinstrains)
 	}
@@ -448,6 +465,10 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 					self.trips = try self.managedContext.fetch(fetchRequest)
 					
 					guard let tripToEdit = self.trips.first else {return}
+					self.trip = tripToEdit
+					
+					self.hudDeletePhoto()
+					
 					tripToEdit.imageName = nil
 					tripToEdit.imageData = nil
 					
@@ -533,6 +554,40 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 				}
 			}
 		}
+	}
+	
+	func hudDeletePhoto() {
+		hud.hudNameLabel.text = "REMOVED"
+		let selectedImageData = trip.imageData
+		let selectedImageName = trip.imageName
+		if selectedImageData != nil {
+			hud.hudImage.image = UIImage(data: selectedImageData! as Data)
+		} else {
+			hud.hudImage.image = UIImage(named: selectedImageName!)
+		}
+		
+		showHUD()
+		
+		
+		let when = DispatchTime.now() + 1.8
+		DispatchQueue.main.asyncAfter(deadline: when){
+			// your code with delay
+			self.hud.removeFromSuperview()
+		}
+
+	
+		}
+	
+	func showHUD() {
+		
+		view.addSubview(hud)
+		hud.translatesAutoresizingMaskIntoConstraints = false
+		hudLayoutConstraints.append(hud.topAnchor.constraint(equalTo: view.topAnchor))
+		hudLayoutConstraints.append(hud.bottomAnchor.constraint(equalTo: view.bottomAnchor))
+		hudLayoutConstraints.append(hud.leadingAnchor.constraint(equalTo: view.leadingAnchor))
+		hudLayoutConstraints.append(hud.trailingAnchor.constraint(equalTo: view.trailingAnchor))
+		NSLayoutConstraint.activate(hudLayoutConstraints)
+		
 	}
 
 	

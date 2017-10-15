@@ -71,34 +71,35 @@ class HudView: UIView {
 		
 		
 		//Background
-		background.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+		background.backgroundColor = UIColor.black.withAlphaComponent(0.6)
 		//background.image = UIImage(named: "thai1")
 		
 		
 		//BoxBackground
-		boxBackground.backgroundColor = UIColor.black.withAlphaComponent(0.95)
+		boxBackground.backgroundColor = UIColor.black.withAlphaComponent(0.4)
 		boxBackground.layer.borderWidth = 2
-		boxBackground.layer.borderColor = UIColor.white.withAlphaComponent(0.9).cgColor
+		boxBackground.layer.borderColor = UIColor.white.withAlphaComponent(0.2).cgColor
 		boxBackground.clipsToBounds = true
 		boxBackground.layer.cornerRadius = 10
 		
 		//hudNameLabel
 		hudNameLabel.font = UIFont.preferredFont(forTextStyle: .title1)
-		hudNameLabel.backgroundColor = UIColor.black
+		hudNameLabel.backgroundColor = UIColor.black.withAlphaComponent(0.4)
 		hudNameLabel.layer.borderWidth = 1
-		hudNameLabel.layer.borderColor = UIColor.white.cgColor
+		hudNameLabel.layer.borderColor = UIColor.white.withAlphaComponent(0.2).cgColor
 		hudNameLabel.clipsToBounds = true
-		hudNameLabel.textColor = UIColor.white
+		hudNameLabel.textColor = UIColor.white.withAlphaComponent(0.4)
 		hudNameLabel.layer.cornerRadius = 10
 		hudNameLabel.textAlignment = .center
 		hudNameLabel.sizeToFit()
 		
 		//hudImage
 		hudImage.contentMode = .scaleAspectFit
-		hudImage.layer.borderColor = UIColor.white.cgColor
+		hudImage.layer.borderColor = UIColor.white.withAlphaComponent(0.2).cgColor
 		hudImage.layer.borderWidth = 0.5
 		hudImage.clipsToBounds = true
 		hudImage.layer.cornerRadius = 10
+		hudImage.alpha = 0.8
 		
 	}
 	
@@ -111,10 +112,13 @@ class HudView: UIView {
 			self.transform = CGAffineTransform.identity},
 		               completion: nil)
 		
-		UIView.animate(withDuration: 0.3, delay: 0.8, animations: {
+		UIView.animate(withDuration: 1, delay: 0.8, animations: {
 			self.alpha = 0
-			self.transform = CGAffineTransform.identity })
+			self.transform = CGAffineTransform.identity
+			
+		})
 	}
+	
 	
 	
 }

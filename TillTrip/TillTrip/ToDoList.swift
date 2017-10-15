@@ -20,7 +20,7 @@ add sample images
 
 poprawic constraint boxBackground height i width
 
-
+kolor dni do wyjazdu 30 15 10 5 3
 
 
 

@@ -16,11 +16,14 @@ class GalleryViewController: UIViewController {
 	var trip = Trip()
 	var tableView = UITableView()
 	var getNewPhotoButton = UIButton()
+	var addSamplePhotoButton = UIButton()
+	var removeAllPhotosButton = UIButton()
+	
 	var universalLayoutConstraints = [NSLayoutConstraint]()
 	var imagePicker = UIImagePickerController()
 	var managedContext: NSManagedObjectContext!
 	var isEditingPhoto = false
-	var searchKeyForSelectedTrip = String()
+	var searchKeyForSelectedTrip: String?
 	
 	var verticalGap: CGFloat = 15
 	var horizontalGap: CGFloat = 5
@@ -29,8 +32,8 @@ class GalleryViewController: UIViewController {
 	var hudLayoutConstraints = [NSLayoutConstraint]()
 	
 	
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
@@ -52,6 +55,8 @@ class GalleryViewController: UIViewController {
 		
 		view.addSubview(getNewPhotoButton)
 		view.addSubview(tableView)
+		view.addSubview(addSamplePhotoButton)
+		view.addSubview(removeAllPhotosButton)
 		
 		universalConstraints()
 		configureButton()
@@ -63,20 +68,26 @@ class GalleryViewController: UIViewController {
 		getNewPhotoButton.addTarget(self, action: #selector(imagePickerSourceType), for: .touchUpInside)
 		imagePicker.delegate = self
 		
+		if searchKeyForSelectedTrip != nil {
 		
-		let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
-		tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip)
+			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
+			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip!)
+			
+			do {
+				trips = try managedContext.fetch(tripFetch)
+					trip = trips.first!
+				
+			} catch let error as NSError {
+				print("Could Not Find Selected Trip \(error), \(error.userInfo)")
+			}
+			if trip.imageName == nil {
+				displayAlertForBGImageSet()
+			}
+		} else {
+			return
+		}
 		
-		do {
-			trips = try managedContext.fetch(tripFetch)
-			trip = trips.first!
-		} catch let error as NSError {
-			print("Could Not Find Selected Trip \(error), \(error.userInfo)")
-		}
-		if trip.imageName == nil {
-		displayAlertForBGImageSet()
-		}
-    }
+	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -99,10 +110,20 @@ class GalleryViewController: UIViewController {
 		
 		getNewPhotoButton.translatesAutoresizingMaskIntoConstraints = false
 		tableView.translatesAutoresizingMaskIntoConstraints = false
+		addSamplePhotoButton.translatesAutoresizingMaskIntoConstraints = false
+		removeAllPhotosButton.translatesAutoresizingMaskIntoConstraints = false
 		
-		//button
+		//buttons
 		universalLayoutConstraints.append(getNewPhotoButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: verticalGap * 2))
 		universalLayoutConstraints.append(getNewPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+		
+		universalLayoutConstraints.append(addSamplePhotoButton.centerYAnchor.constraint(equalTo: getNewPhotoButton.centerYAnchor))
+		universalLayoutConstraints.append(addSamplePhotoButton.trailingAnchor.constraint(equalTo: getNewPhotoButton.leadingAnchor, constant: -horizontalGap * 2))
+		universalLayoutConstraints.append(addSamplePhotoButton.widthAnchor.constraint(equalTo: getNewPhotoButton.widthAnchor, multiplier: 0.6))
+		
+		universalLayoutConstraints.append(removeAllPhotosButton.centerYAnchor.constraint(equalTo: getNewPhotoButton.centerYAnchor))
+		universalLayoutConstraints.append(removeAllPhotosButton.leadingAnchor.constraint(equalTo: getNewPhotoButton.trailingAnchor, constant: horizontalGap * 2))
+		universalLayoutConstraints.append(removeAllPhotosButton.widthAnchor.constraint(equalTo: getNewPhotoButton.widthAnchor, multiplier: 0.6))
 		
 		//tableView
 		universalLayoutConstraints.append(tableView.topAnchor.constraint(equalTo: getNewPhotoButton.bottomAnchor, constant: verticalGap))
@@ -120,7 +141,27 @@ class GalleryViewController: UIViewController {
 		getNewPhotoButton.backgroundColor = UIColor.white
 		getNewPhotoButton.setTitle("Add New Photo", for: .normal)
 		getNewPhotoButton.setTitleColor(UIColor.black, for: .normal)
+		getNewPhotoButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 5, bottom: 4, right: 5)
 		
+		addSamplePhotoButton.clipsToBounds = true
+		addSamplePhotoButton.layer.cornerRadius = 5
+		addSamplePhotoButton.backgroundColor = UIColor.clear
+		addSamplePhotoButton.layer.borderWidth = 0.5
+		addSamplePhotoButton.layer.borderColor = UIColor.white.withAlphaComponent(0.6).cgColor
+		addSamplePhotoButton.setTitle("Add Starter Photos", for: .normal)
+		addSamplePhotoButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote)
+		addSamplePhotoButton.setTitleColor(UIColor.white.withAlphaComponent(0.6), for: .normal)
+		addSamplePhotoButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 5, bottom: 4, right: 5)
+		
+		removeAllPhotosButton.clipsToBounds = true
+		removeAllPhotosButton.layer.cornerRadius = 5
+		removeAllPhotosButton.backgroundColor = UIColor.clear
+		removeAllPhotosButton.layer.borderWidth = 0.5
+		removeAllPhotosButton.layer.borderColor = UIColor.white.withAlphaComponent(0.6).cgColor
+		removeAllPhotosButton.setTitle("Clear Gallerie", for: .normal)
+		removeAllPhotosButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote)
+		removeAllPhotosButton.setTitleColor(UIColor.white.withAlphaComponent(0.6), for: .normal)
+		removeAllPhotosButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 5, bottom: 4, right: 5)
 	}
 	
 	func imagePickerSourceType() {
@@ -163,7 +204,7 @@ class GalleryViewController: UIViewController {
 			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 			managedContext = appDelegate.persistentContainer.viewContext
 			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
-			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip)
+			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip!)
 			
 			do {
 				trips = try managedContext.fetch(tripFetch)
@@ -279,6 +320,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: false)
 		if isEditingPhoto == false {
 			print("is Editing Photo == false")
 			return
@@ -295,7 +337,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 			managedContext = appDelegate.persistentContainer.viewContext
 			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
-			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip)
+			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip!)
 			
 			do {
 				trips = try managedContext.fetch(tripFetch)
@@ -303,7 +345,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 				tripToEdit.imageName = selectedImageName
 				tripToEdit.imageData = selectedImageData
 				
-				hud.hudNameLabel.text = "Photo Added"
+				hud.hudNameLabel.text = "SAVED"
 				if selectedImageData != nil {
 					hud.hudImage.image = UIImage(data: selectedImageData! as Data)
 				} else {
@@ -311,6 +353,13 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 				}
 				
 				showHUD()
+				print( isEditingPhoto)
+				
+				let when = DispatchTime.now() + 1.8
+				DispatchQueue.main.asyncAfter(deadline: when){
+					// your code with delay
+					self.hud.removeFromSuperview()
+				}
 				
 			} catch let error as NSError {
 				print("Could Not Find Selected Trip \(error), \(error.userInfo)")
@@ -325,7 +374,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 				print("Could Not Save photo in Selected Trip  \(error), \(error.userInfo)")
 			}
 //TODO: dowiedzieć się czemu nie działał dismiss
-			self.dismiss(animated: true, completion: nil)
+			//self.dismiss(animated: true, completion: nil)
 			
 		}
 	}
