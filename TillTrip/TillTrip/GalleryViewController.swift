@@ -114,22 +114,22 @@ class GalleryViewController: UIViewController {
 		removeAllPhotosButton.translatesAutoresizingMaskIntoConstraints = false
 		
 		//buttons
-		universalLayoutConstraints.append(getNewPhotoButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: verticalGap * 2))
+		universalLayoutConstraints.append(getNewPhotoButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: verticalGap))
 		universalLayoutConstraints.append(getNewPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor))
 		
-		universalLayoutConstraints.append(addSamplePhotoButton.centerYAnchor.constraint(equalTo: getNewPhotoButton.centerYAnchor))
-		universalLayoutConstraints.append(addSamplePhotoButton.trailingAnchor.constraint(equalTo: getNewPhotoButton.leadingAnchor, constant: -horizontalGap * 2))
+		universalLayoutConstraints.append(addSamplePhotoButton.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor, constant: view.frame.size.width * 0.25))
 		universalLayoutConstraints.append(addSamplePhotoButton.widthAnchor.constraint(equalTo: getNewPhotoButton.widthAnchor, multiplier: 0.6))
+		universalLayoutConstraints.append(addSamplePhotoButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -horizontalGap * 0.5))
 		
-		universalLayoutConstraints.append(removeAllPhotosButton.centerYAnchor.constraint(equalTo: getNewPhotoButton.centerYAnchor))
-		universalLayoutConstraints.append(removeAllPhotosButton.leadingAnchor.constraint(equalTo: getNewPhotoButton.trailingAnchor, constant: horizontalGap * 2))
+		universalLayoutConstraints.append(removeAllPhotosButton.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor, constant: -view.frame.size.width * 0.25))
 		universalLayoutConstraints.append(removeAllPhotosButton.widthAnchor.constraint(equalTo: getNewPhotoButton.widthAnchor, multiplier: 0.6))
+		universalLayoutConstraints.append(removeAllPhotosButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -horizontalGap * 0.5))
 		
 		//tableView
 		universalLayoutConstraints.append(tableView.topAnchor.constraint(equalTo: getNewPhotoButton.bottomAnchor, constant: verticalGap))
 		universalLayoutConstraints.append(tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
 		universalLayoutConstraints.append(tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
-		universalLayoutConstraints.append(tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -verticalGap))
+		universalLayoutConstraints.append(tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -verticalGap * 2))
 
 		
 		NSLayoutConstraint.activate(universalLayoutConstraints)
@@ -138,7 +138,9 @@ class GalleryViewController: UIViewController {
 	func configureButton() {
 		getNewPhotoButton.clipsToBounds = true
 		getNewPhotoButton.layer.cornerRadius = 10
-		getNewPhotoButton.backgroundColor = UIColor.white
+		getNewPhotoButton.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+		getNewPhotoButton.layer.borderWidth = 1.5
+		getNewPhotoButton.layer.borderColor = UIColor.white.withAlphaComponent(1).cgColor
 		getNewPhotoButton.setTitle("Add New Photo", for: .normal)
 		getNewPhotoButton.setTitleColor(UIColor.black, for: .normal)
 		getNewPhotoButton.contentEdgeInsets = UIEdgeInsets(top: 4, left: 5, bottom: 4, right: 5)
