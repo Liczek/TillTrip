@@ -158,43 +158,68 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		
-		if bgImagesDecreasingArray.count < trips.count {
-			bgImagesDecreasingArray += bgImages
-		}
-		
-		let maxIndex = bgImagesDecreasingArray.count
-		let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
-		let image = bgImagesDecreasingArray[Int(randomImageIndex)]
-		let imageName = bgImagesDecreasingArray[Int(randomImageIndex)].imageName!
-		bgImagesDecreasingArray.remove(at: Int(randomImageIndex))
-		
-		
-		
-		
-		if trip.imageData != nil {
-			let tripImageData: Data = trip.imageData! as Data
-			cell.bgImage.image = UIImage(data: tripImageData)
-		} else if trip.imageName != nil {
-			let tripImageName = trip.imageName! as String
-			cell.bgImage.image = UIImage(named: tripImageName)
-		} else {
-			if image.imageData == nil {
-				cell.bgImage.image = UIImage(named: image.imageName!)
+		if bgImages.isEmpty {
+			
+			if trip.imageData != nil {
+				let tripImageData: Data = trip.imageData! as Data
+				cell.bgImage.image = UIImage(data: tripImageData)
+			} else if trip.imageName != nil {
+				let tripImageName = trip.imageName! as String
+				cell.bgImage.image = UIImage(named: tripImageName)
 			} else {
-				let convertedImageData: Data = image.imageData! as Data
-				cell.bgImage.image = UIImage(data: convertedImageData)
+				cell.bgImage.image = UIImage(named: "No_image")
+				cell.bgImage.contentMode = .scaleAspectFit
 			}
 			
+		
+			
+		} else {
+			
+			if bgImagesDecreasingArray.count < trips.count {
+				bgImagesDecreasingArray += bgImages
+			}
+			
+			let maxIndex = bgImagesDecreasingArray.count
+			let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
+			let image = bgImagesDecreasingArray[Int(randomImageIndex)]
+			let imageName = bgImagesDecreasingArray[Int(randomImageIndex)].imageName!
+			bgImagesDecreasingArray.remove(at: Int(randomImageIndex))
+			
+			
+			
+			
+			if trip.imageData != nil {
+				let tripImageData: Data = trip.imageData! as Data
+				cell.bgImage.image = UIImage(data: tripImageData)
+			} else if trip.imageName != nil {
+				let tripImageName = trip.imageName! as String
+				cell.bgImage.image = UIImage(named: tripImageName)
+			} else {
+				if image.imageData == nil {
+					cell.bgImage.image = UIImage(named: image.imageName!)
+				} else {
+					let convertedImageData: Data = image.imageData! as Data
+					cell.bgImage.image = UIImage(data: convertedImageData)
+				}
+				
+			}
+			
+			if  cell.bgImage.image == UIImage(named:"No_image") {
+				cell.bgImage.contentMode = .scaleAspectFit
+			} else {
+				cell.bgImage.contentMode = .scaleToFill
+				cell.bgImageName = imageName
+			}
 		}
 		
 		
-		cell.bgImage.contentMode = .scaleToFill
+		
 		cell.selectionStyle = .none
 		
 		cell.destinationName.text = trip.name
 		cell.destinationName.textColor = UIColor.white
 		cell.searchKey = trip.searchKey
-		cell.bgImageName = imageName
+		
 		let daysTillTrip = daysBetweenDates(firstDate: Date(), secondDate: trip.date! as Date)
 		
 		cell.dayLeftNumber.text = "\(daysTillTrip)"

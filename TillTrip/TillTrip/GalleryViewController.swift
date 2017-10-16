@@ -262,7 +262,37 @@ extension GalleryViewController {
 			}
 		}
 	}
+	
+	
+	func insertNoImageImage() {
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		managedContext = appDelegate.persistentContainer.viewContext
+		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+		fetchRequest.predicate = NSPredicate(format: "imageName != nil")
+		
+		do {
+			let result = try managedContext.count(for: fetchRequest)
+			if result > 0 {return}
+		} catch let error as NSError {
+			print("Could not insert fake data\(error),\(error.userInfo)")
+		}
+		
+		
+		let entity = NSEntityDescription.entity(forEntityName: "FullRes", in: managedContext)!
+		let image = FullRes(entity: entity, insertInto: managedContext)
+		
+		
+		image.imageName = "No_image"
+		do {
+			try managedContext.save()
+		} catch let error as NSError {
+			print("Could Not Save no_image Image \(error), \(error.userInfo)")
+		}
+	}
 }
+
+
+
 
 extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 	
@@ -422,6 +452,30 @@ extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationCo
 		let imageName = String(NSDate().timeIntervalSince1970)
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		let managedContext = appDelegate.persistentContainer.viewContext
+		
+		let fetchNoImageImage = NSFetchRequest<FullRes>(entityName: "FullRes")
+		fetchNoImageImage.predicate = NSPredicate(format: "imageName == %@", "No_image")
+		
+		do {
+			let result = try managedContext.count(for: fetchNoImageImage)
+			if result > 0 {
+				let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FullRes")
+				let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+				
+				do {
+					try managedContext.execute(deleteRequest)
+					bgImages = [FullRes]()
+				} catch let error as NSError {
+					print("Could Not Remove No_image Image \(error), \(error.userInfo)")
+				}
+			}
+			
+			try! managedContext.save()
+			
+		} catch let error as NSError {
+			print("Coudl Not Set No_image Image \(error), \(error.userInfo)")
+		}
+		
 		let entity = NSEntityDescription.entity(forEntityName: "FullRes", in: managedContext)!
 		let fullRes = FullRes(entity: entity, insertInto: managedContext)
 		
@@ -468,11 +522,13 @@ extension GalleryViewController {
 	func removeAllPhotosFromGallery() {
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		managedContext = appDelegate.persistentContainer.viewContext
-		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
-		let emptyArray = [FullRes]()
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FullRes")
+		let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+		
 		do {
-			bgImages = try managedContext.fetch(fetchRequest)
-			bgImages = emptyArray
+			try managedContext.execute(deleteRequest)
+			bgImages = [FullRes]()
+			insertNoImageImage()
 		} catch let error as NSError {
 			print("Could Not Fetch bgImages \(error), \(error.userInfo)")
 		}
