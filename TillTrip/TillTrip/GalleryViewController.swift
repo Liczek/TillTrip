@@ -31,6 +31,7 @@ class GalleryViewController: UIViewController {
 	var hud = HudView()
 	var hudLayoutConstraints = [NSLayoutConstraint]()
 	
+	var arrayOfImages = ["thai1", "thai2", "thai3", "thai4", "thai5", "thai6", "thai7", "thai8", "thai9", "thai10", "thai11", "thai12", "thai13"]
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -69,6 +70,9 @@ class GalleryViewController: UIViewController {
 		imagePicker.delegate = self
 		
 		removeAllPhotosButton.addTarget(self, action: #selector(removeAllPhotosFromGallery), for: .touchUpInside)
+		addSamplePhotoButton.addTarget(self, action: #selector(addStarterPhotosToGallery), for: .touchUpInside)
+		
+		
 		
 		if searchKeyForSelectedTrip != nil {
 		
@@ -333,16 +337,22 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.dayLeftNumber.isHidden = true
 		
 		if bgImages == [] {
+			insertNoImageImage()
 			cell.bgImage.image = UIImage(named: "No_image")
 			cell.bgImage.contentMode = .scaleAspectFit
 		} else {
-			let image = bgImages[indexPath.row]
-			if image.imageData == nil {
-				cell.bgImage.image = UIImage(named: image.imageName!)
-			} else {
-				let convertedImageData: Data = image.imageData! as Data
-				cell.bgImage.image = UIImage(data: convertedImageData)
-			}
+		let image = bgImages[indexPath.row]
+		if image.imageData == nil {
+			cell.bgImage.image = UIImage(named: image.imageName!)
+		} else {
+			let convertedImageData: Data = image.imageData! as Data
+			cell.bgImage.image = UIImage(data: convertedImageData)
+		}
+		if cell.bgImage.image == UIImage(named: "No_image") {
+			cell.bgImage.contentMode = .scaleAspectFit
+		} else {
+			cell.bgImage.contentMode = .scaleToFill
+		}
 		}
 		cell.selectionStyle = .none
 		return cell
@@ -350,7 +360,20 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-		return true
+		
+		var isEditable = true
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return isEditable}
+		let managedContext = appDelegate.persistentContainer.viewContext
+		let fetchNoImageImage = NSFetchRequest<FullRes>(entityName: "FullRes")
+		fetchNoImageImage.predicate = NSPredicate(format: "imageName == %@", "No_image")
+		
+			let result = try! managedContext.count(for: fetchNoImageImage)
+			if result > 0 {
+				isEditable = false
+			} else {
+				isEditable = true
+			}
+		return isEditable
 	}
 	
 	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -535,6 +558,84 @@ extension GalleryViewController {
 		
 		try! managedContext.save()
 		tableView.reloadData()
+
+	}
+	
+	func addStarterPhotosToGallery() {
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		managedContext = appDelegate.persistentContainer.viewContext
+		
+		
+		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+//		fetchRequest.predicate = NSPredicate(format: "imageName != nil")
+//		
+//		
+//		do {
+//			let result = try managedContext.count(for: fetchRequest)
+//			if result > 0 {return}
+//		} catch let error as NSError {
+//			print("Could not fetch plist data \(error)")
+//		}
+		
+//		do {
+//			let imageToRemove = try managedContext.fetch(fetchRequest)[indexPath.row]
+//			managedContext.delete(imageToRemove)
+//			bgImages.remove(at: indexPath.row)
+//			tableView.deleteRows(at: [indexPath], with: .automatic)
+//			
+//		} catch let error as NSError {
+//			print("Could Not Find Selected Image \(error), \(error.userInfo)")
+//		}
+		let fetchNoImageImage = NSFetchRequest<FullRes>(entityName: "FullRes")
+		fetchNoImageImage.predicate = NSPredicate(format: "imageName == %@", "No_image")
+		
+		do {
+			let result = try managedContext.count(for: fetchNoImageImage)
+			if result > 0 {
+				let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FullRes")
+				let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+				
+				do {
+					try managedContext.execute(deleteRequest)
+					bgImages = [FullRes]()
+				} catch let error as NSError {
+					print("Could Not Remove No_image Image \(error), \(error.userInfo)")
+				}
+			}
+			
+			try! managedContext.save()
+			
+		} catch let error as NSError {
+			print("Could Not Set No_image Image \(error), \(error.userInfo)")
+		}
+
+		
+		for (_, element) in arrayOfImages.enumerated() {
+			let entity = NSEntityDescription.entity(forEntityName: "FullRes", in: managedContext)!
+			let fullRes = FullRes(entity: entity, insertInto: managedContext)
+			fullRes.imageName = String(element)
+			
+			managedContext.insert(fullRes)
+		
+		}
+		
+		try! managedContext.save()
+		
+		
+		do {
+			bgImages = try managedContext.fetch(fetchRequest)
+		} catch let error as NSError {
+			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
+		}
+		
+		do {
+			try managedContext.save()
+		} catch let error as NSError {
+			print("Could Not Save FullRes after add new one \(error), \(error.userInfo)")
+		}
+		
+		tableView.reloadData()
+		
 
 	}
 }
