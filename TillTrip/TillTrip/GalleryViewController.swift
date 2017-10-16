@@ -68,6 +68,8 @@ class GalleryViewController: UIViewController {
 		getNewPhotoButton.addTarget(self, action: #selector(imagePickerSourceType), for: .touchUpInside)
 		imagePicker.delegate = self
 		
+		removeAllPhotosButton.addTarget(self, action: #selector(removeAllPhotosFromGallery), for: .touchUpInside)
+		
 		if searchKeyForSelectedTrip != nil {
 		
 			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
@@ -177,9 +179,16 @@ class GalleryViewController: UIViewController {
 		let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
 			self.dismiss(animated: true, completion: nil)
 		}
+		
+		alert.view.tintColor = UIColor.black
+		
+		
 		alert.addAction(camera)
 		alert.addAction(photoLibrary)
 		alert.addAction(cancel)
+		
+		
+		
 		
 		present(alert, animated: true, completion: nil)
 	}
@@ -201,6 +210,9 @@ class GalleryViewController: UIViewController {
 			let alert = UIAlertController(title: "Choose photo", message: "Tap on image which you want add to your trip or add new photo to gallery from your camera or photo library", preferredStyle: .alert)
 			let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
 			alert.addAction(okAction)
+			
+			alert.view.tintColor = UIColor.black
+			
 			present(alert, animated: true, completion: nil)
 			
 			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
@@ -272,25 +284,40 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return bgImages.count
+		var numberOfRows = Int()
+		if bgImages.count == 0 {
+			numberOfRows = 1
+		} else {
+			numberOfRows = bgImages.count
+		}
+		return numberOfRows
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let image = bgImages[indexPath.row]
+		
+		
 		let cell = tableView.dequeueReusableCell(withIdentifier: "TripMenuCell", for: indexPath) as! TripMenuCell
 		cell.destination.isHidden = true
 		cell.dayLeft.isHidden = true
 		cell.destinationName.isHidden = true
 		cell.dayLeftNumber.isHidden = true
-		if image.imageData == nil {
-			cell.bgImage.image = UIImage(named: image.imageName!)
+		
+		if bgImages == [] {
+			cell.bgImage.image = UIImage(named: "No_image")
+			cell.bgImage.contentMode = .scaleAspectFit
 		} else {
-			let convertedImageData: Data = image.imageData! as Data
-			cell.bgImage.image = UIImage(data: convertedImageData)
+			let image = bgImages[indexPath.row]
+			if image.imageData == nil {
+				cell.bgImage.image = UIImage(named: image.imageName!)
+			} else {
+				let convertedImageData: Data = image.imageData! as Data
+				cell.bgImage.image = UIImage(data: convertedImageData)
+			}
 		}
 		cell.selectionStyle = .none
 		return cell
 	}
+	
 	
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		return true
@@ -434,5 +461,24 @@ extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationCo
 		hudLayoutConstraints.append(hud.trailingAnchor.constraint(equalTo: view.trailingAnchor))
 		NSLayoutConstraint.activate(hudLayoutConstraints)
 		
+	}
+}
+
+extension GalleryViewController {
+	func removeAllPhotosFromGallery() {
+		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+		managedContext = appDelegate.persistentContainer.viewContext
+		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+		let emptyArray = [FullRes]()
+		do {
+			bgImages = try managedContext.fetch(fetchRequest)
+			bgImages = emptyArray
+		} catch let error as NSError {
+			print("Could Not Fetch bgImages \(error), \(error.userInfo)")
+		}
+		
+		try! managedContext.save()
+		tableView.reloadData()
+
 	}
 }

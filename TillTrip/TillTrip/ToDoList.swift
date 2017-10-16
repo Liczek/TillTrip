@@ -22,6 +22,6 @@ poprawic constraint boxBackground height i width
 
 kolor dni do wyjazdu 30 15 10 5 3
 
-
+jak dopisujesz zdjecie do tripa to dopiero przy kliknieciu accept changes powinno sie dodawac ( sprawdz czy jak usuniesz z gallery  managed contex.save to czy to zadziala moze by trzeba protocol zrobic
 
 */

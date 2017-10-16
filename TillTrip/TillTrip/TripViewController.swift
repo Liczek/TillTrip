@@ -449,6 +449,9 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			
 			alert.addAction(yesAction)
 			alert.addAction(noAction)
+			
+			alert.view.tintColor = UIColor.black
+			
 			present(alert, animated: true, completion: nil)
 			
 		} else {
@@ -495,6 +498,9 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			alert.addAction(changeAction)
 			alert.addAction(cancelAction)
 			alert.addAction(deleteAction)
+			
+			alert.view.tintColor = UIColor.black
+			
 			present(alert, animated: true, completion: nil)
 			print("Switch is Off")
 		}
