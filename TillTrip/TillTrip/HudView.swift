@@ -94,10 +94,10 @@ class HudView: UIView {
 		hudNameLabel.sizeToFit()
 		
 		//hudImage
-		hudImage.contentMode = .scaleAspectFit
+		hudImage.clipsToBounds = true
+		hudImage.contentMode = .scaleAspectFill
 		hudImage.layer.borderColor = UIColor.white.withAlphaComponent(0.2).cgColor
 		hudImage.layer.borderWidth = 0.5
-		hudImage.clipsToBounds = true
 		hudImage.layer.cornerRadius = 10
 		hudImage.alpha = 0.8
 		

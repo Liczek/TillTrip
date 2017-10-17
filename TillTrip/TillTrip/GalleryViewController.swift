@@ -69,9 +69,9 @@ class GalleryViewController: UIViewController {
 		getNewPhotoButton.addTarget(self, action: #selector(imagePickerSourceType), for: .touchUpInside)
 		imagePicker.delegate = self
 		
-		removeAllPhotosButton.addTarget(self, action: #selector(removeAllPhotosFromGallery), for: .touchUpInside)
+		removeAllPhotosButton.addTarget(self, action: #selector(eraseGalleryAlert), for: .touchUpInside)
 		addSamplePhotoButton.addTarget(self, action: #selector(addStarterPhotosToGallery), for: .touchUpInside)
-		
+		addSamplePhotoButton.addTarget(self, action: #selector(addSampleImagesHud), for: .touchUpInside)
 		
 		
 		if searchKeyForSelectedTrip != nil {
@@ -567,25 +567,6 @@ extension GalleryViewController {
 		
 		
 		let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
-//		fetchRequest.predicate = NSPredicate(format: "imageName != nil")
-//		
-//		
-//		do {
-//			let result = try managedContext.count(for: fetchRequest)
-//			if result > 0 {return}
-//		} catch let error as NSError {
-//			print("Could not fetch plist data \(error)")
-//		}
-		
-//		do {
-//			let imageToRemove = try managedContext.fetch(fetchRequest)[indexPath.row]
-//			managedContext.delete(imageToRemove)
-//			bgImages.remove(at: indexPath.row)
-//			tableView.deleteRows(at: [indexPath], with: .automatic)
-//			
-//		} catch let error as NSError {
-//			print("Could Not Find Selected Image \(error), \(error.userInfo)")
-//		}
 		let fetchNoImageImage = NSFetchRequest<FullRes>(entityName: "FullRes")
 		fetchNoImageImage.predicate = NSPredicate(format: "imageName == %@", "No_image")
 		
@@ -635,7 +616,33 @@ extension GalleryViewController {
 		}
 		
 		tableView.reloadData()
-		
 
+	}
+	
+	func addSampleImagesHud() {
+		hud.hudNameLabel.text = "ADDED"
+		hud.hudImage.image = UIImage(named: "checkmark")
+		hud.hudImage.contentMode = .scaleAspectFit
+		showHUD()
+		
+		let when = DispatchTime.now() + 1.8
+		DispatchQueue.main.asyncAfter(deadline: when){
+			// your code with delay
+			self.hud.removeFromSuperview()
+		}
+
+	}
+	
+	func eraseGalleryAlert() {
+		let warningString = NSAttributedString(string: "Warning", attributes: [NSForegroundColorAttributeName : UIColor.red])
+		let alert = UIAlertController(title: "", message: "Are you sure you wanna erase all images from gallery", preferredStyle: .alert)
+		alert.setValue(warningString, forKey: "attributedTitle")
+		let yesAction = UIAlertAction(title: "Yes", style: .destructive) { (action) in
+			self.removeAllPhotosFromGallery()
+		}
+		let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
+		alert.addAction(yesAction)
+		alert.addAction(noAction)
+		present(alert, animated: true, completion: nil)
 	}
 }
