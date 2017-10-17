@@ -45,7 +45,36 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		if searchKey != nil {
+			
+			acceptTripButton.setTitle("Accept Changes", for: .normal)
+			
+			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+			managedContext = appDelegate.persistentContainer.viewContext
+			
+			let fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+			fetchRequest.predicate = NSPredicate(format: "searchKey == %@", searchKey!)
+			
+			do {
+				trips = try managedContext.fetch(fetchRequest)
+				
+				guard let tripToEdit = trips.first else {return}
+				tripNameTextField.text = tripToEdit.name
+				tripDateTextField.text = dateConverterToString(from: tripToEdit.date! as Date)
+				pickedDate = tripToEdit.date! as Date
+				imageName = tripToEdit.imageName
+			} catch let error as NSError {
+				print("Could Not Load/Create Trip \(error), \(error.userInfo)")
+			}
+			
+		} else {
+			
+			acceptTripButton.setTitle("Add Trip", for: .normal)
+			
+		}
 		tripImageConfiguration()
+		print(imageName)
 	}
 	
 	
@@ -349,7 +378,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 				editedTrip.name = tripNameTextField.text
 				editedTrip.date = pickedDate as NSDate
 				
-			}else {
+			} else {
 				
 				let entity = NSEntityDescription.entity(forEntityName: "Trip", in: managedContext)!
 				let newTrip = NSManagedObject(entity: entity, insertInto: managedContext) as! Trip
@@ -438,22 +467,33 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	func switchChanged(imageSwitch: UISwitch) {
 		let value = imageSwitch.isOn
 		if value == true {
-			print("Switch is On")
 			
-			let alert = UIAlertController(title: "Do you wanna set image for this Trip?", message: nil, preferredStyle: .alert)
-			let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-				self.performSegue(withIdentifier: "setPhoto", sender: nil)
-			})
-			let noAction = UIAlertAction(title: "No", style: .default, handler: { (action) in
-				imageSwitch.isOn = false})
-			
-			alert.addAction(yesAction)
-			alert.addAction(noAction)
-			
-			alert.view.tintColor = UIColor.black
-			
-			present(alert, animated: true, completion: nil)
-			
+			if pickedDate == nil && tripNameTextField.text == "" {
+				self.imageSwitch.isOn = false
+				ifTripInformationAreEmptyAlert()
+			} else {
+			 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+				managedContext = appDelegate.persistentContainer.viewContext
+				
+				if searchKey == nil {
+					alertSaveTripBecauseOfSetImage()
+					
+				} else {
+					let alert = UIAlertController(title: "Do you wanna set image for this Trip?", message: nil, preferredStyle: .alert)
+					let yesAction = UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+						self.performSegue(withIdentifier: "setPhoto", sender: nil)
+					})
+					let noAction = UIAlertAction(title: "No", style: .default, handler: { (action) in
+						imageSwitch.isOn = false})
+					
+					alert.addAction(yesAction)
+					alert.addAction(noAction)
+					
+					alert.view.tintColor = UIColor.black
+					
+					present(alert, animated: true, completion: nil)
+				}
+			}
 		} else {
 			let alert = UIAlertController(title: nil, message: "What you wanna to do with current Trip photo?", preferredStyle: .alert)
 			let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
@@ -594,6 +634,48 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		hudLayoutConstraints.append(hud.trailingAnchor.constraint(equalTo: view.trailingAnchor))
 		NSLayoutConstraint.activate(hudLayoutConstraints)
 		
+	}
+	
+	func ifTripInformationAreEmptyAlert() {
+		let alert = UIAlertController(title: "First:", message: "Insert Trip name and/or Trip date", preferredStyle: .alert)
+		let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+		alert.addAction(action)
+		present(alert, animated: true, completion: nil)
+	}
+	
+	func alertSaveTripBecauseOfSetImage() {
+		let alert = UIAlertController(title: "Are you sure?", message: "If you wanna set image for Trip, first you need to save new Trip. \nDo you wanna save new trip?", preferredStyle: .alert)
+		let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+			self.saveTripWhenSetImageToTrip()
+			self.performSegue(withIdentifier: "setPhoto", sender: nil)
+		}
+		let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
+		alert.addAction(yesAction)
+		alert.addAction(noAction)
+		present(alert, animated: true, completion: nil)
+	}
+	
+	func saveTripWhenSetImageToTrip() {
+		
+		let entity = NSEntityDescription.entity(forEntityName: "Trip", in: managedContext)!
+		let newTrip = NSManagedObject(entity: entity, insertInto: managedContext) as! Trip
+		
+		addSearchKey()
+		if pickedDate == nil {
+			pickedDate = Date()
+		}
+		if tripNameTextField.text == "" {
+			tripNameTextField.text = "No Destination Name"
+		}
+		newTrip.name = tripNameTextField.text
+		newTrip.date = pickedDate as NSDate?
+		newTrip.searchKey = self.searchKey
+		
+		do {
+			try managedContext.save()
+		} catch let error as NSError {
+			print("Could Not Save New Trip \(error), \(error.userInfo)")
+		}
 	}
 
 	

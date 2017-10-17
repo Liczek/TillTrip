@@ -16,12 +16,6 @@ jak dopisujesz zdjecie do tripa to dopiero przy kliknieciu accept changes powinn
 
 dodanie zdjecia do jeszcze nie utworzonego tripa (przy odpaleniu switch alert controlller z pytaniem czy utworzyc trip i dodac zdjecie)
 
-hud po dodaniu saple photos
-
-alert przed usunieciem wszystkich zdjęć z galerii
-
-corner radius na hud image
-
 horizontal screen only one trip ? sprawdz najpierw jak bedzie wyglądać z blur background
 
 */

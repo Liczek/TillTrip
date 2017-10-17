@@ -421,6 +421,8 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 			let tripFetch = NSFetchRequest<Trip>(entityName: "Trip")
 			tripFetch.predicate = NSPredicate(format: "searchKey == %@", searchKeyForSelectedTrip!)
 			
+			
+			
 			do {
 				trips = try managedContext.fetch(tripFetch)
 				guard let tripToEdit = trips.first else { return }
