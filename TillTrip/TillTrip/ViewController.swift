@@ -20,6 +20,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	var searchKeyOfSelectedTrip = String()
 	var selectedTripImageName = String()
 	var universalConstraints = [NSLayoutConstraint]()
+	
+	var refresher: UIRefreshControl!
 
 	
 	let tableView = UITableView()
@@ -27,6 +29,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		refresherConfiguration()
 		insertStarterData()
 		insertStarterImages()
 		bgImagesDecreasingArray = bgImages
@@ -238,6 +241,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	}
 	
 	
+	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 		let cell = tableView.cellForRow(at: indexPath) as! TripMenuCell
@@ -396,7 +400,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		super.viewWillTransition(to: size, with: coordinator)
 	}
 	
-	
+	func refresherConfiguration() {
+		
+		refresher = UIRefreshControl()
+		refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+		refresher.addTarget(self, action: #selector(reloadTable), for: UIControlEvents.valueChanged)
+		refresher.tintColor = UIColor.white
+		tableView.addSubview(refresher)
+		
+	}
+	func reloadTable() {
+		tableView.reloadData()
+		refresher.endRefreshing()
+	}
 
 }
 
