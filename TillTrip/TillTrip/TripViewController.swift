@@ -20,6 +20,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	var imageName: String!
 	var image: FullRes!
 	
+	var bgImages: [FullRes] = []
 	
 	var verticalGap: CGFloat = 5
 	var horizontalGap: CGFloat = 15
@@ -556,8 +557,21 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 	
 	func tripImageConfiguration() {
 		if imageName == nil {
-			//TODO: 1 - zmienić na arc4random_uniform zamiast thai8
-			imageView.image = UIImage(named: "thai8")
+			
+			guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+			let managedContext = appDelegate.persistentContainer.viewContext
+			let fetchRequest = NSFetchRequest<FullRes>(entityName: "FullRes")
+			
+			do {
+				bgImages = try managedContext.fetch(fetchRequest)
+			} catch let error as NSError {
+				print("Could Not Fetch FullRes \(error), \(error.userInfo)")
+			}
+			
+			let maxIndex = bgImages.count
+			let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
+			let imageName = bgImages[Int(randomImageIndex)].imageName!
+			imageView.image = UIImage(named: imageName)
 		} else {
 			
 			let tripsFetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
