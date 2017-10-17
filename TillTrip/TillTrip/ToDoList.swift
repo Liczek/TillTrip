@@ -14,4 +14,6 @@ kolor dni do wyjazdu 30 15 10 5 3
 
 horizontal screen only one trip ? sprawdz najpierw jak bedzie wyglądać z blur background
 
+bez danych name i date proba switch on uaktywnia dwa alerty wyeliminowac drugi
+
 */

@@ -470,7 +470,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		if value == true {
 			
 			if pickedDate == nil && tripNameTextField.text == "" {
-				self.imageSwitch.isOn = false
+				imageSwitchIsOff()
 				ifTripInformationAreEmptyAlert()
 			} else {
 			 guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
@@ -663,7 +663,9 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			self.saveTripWhenSetImageToTrip()
 			self.performSegue(withIdentifier: "setPhoto", sender: nil)
 		}
-		let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
+		let noAction = UIAlertAction(title: "No", style: .default) { (action) in
+			self.imageSwitchIsOff()
+		}
 		alert.addAction(yesAction)
 		alert.addAction(noAction)
 		present(alert, animated: true, completion: nil)
@@ -690,6 +692,10 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		} catch let error as NSError {
 			print("Could Not Save New Trip \(error), \(error.userInfo)")
 		}
+	}
+	
+	func imageSwitchIsOff() {
+		self.imageSwitch.isOn = false
 	}
 
 	

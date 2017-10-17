@@ -222,6 +222,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		let daysTillTrip = daysBetweenDates(firstDate: Date(), secondDate: trip.date! as Date)
 		
+		
+		if 11...30 ~= daysTillTrip {
+			cell.dayLeftNumber.textColor = UIColor.yellow
+		} else if 4...10 ~= daysTillTrip {
+			cell.dayLeftNumber.textColor = UIColor.orange
+		} else if 2...3 ~= daysTillTrip {
+			cell.dayLeftNumber.textColor = UIColor.red
+		} else if 0...1 ~= daysTillTrip {
+			cell.dayLeftNumber.textColor = UIColor.green
+		}
 		cell.dayLeftNumber.text = "\(daysTillTrip)"
 		
 		return cell
