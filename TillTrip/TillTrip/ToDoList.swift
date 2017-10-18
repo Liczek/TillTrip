@@ -17,4 +17,5 @@ bez danych name i date proba switch on uaktywnia dwa alerty wyeliminowac drugi
 przy obracaniu z pod kwadrata wyjezdzalyby jeden w lewo drugi w prawo kwadraty takie same tylko troszke mniejsze i do polowy by sie wysuwaly
 
 przyciemnione zdjecie w gallery
+
 */

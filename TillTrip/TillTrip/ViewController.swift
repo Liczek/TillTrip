@@ -232,7 +232,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		cell.destinationName.textColor = UIColor.white
 		cell.searchKey = trip.searchKey
 		cell.bgImage.alpha = 0.75
-		
+		cell.leftMainImage.image = cell.mainImage.image
+		cell.rightMainImage.image = cell.mainImage.image
 		
 //MARK: Blur for bgImage
 //		let blurRadius: CGFloat = 3

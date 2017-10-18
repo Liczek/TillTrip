@@ -75,7 +75,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			
 		}
 		tripImageConfiguration()
-		print(imageName)
+		
 	}
 	
 	
@@ -543,7 +543,6 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			alert.view.tintColor = UIColor.black
 			
 			present(alert, animated: true, completion: nil)
-			print("Switch is Off")
 		}
 	}
 	
@@ -573,7 +572,6 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			image = bgImages[Int(randomImageIndex)]
 			if image.imageData == nil {
 			imageView.image = UIImage(named: image.imageName!)
-			print(image.imageName!)
 			} else {
 				imageView.image = UIImage(data: image.imageData! as Data)
 			}
