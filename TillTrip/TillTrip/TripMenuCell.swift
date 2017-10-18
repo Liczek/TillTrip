@@ -18,6 +18,7 @@ class TripMenuCell: UITableViewCell {
 	let bgImageBorderWidth: CGFloat = 5
 	
 	let bgImage = UIImageView()
+	let mainImage = UIImageView()
 	let destination = UILabelWithInsets()
 	let destinationName = UILabelWithInsets()
 	let dayLeft = UILabelWithInsets()
@@ -30,6 +31,7 @@ class TripMenuCell: UITableViewCell {
 		super.init(style: style, reuseIdentifier: "TripMenuCell")
 		
 		addSubview(bgImage)
+		addSubview(mainImage)
 		addSubview(destination)
 		addSubview(dayLeft)
 		addSubview(destinationName)		
@@ -73,6 +75,7 @@ class TripMenuCell: UITableViewCell {
 	func configureUniversalConstraints() {
 		
 		bgImage.translatesAutoresizingMaskIntoConstraints = false
+		mainImage.translatesAutoresizingMaskIntoConstraints = false
 		destination.translatesAutoresizingMaskIntoConstraints = false
 		destinationName.translatesAutoresizingMaskIntoConstraints = false
 		dayLeftNumber.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +86,12 @@ class TripMenuCell: UITableViewCell {
 		universalConstraints.append(bgImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -bgGap))
 		universalConstraints.append(bgImage.leadingAnchor.constraint(equalTo: leadingAnchor))
 		universalConstraints.append(bgImage.trailingAnchor.constraint(equalTo: trailingAnchor))
+		
+		//MainImage View
+		universalConstraints.append(mainImage.heightAnchor.constraint(lessThanOrEqualTo: bgImage.heightAnchor, multiplier: 1, constant: -bgImageBorderWidth * 4))
+		universalConstraints.append(mainImage.widthAnchor.constraint(lessThanOrEqualTo: bgImage.heightAnchor, multiplier: 1, constant: -bgImageBorderWidth * 4))
+		universalConstraints.append(mainImage.centerXAnchor.constraint(equalTo: bgImage.centerXAnchor))
+		universalConstraints.append(mainImage.centerYAnchor.constraint(equalTo: bgImage.centerYAnchor))
 		
 		//destination Label
 		universalConstraints.append(destination.topAnchor.constraint(equalTo: bgImage.topAnchor, constant: verticalGap + bgImageBorderWidth))
@@ -104,18 +113,7 @@ class TripMenuCell: UITableViewCell {
 		NSLayoutConstraint.activate(universalConstraints)
 	}
 	
-	func configureCopactConstraints() {
-		
 	
-		
-	}
-	
-	func configureRegularConstraints() {
-		
-		
-		
-		
-	}
 	
 	func configureLabels() {
 		
@@ -139,10 +137,17 @@ class TripMenuCell: UITableViewCell {
 	}
 	
 	func configureBGImage() {
+		
 		bgImage.clipsToBounds = true
 		bgImage.layer.cornerRadius = 25
 		bgImage.layer.borderWidth = bgImageBorderWidth
 		bgImage.layer.borderColor = UIColor.black.withAlphaComponent(0.25).cgColor
+		bgImage.alpha = 0.75
+		mainImage.clipsToBounds = true
+		mainImage.layer.cornerRadius = 25
+		mainImage.layer.borderWidth = bgImageBorderWidth
+		mainImage.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
+		
 	}
 
 }

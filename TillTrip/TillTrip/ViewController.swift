@@ -166,12 +166,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			if trip.imageData != nil {
 				let tripImageData: Data = trip.imageData! as Data
 				cell.bgImage.image = UIImage(data: tripImageData)
+				cell.mainImage.image = UIImage(data: tripImageData)
 			} else if trip.imageName != nil {
 				let tripImageName = trip.imageName! as String
 				cell.bgImage.image = UIImage(named: tripImageName)
+				cell.mainImage.image = UIImage(named: tripImageName)
 			} else {
 				cell.bgImage.image = UIImage(named: "No_image")
 				cell.bgImage.contentMode = .scaleAspectFit
+				cell.mainImage.image = UIImage(named: "No_image")
+				cell.mainImage.contentMode = .scaleAspectFill
 			}
 			
 		
@@ -194,27 +198,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			if trip.imageData != nil {
 				let tripImageData: Data = trip.imageData! as Data
 				cell.bgImage.image = UIImage(data: tripImageData)
+				cell.mainImage.image = UIImage(data: tripImageData)
 			} else if trip.imageName != nil {
 				let tripImageName = trip.imageName! as String
 				cell.bgImage.image = UIImage(named: tripImageName)
+				cell.mainImage.image = UIImage(named: tripImageName)
 			} else {
 				if image.imageData == nil {
 					cell.bgImage.image = UIImage(named: image.imageName!)
+					cell.mainImage.image = UIImage(named: image.imageName!)
 				} else {
 					let convertedImageData: Data = image.imageData! as Data
 					cell.bgImage.image = UIImage(data: convertedImageData)
+					cell.mainImage.image = UIImage(data: convertedImageData)
 				}
 				
 			}
 			
 			if  cell.bgImage.image == UIImage(named:"No_image") {
 				cell.bgImage.contentMode = .scaleAspectFit
+				cell.mainImage.contentMode = .scaleAspectFill
 			} else {
 				cell.bgImage.contentMode = .scaleToFill
 				cell.bgImageName = imageName
+				cell.mainImage.contentMode = .scaleAspectFill
 			}
 		}
-		
 		
 		
 		cell.selectionStyle = .none
@@ -227,13 +236,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		
 		
 		if 11...30 ~= daysTillTrip {
-			cell.dayLeftNumber.textColor = UIColor.yellow
+			cell.dayLeftNumber.textColor = UIColor.yellow.withAlphaComponent(0.85)
 		} else if 4...10 ~= daysTillTrip {
-			cell.dayLeftNumber.textColor = UIColor.orange
+			cell.dayLeftNumber.textColor = UIColor.orange.withAlphaComponent(0.85)
 		} else if 2...3 ~= daysTillTrip {
-			cell.dayLeftNumber.textColor = UIColor.red
+			cell.dayLeftNumber.textColor = UIColor.red.withAlphaComponent(0.85)
 		} else if 0...1 ~= daysTillTrip {
-			cell.dayLeftNumber.textColor = UIColor.green
+			cell.dayLeftNumber.textColor = UIColor.green.withAlphaComponent(0.85)
+		} else {
+			cell.dayLeftNumber.textColor = UIColor.white.withAlphaComponent(0.85)
 		}
 		cell.dayLeftNumber.text = "\(daysTillTrip)"
 		
@@ -369,12 +380,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		fetchRequest.predicate = NSPredicate(format: "searchKey == %@", searchKeyOfSelectedTrip)
 		do {
 			guard let tripToRemove = try managedContext.fetch(fetchRequest).first else {return}
+			
 			managedContext.delete(tripToRemove)
+			
 		} catch let error as NSError {
 			print("Could Not Delete Trip \(error), \(error.userInfo)")
 		}
 		
 		fetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
+		let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+		fetchRequest.sortDescriptors = [sortDescriptor]
 		do {
 			trips = try managedContext.fetch(fetchRequest)
 		} catch let error as NSError {
@@ -386,10 +401,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		do {
 			try managedContext.save()
 			tableView.deleteRows(at: [indexPath], with: .fade)
+			tableView.reloadData()
 		} catch let error as NSError {
 			print("Could Not Save Deleted Trip \(error), \(error.userInfo)")
 		}
-		
 		
 	}
 	
@@ -403,7 +418,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 	func refresherConfiguration() {
 		
 		refresher = UIRefreshControl()
-		refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+		refresher.attributedTitle = NSAttributedString(string: "Pull to refresh", attributes: [NSForegroundColorAttributeName : UIColor.white])
 		refresher.addTarget(self, action: #selector(reloadTable), for: UIControlEvents.valueChanged)
 		refresher.tintColor = UIColor.white
 		tableView.addSubview(refresher)
