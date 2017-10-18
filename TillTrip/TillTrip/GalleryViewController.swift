@@ -474,7 +474,9 @@ extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationCo
 			print("Could not convert UIImage to NSData")
 			return
 		}
-		let imageName = String(NSDate().timeIntervalSince1970)
+		let uniqueID = UUID().uuidString
+		let imageName = uniqueID
+		//let imageName = String(NSDate().timeIntervalSince1970)
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		let managedContext = appDelegate.persistentContainer.viewContext
 		

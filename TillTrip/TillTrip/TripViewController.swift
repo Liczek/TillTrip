@@ -570,8 +570,13 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			
 			let maxIndex = bgImages.count
 			let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
-			let imageName = bgImages[Int(randomImageIndex) - 1].imageName!
-			imageView.image = UIImage(named: imageName)
+			image = bgImages[Int(randomImageIndex)]
+			if image.imageData == nil {
+			imageView.image = UIImage(named: image.imageName!)
+			print(image.imageName!)
+			} else {
+				imageView.image = UIImage(data: image.imageData! as Data)
+			}
 		} else {
 			
 			let tripsFetchRequest = NSFetchRequest<Trip>(entityName: "Trip")
