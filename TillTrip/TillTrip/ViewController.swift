@@ -173,7 +173,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 				cell.mainImage.image = UIImage(named: tripImageName)
 			} else {
 				cell.bgImage.image = UIImage(named: "No_image")
-				cell.bgImage.contentMode = .scaleAspectFit
+				cell.bgImage.contentMode = .scaleAspectFill
 				cell.mainImage.image = UIImage(named: "No_image")
 				cell.mainImage.contentMode = .scaleAspectFill
 			}
@@ -219,7 +219,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 				cell.bgImage.contentMode = .scaleAspectFit
 				cell.mainImage.contentMode = .scaleAspectFill
 			} else {
-				cell.bgImage.contentMode = .scaleToFill
+				cell.bgImage.contentMode = .scaleAspectFill
 				cell.bgImageName = imageName
 				cell.mainImage.contentMode = .scaleAspectFill
 			}
