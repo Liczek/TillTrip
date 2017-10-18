@@ -231,7 +231,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		cell.destinationName.text = trip.name
 		cell.destinationName.textColor = UIColor.white
 		cell.searchKey = trip.searchKey
+		cell.bgImage.alpha = 0.75
 		
+		
+//MARK: Blur for bgImage
+//		let blurRadius: CGFloat = 3
+//		if let imageToBlur = cell.bgImage.image {
+//		let beginImage = CIImage(image: imageToBlur)
+//		var blurfilter = CIFilter(name: "CIGaussianBlur")
+//		blurfilter?.setValue(beginImage, forKey: "inputImage")
+//		blurfilter?.setValue(blurRadius, forKey: kCIInputRadiusKey)
+//			var resultImage = blurfilter?.value(forKey: "outputImage") as! CIImage
+//			var bluredImage = UIImage(ciImage: resultImage)
+//			cell.bgImage.image = bluredImage
+//		}
 		let daysTillTrip = daysBetweenDates(firstDate: Date(), secondDate: trip.date! as Date)
 		
 		

@@ -142,12 +142,16 @@ class TripMenuCell: UITableViewCell {
 		bgImage.layer.cornerRadius = 25
 		bgImage.layer.borderWidth = bgImageBorderWidth
 		bgImage.layer.borderColor = UIColor.black.withAlphaComponent(0.25).cgColor
-		bgImage.alpha = 0.75
+		
+		
+		
 		mainImage.clipsToBounds = true
 		mainImage.layer.cornerRadius = 25
 		mainImage.layer.borderWidth = bgImageBorderWidth
 		mainImage.layer.borderColor = UIColor.white.withAlphaComponent(0.25).cgColor
 		
 	}
+	
+	
 
 }

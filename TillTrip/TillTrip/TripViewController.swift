@@ -180,7 +180,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 		}
 		
 		imageView.clipsToBounds = true
-		imageView.contentMode = .scaleToFill
+		imageView.contentMode = .scaleAspectFill
 		
 		tripNameLabel.text = "Trip name"
 		tripDateLabel.text = "Date of trip"
