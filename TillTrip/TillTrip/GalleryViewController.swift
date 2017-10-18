@@ -18,6 +18,7 @@ class GalleryViewController: UIViewController {
 	var getNewPhotoButton = UIButton()
 	var addSamplePhotoButton = UIButton()
 	var removeAllPhotosButton = UIButton()
+	var gradientView = UIImageView()
 	
 	var universalLayoutConstraints = [NSLayoutConstraint]()
 	var imagePicker = UIImagePickerController()
@@ -56,6 +57,7 @@ class GalleryViewController: UIViewController {
 		
 		view.addSubview(getNewPhotoButton)
 		view.addSubview(tableView)
+		view.addSubview(gradientView)
 		view.addSubview(addSamplePhotoButton)
 		view.addSubview(removeAllPhotosButton)
 		
@@ -109,6 +111,8 @@ class GalleryViewController: UIViewController {
 			print("Could Not Fetch bgImages \(error), \(error.userInfo)")
 		}
 		
+		configureGradientView()
+		
 		tableView.reloadData()
 	}
 	
@@ -116,6 +120,7 @@ class GalleryViewController: UIViewController {
 		
 		getNewPhotoButton.translatesAutoresizingMaskIntoConstraints = false
 		tableView.translatesAutoresizingMaskIntoConstraints = false
+		gradientView.translatesAutoresizingMaskIntoConstraints = false
 		addSamplePhotoButton.translatesAutoresizingMaskIntoConstraints = false
 		removeAllPhotosButton.translatesAutoresizingMaskIntoConstraints = false
 		
@@ -136,6 +141,12 @@ class GalleryViewController: UIViewController {
 		universalLayoutConstraints.append(tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalGap))
 		universalLayoutConstraints.append(tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalGap))
 		universalLayoutConstraints.append(tableView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor, constant: -verticalGap * 2))
+		
+		//gradientView
+		universalLayoutConstraints.append(gradientView.topAnchor.constraint(equalTo: tableView.topAnchor))
+		universalLayoutConstraints.append(gradientView.leadingAnchor.constraint(equalTo: tableView.leadingAnchor))
+		universalLayoutConstraints.append(gradientView.trailingAnchor.constraint(equalTo: tableView.trailingAnchor))
+		universalLayoutConstraints.append(gradientView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor))
 
 		
 		NSLayoutConstraint.activate(universalLayoutConstraints)
@@ -335,6 +346,9 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.dayLeft.isHidden = true
 		cell.destinationName.isHidden = true
 		cell.dayLeftNumber.isHidden = true
+		cell.leftMainImage.isHidden = true
+		cell.rightMainImage.isHidden = true
+		cell.mainImage.isHidden = true
 		
 		if bgImages == [] {
 			insertNoImageImage()
@@ -461,6 +475,12 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 			//self.dismiss(animated: true, completion: nil)
 			
 		}
+	}
+	
+	func configureGradientView() {
+		gradientView.image = UIImage(named: "gradient")
+		gradientView.contentMode = .scaleToFill
+		gradientView.isUserInteractionEnabled = false
 	}
 	
 }

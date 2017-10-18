@@ -10,12 +10,12 @@ import Foundation
 /*
 
 
-horizontal screen only one trip ? sprawdz najpierw jak bedzie wyglądać z blur background
+
 
 bez danych name i date proba switch on uaktywnia dwa alerty wyeliminowac drugi
 
-przy obracaniu z pod kwadrata wyjezdzalyby jeden w lewo drugi w prawo kwadraty takie same tylko troszke mniejsze i do polowy by sie wysuwaly
 
-przyciemnione zdjecie w gallery
+if no image trzeba bordery usunac pozostana kola fajnie sie to przedstawia
+
 
 */
