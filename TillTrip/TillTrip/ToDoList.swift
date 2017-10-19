@@ -13,9 +13,9 @@ import Foundation
 
 
 bez danych name i date proba switch on uaktywnia dwa alerty wyeliminowac drugi
+odpala sie change cancel delete alert, tylko dlaczego?
 
 
-if no image trzeba bordery usunac pozostana kola fajnie sie to przedstawia
 
 
 */
