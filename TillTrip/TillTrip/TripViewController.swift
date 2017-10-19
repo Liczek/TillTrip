@@ -551,6 +551,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			let controller = segue.destination as! GalleryViewController
 			controller.isEditingPhoto = true
 			controller.searchKeyForSelectedTrip = searchKey
+			print(searchKey)
 		}
 	}
 	

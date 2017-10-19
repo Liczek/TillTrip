@@ -11,7 +11,7 @@ import CoreData
 
 class GalleryViewController: UIViewController {
 	
-	var bgImages = [FullRes]()
+	var bgImages: [FullRes] = []
 	var trips = [Trip]()
 	var trip = Trip()
 	var tableView = UITableView()
@@ -494,9 +494,7 @@ extension GalleryViewController: UIImagePickerControllerDelegate, UINavigationCo
 			print("Could not convert UIImage to NSData")
 			return
 		}
-		let uniqueID = UUID().uuidString
-		let imageName = uniqueID
-		//let imageName = String(NSDate().timeIntervalSince1970)
+		let imageName = String(NSDate().timeIntervalSince1970)
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 		let managedContext = appDelegate.persistentContainer.viewContext
 		
