@@ -176,6 +176,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 				cell.bgImage.contentMode = .scaleAspectFill
 				cell.mainImage.image = UIImage(named: "No_image")
 				cell.mainImage.contentMode = .scaleAspectFill
+				
 			}
 			
 		
@@ -216,15 +217,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 			}
 			
 			if  cell.bgImage.image == UIImage(named:"No_image") {
+				cell.bgImageName = "No_image"
 				cell.bgImage.contentMode = .scaleAspectFit
 				cell.mainImage.contentMode = .scaleAspectFill
+				
+
 			} else {
 				cell.bgImage.contentMode = .scaleAspectFill
 				cell.bgImageName = imageName
 				cell.mainImage.contentMode = .scaleAspectFill
 			}
 		}
-		
+		if  cell.bgImage.image == UIImage(named:"No_image") {
+			cell.mainImage.layer.borderWidth = 0
+			cell.leftMainImage.layer.borderWidth = 0
+			cell.rightMainImage.layer.borderWidth = 0
+		} else {
+			cell.mainImage.layer.borderWidth = cell.bgImageBorderWidth
+			cell.leftMainImage.layer.borderWidth = cell.bgImageBorderWidth
+			cell.rightMainImage.layer.borderWidth = cell.bgImageBorderWidth
+		}
+
 		
 		cell.selectionStyle = .none
 		
@@ -415,7 +428,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 		do {
 			try managedContext.save()
 			tableView.deleteRows(at: [indexPath], with: .fade)
-			tableView.reloadData()
+			//tableView.reloadData()
 		} catch let error as NSError {
 			print("Could Not Save Deleted Trip \(error), \(error.userInfo)")
 		}

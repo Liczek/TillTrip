@@ -238,6 +238,7 @@ class TripMenuCell: UITableViewCell {
 		leftMainImage.isHidden = false
 		leftMainImage.contentMode = .scaleAspectFill
 		
+		
 		rightMainImage.image = bgImage.image
 		rightMainImage.clipsToBounds = true
 		rightMainImage.layer.cornerRadius = cornerRadius

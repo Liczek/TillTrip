@@ -365,7 +365,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 		if cell.bgImage.image == UIImage(named: "No_image") {
 			cell.bgImage.contentMode = .scaleAspectFit
 		} else {
-			cell.bgImage.contentMode = .scaleToFill
+			cell.bgImage.contentMode = .scaleAspectFill
 		}
 		}
 		cell.selectionStyle = .none

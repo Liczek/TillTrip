@@ -571,6 +571,7 @@ class TripViewController: UIViewController, UITextFieldDelegate {
 			let maxIndex = bgImages.count
 			let randomImageIndex = arc4random_uniform(UInt32(maxIndex))
 			image = bgImages[Int(randomImageIndex)]
+			print(randomImageIndex)
 			if image.imageData == nil {
 			imageView.image = UIImage(named: image.imageName!)
 			} else {
